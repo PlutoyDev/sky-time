@@ -1,0 +1,107 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../dist"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Guild {
+  id            String   @id @map("_id") @db.ObjectId
+  userIds       String[] @db.ObjectId
+  webhookIds    String[] @unique @db.ObjectId
+  mainConfigId  String   @unique @db.ObjectId
+  reptConfigIds String[] @unique @db.ObjectId
+
+  user        User[]       @relation(fields: [userIds], references: [id])
+  webhooks    Webhook[]
+  mainConfig  MainConfig?
+  reptConfigs ReptConfig[]
+}
+
+model User {
+  id            String   @id @map("_id") @db.ObjectId
+  guildIds      String[] @db.ObjectId
+  username      String
+  discriminator String
+  avatar        String?
+  refreshToken  String
+  accessToken   String
+  expiresAt     DateTime
+
+  admin         Boolean  @default(false)
+
+  guild Guild[] @relation(fields: [guildIds], references: [id])
+}
+
+model Webhook {
+  id         String      @id @map("_id") @db.ObjectId
+  token      String
+  guildId    String      @db.ObjectId
+  channelId  String      @db.ObjectId
+  messageIds String[]    @db.ObjectId
+  username   String[]
+  avatar_url String[]
+  mentionIds String[]
+  type       WebhookType
+
+  Guild Guild @relation(fields: [guildId], references: [id])
+}
+
+enum WebhookType {
+  TIMESTAMP
+  REMINDER
+  SYSTEM
+}
+
+model Message {
+  id          String      @id @map("_id") @db.ObjectId
+  webhookId   String      @db.ObjectId
+  createdAt   DateTime
+  deleteAfter DateTime?
+  type        MessageType
+}
+
+enum MessageType {
+  MAIN
+  MAIN_RAW
+  REPT
+  REPT_RAW
+  REMINDER
+  SYSTEM_CHANGES
+  SYSTEM_UPDATES
+  SYSTEM_OWNER
+}
+
+model MainConfig {
+  id               String  @id @map("_id") @db.ObjectId
+  guildId          String  @unique @db.ObjectId
+  title            String?
+  showLastUpdate   Boolean @default(false)
+  labelResetDaily  String?
+  LabelResetEden   String?
+  titleTS          String?
+  showCountTS      Boolean @default(false)
+  labelArrivalTS   String?
+  labelDepartureTS String?
+  showPromo        Boolean @default(true)
+
+  Guild Guild @relation(fields: [guildId], references: [id])
+}
+
+model ReptConfig {
+  id             String  @id @map("_id") @db.ObjectId
+  guildId        String  @db.ObjectId
+  title          String?
+  showLastUpdate Boolean @default(false)
+  seperator      String?
+  showOngoing    Boolean @default(true)
+  showUpcoming   Boolean @default(true)
+
+  Guild Guild @relation(fields: [guildId], references: [id])
+}
