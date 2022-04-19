@@ -1,0 +1,16 @@
+{
+  "name": "@sky-time/prisma",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "yarn@3.2.0",
+  "scripts": {
+    "build": "yarn prisma generate",
+    "prisma": "yarn prisma"
+  },
+  "devDependencies": {
+    "prisma": "^3.12.0"
+  },
+  "dependencies": {
+    "@prisma/client": "^3.12.0"
+  }
+}
