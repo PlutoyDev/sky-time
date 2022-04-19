@@ -2,6 +2,8 @@
   "name": "@sky-time/prisma",
   "version": "0.1.0",
   "private": true,
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
   "packageManager": "yarn@3.2.0",
   "scripts": {
     "build": "yarn prisma generate",

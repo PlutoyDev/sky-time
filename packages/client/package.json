@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@prisma/client": "^3.0.1",
+    "@sky-time/prisma": "^0.1.0",
+    "@sky-time/server": "^0.1.0",
     "@trpc/client": "^9.22.0",
     "@trpc/next": "^9.22.0",
     "@trpc/react": "^9.22.0",
