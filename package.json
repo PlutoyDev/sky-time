@@ -5,10 +5,9 @@
   "private": true,
   "scripts": {
     "wlj": "yarn workspaces list --json",
-    "wname": "yarn wlj | ndjson-map 'd.name' ",
+    "wname": "yarn workspaces list --json | ndjson-map 'd.name' ",
     "wr": "yarn workspace $(yarn wname | ipt | tr -d '\"')",
-    "wntl": "yarn wr ntl",
-
+    "wntl": "yarn workspace $(yarn wname | ipt | tr -d '\"') ntl",
     "client": "yarn workspace @sky-time/client",
     "server": "yarn workspace @sky-time/server",
     "prisma": "yarn workspace @sky-time/prisma"
