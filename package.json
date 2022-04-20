@@ -3,12 +3,28 @@
   "version": "0.1.0",
   "packageManager": "yarn@3.2.0",
   "private": true,
+  "scripts": {
+    "wlj": "yarn workspaces list --json",
+    "wname": "yarn wlj | ndjson-map 'd.name' ",
+    "wr": "yarn workspace $(yarn wname | ipt | tr -d '\"')",
+    "wntl": "yarn wr ntl",
+
+    "client": "yarn workspace @sky-time/client",
+    "server": "yarn workspace @sky-time/server",
+    "prisma": "yarn workspace @sky-time/prisma"
+  },
   "workspaces": [
     "packages/*"
   ],
   "devDependencies": {
     "concurrently": "^7.1.0",
+    "ipt": "^3.2.0",
+    "ndjson-cli": "^0.3.1",
     "npm-run-all": "^4.1.5",
+    "ntl": "^5.1.0",
     "typescript": "^4.6.3"
+  },
+  "ntl": {
+    "runner": "yarn"
   }
 }
