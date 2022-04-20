@@ -46,7 +46,7 @@ model Webhook {
   channelId  String      @db.ObjectId
   messageIds String[]    @db.ObjectId
   username   String[]
-  avatar_url String[]
+  avatarUrl String[]
   mentionIds String[]
   type       WebhookType
 
