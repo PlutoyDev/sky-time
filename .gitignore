@@ -5,3 +5,19 @@
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+.env
+dist/
+
+# next.js
+.next
+out
+
+# production
+build
+
+# vercel
+.vercel
+
+# prisma
+prisma/**/migrations
