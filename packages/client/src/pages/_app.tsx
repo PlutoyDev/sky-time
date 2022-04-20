@@ -1,13 +1,22 @@
-import { httpBatchLink } from '@trpc/client/links/httpBatchLink';
-import { loggerLink } from '@trpc/client/links/loggerLink';
-import { withTRPC } from '@trpc/next';
-import { NextPage } from 'next';
-import { AppProps } from 'next/app';
-import { AppType } from 'next/dist/shared/lib/utils';
-import { ReactElement, ReactNode } from 'react';
-import superjson from 'superjson';
-import { DefaultLayout } from '~/components/DefaultLayout';
-import type { AppRouter } from '~/router';
+import { httpBatchLink } from "@trpc/client/links/httpBatchLink";
+import { loggerLink } from "@trpc/client/links/loggerLink";
+import { withTRPC } from "@trpc/next";
+import { NextPage } from "next";
+import { AppProps } from "next/app";
+import { AppType } from "next/dist/shared/lib/utils";
+import { ReactElement, ReactNode, useMemo, useState } from "react";
+import superjson from "superjson";
+import { DefaultLayout } from "~/components/DefaultLayout";
+import type { AppRouter } from "~/router";
+import { MantineThemeOverride, MantineProvider } from "@mantine/core";
+import getBaseUrl from "~/utils/getBaseUrl";
+import { trpc } from "~/libs/trpc/client";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { AuthProvider } from "~/context/AuthContext";
+
+const appTheme: MantineThemeOverride = {
+  colorScheme: "dark",
+};
 
 export type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -17,39 +26,47 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
 
-const MyApp = (({ Component, pageProps }: AppPropsWithLayout) => {
-  const getLayout =
-    Component.getLayout ?? ((page) => <DefaultLayout>{page}</DefaultLayout>);
-
-  return getLayout(<Component {...pageProps} />);
-}) as AppType;
-
-function getBaseUrl() {
-  if (typeof window !== 'undefined') {
-    return '';
-  }
-
-  if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}`;
-  }
-
-  return `http://localhost:${process.env.PORT ?? 3000}`;
-}
-
-export default withTRPC<AppRouter>({
-  config() {
-    return {
+function addProviders(children: ReactNode) {
+  const [accessToken, setAccessToken] = useState<string>();
+  const [queryClient] = useState(() => new QueryClient());
+  const [trpcClient] = useState(() =>
+    trpc.createClient({
+      url: "/api/trpc",
+      transformer: superjson,
       links: [
         loggerLink({
           enabled: (opts) =>
-            process.env.NODE_ENV === 'development' ||
-            (opts.direction === 'down' && opts.result instanceof Error),
+            process.env.NODE_ENV === "development" ||
+            (opts.direction === "down" && opts.result instanceof Error),
         }),
         httpBatchLink({
-          url: `${getBaseUrl()}/api/trpc`,
+          url: `/api/trpc`,
         }),
       ],
-      transformer: superjson,
-    };
-  },
-})(MyApp);
+      headers: () => ({ authorization: accessToken }),
+    })
+  );
+
+  return (
+    <trpc.Provider client={trpcClient} queryClient={queryClient}>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider setAccessToken={setAccessToken}>
+          <MantineProvider
+            theme={appTheme}
+            withGlobalStyles
+            emotionOptions={{ key: "mantine", prepend: true }}
+          >
+            {children}
+          </MantineProvider>
+        </AuthProvider>
+      </QueryClientProvider>
+    </trpc.Provider>
+  );
+}
+
+function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+  const getLayout =
+    Component.getLayout ?? ((page) => <DefaultLayout>{page}</DefaultLayout>);
+
+  return addProviders(getLayout(<Component {...pageProps} />));
+}
