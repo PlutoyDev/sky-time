@@ -1,57 +1,42 @@
-import React from "react";
-import {
-  createStyles,
-  Menu,
-  Center,
-  Header,
-  Container,
-  Group,
-  Button,
-  Burger,
-} from "@mantine/core";
-import { useBooleanToggle } from "@mantine/hooks";
-import { ChevronDown } from "tabler-icons-react";
+import React from 'react';
+import { createStyles, Menu, Center, Header, Container, Group, Button, Burger } from '@mantine/core';
+import { useBooleanToggle } from '@mantine/hooks';
+import { ChevronDown } from 'tabler-icons-react';
 
 const HEADER_HEIGHT = 60;
 
 const useStyles = createStyles((theme) => ({
   inner: {
     height: HEADER_HEIGHT,
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 
   links: {
-    [theme.fn.smallerThan("sm")]: {
-      display: "none",
+    [theme.fn.smallerThan('sm')]: {
+      display: 'none',
     },
   },
 
   burger: {
-    [theme.fn.largerThan("sm")]: {
-      display: "none",
+    [theme.fn.largerThan('sm')]: {
+      display: 'none',
     },
   },
 
   link: {
-    display: "block",
+    display: 'block',
     lineHeight: 1,
-    padding: "8px 12px",
+    padding: '8px 12px',
     borderRadius: theme.radius.sm,
-    textDecoration: "none",
-    color:
-      theme.colorScheme === "dark"
-        ? theme.colors.dark[0]
-        : theme.colors.gray[7],
+    textDecoration: 'none',
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
     fontSize: theme.fontSizes.sm,
     fontWeight: 500,
 
-    "&:hover": {
-      backgroundColor:
-        theme.colorScheme === "dark"
-          ? theme.colors.dark[6]
-          : theme.colors.gray[0],
+    '&:hover': {
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
     },
   },
 
@@ -60,22 +45,35 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-interface AppHeaderProps {
-  links: {
-    link: string;
-    label: string;
-    links: { link: string; label: string }[];
-  }[];
+interface NavLinks {
+  label: string;
+  link: string;
+  links?: { link: string; label: string }[];
 }
 
-export function AppHeader({ links }: AppHeaderProps) {
+const links: NavLinks[] = [
+  {
+    label: 'Home',
+    link: '/',
+  },
+  {
+    label: 'Add To Server',
+    link: '/add',
+  },
+  {
+    label: 'Configure "Bot"',
+    link: '/configure',
+  },
+];
+
+interface AppHeaderProps {}
+
+export function AppHeader({}: AppHeaderProps) {
   const { classes } = useStyles();
   const [opened, toggleOpened] = useBooleanToggle(false);
 
   const items = links.map((link) => {
-    const menuItems = link.links?.map((item) => (
-      <Menu.Item key={item.link}>{item.label}</Menu.Item>
-    ));
+    const menuItems = link.links?.map((item) => <Menu.Item key={item.link}>{item.label}</Menu.Item>);
 
     if (menuItems) {
       return (
@@ -87,11 +85,7 @@ export function AppHeader({ links }: AppHeaderProps) {
           placement="end"
           gutter={1}
           control={
-            <a
-              href={link.link}
-              className={classes.link}
-              onClick={(event) => event.preventDefault()}
-            >
+            <a href={link.link} className={classes.link} onClick={(event) => event.preventDefault()}>
               <Center>
                 <span className={classes.linkLabel}>{link.label}</span>
                 <ChevronDown size={12} />
@@ -105,12 +99,7 @@ export function AppHeader({ links }: AppHeaderProps) {
     }
 
     return (
-      <a
-        key={link.label}
-        href={link.link}
-        className={classes.link}
-        onClick={(event) => event.preventDefault()}
-      >
+      <a key={link.label} href={link.link} className={classes.link} onClick={(event) => event.preventDefault()}>
         {link.label}
       </a>
     );
@@ -120,12 +109,7 @@ export function AppHeader({ links }: AppHeaderProps) {
     <Header height={HEADER_HEIGHT} sx={{ borderBottom: 0 }} mb={120}>
       <Container className={classes.inner} fluid>
         <Group>
-          <Burger
-            opened={opened}
-            onClick={() => toggleOpened()}
-            className={classes.burger}
-            size="sm"
-          />
+          <Burger opened={opened} onClick={() => toggleOpened()} className={classes.burger} size="sm" />
           {/* <MantineLogo /> */}
         </Group>
         <Group spacing={5} className={classes.links}>
