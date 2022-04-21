@@ -1111,7 +1111,9 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jsonwebtoken", "npm:8.5.8"],\
             ["@types/node", "npm:17.0.25"],\
             ["@types/react", "npm:17.0.44"],\
+            ["axios", "npm:0.26.1"],\
             ["clsx", "npm:1.1.1"],\
+            ["cookies-next", "npm:2.0.4"],\
             ["dayjs", "npm:1.11.1"],\
             ["discord-api-types", "npm:0.31.2"],\
             ["jsonwebtoken", "npm:8.5.1"],\
@@ -1349,6 +1351,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@types/cookie", [\
+        ["npm:0.4.1", {\
+          "packageLocation": "./.yarn/cache/@types-cookie-npm-0.4.1-274a704dc6-3275534ed6.zip/node_modules/@types/cookie/",\
+          "packageDependencies": [\
+            ["@types/cookie", "npm:0.4.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@types/cookie-parser", [\
         ["npm:1.4.2", {\
           "packageLocation": "./.yarn/cache/@types-cookie-parser-npm-1.4.2-e1bc89ec98-d5b3c0e193.zip/node_modules/@types/cookie-parser/",\
@@ -1461,6 +1472,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/node", [\
+        ["npm:16.11.27", {\
+          "packageLocation": "./.yarn/cache/@types-node-npm-16.11.27-f4555d5131-6ed0c8c4d2.zip/node_modules/@types/node/",\
+          "packageDependencies": [\
+            ["@types/node", "npm:16.11.27"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
         ["npm:17.0.25", {\
           "packageLocation": "./.yarn/cache/@types-node-npm-17.0.25-cd1a2f2374-6a820bd624.zip/node_modules/@types/node/",\
           "packageDependencies": [\
@@ -2502,6 +2520,18 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/cookie-signature-npm-1.0.6-93f325f7f0-f4e1b0a98a.zip/node_modules/cookie-signature/",\
           "packageDependencies": [\
             ["cookie-signature", "npm:1.0.6"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["cookies-next", [\
+        ["npm:2.0.4", {\
+          "packageLocation": "./.yarn/cache/cookies-next-npm-2.0.4-91309407f7-fc25b4215f.zip/node_modules/cookies-next/",\
+          "packageDependencies": [\
+            ["cookies-next", "npm:2.0.4"],\
+            ["@types/cookie", "npm:0.4.1"],\
+            ["@types/node", "npm:16.11.27"],\
+            ["cookie", "npm:0.4.2"]\
           ],\
           "linkType": "HARD"\
         }]\

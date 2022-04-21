@@ -678,7 +678,9 @@ __metadata:
     "@types/jsonwebtoken": ^8
     "@types/node": ^17.0.10
     "@types/react": ^17.0.20
+    axios: ^0.26.1
     clsx: ^1.1.1
+    cookies-next: ^2.0.4
     dayjs: ^1.11.1
     discord-api-types: ^0.31.2
     jsonwebtoken: ^8.5.1
@@ -847,6 +849,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/cookie@npm:^0.4.1":
+  version: 0.4.1
+  resolution: "@types/cookie@npm:0.4.1"
+  checksum: 3275534ed69a76c68eb1a77d547d75f99fedc80befb75a3d1d03662fb08d697e6f8b1274e12af1a74c6896071b11510631ba891f64d30c78528d0ec45a9c1a18
+  languageName: node
+  linkType: hard
+
 "@types/cors@npm:^2":
   version: 2.8.12
   resolution: "@types/cors@npm:2.8.12"
@@ -937,6 +946,13 @@ __metadata:
   version: 17.0.25
   resolution: "@types/node@npm:17.0.25"
   checksum: 6a820bd624e69ea772f52a6cdb326484eff5829443dc981939373929ade109f58c21698b9f0a831bd6ceea799e722a75dc49c5fa7a6bc32a81e1cbdfc6507b64
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^16.10.2":
+  version: 16.11.27
+  resolution: "@types/node@npm:16.11.27"
+  checksum: 6ed0c8c4d29a549d0cfd607d19edf9a4668fbd39087701d923b4a04cd760564e47ad27f9403968cb9c11ee006f0ea6ab698b2491b4b2d2dec3f4a53d0fc22df7
   languageName: node
   linkType: hard
 
@@ -1857,10 +1873,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cookie@npm:0.4.2":
+"cookie@npm:0.4.2, cookie@npm:^0.4.0":
   version: 0.4.2
   resolution: "cookie@npm:0.4.2"
   checksum: a00833c998bedf8e787b4c342defe5fa419abd96b32f4464f718b91022586b8f1bafbddd499288e75c037642493c83083da426c6a9080d309e3bd90fd11baa9b
+  languageName: node
+  linkType: hard
+
+"cookies-next@npm:^2.0.4":
+  version: 2.0.4
+  resolution: "cookies-next@npm:2.0.4"
+  dependencies:
+    "@types/cookie": ^0.4.1
+    "@types/node": ^16.10.2
+    cookie: ^0.4.0
+  checksum: fc25b4215f2d7092d72f8591c9bc8b30f3ea866fca76e536e31825899c3f05eefb97cdb4152c565429cab38d20f2f937d08aea76a43d3cdd3ca36e24a347fe00
   languageName: node
   linkType: hard
 
