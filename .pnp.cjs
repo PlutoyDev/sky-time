@@ -1111,11 +1111,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jsonwebtoken", "npm:8.5.8"],\
             ["@types/node", "npm:17.0.25"],\
             ["@types/react", "npm:17.0.44"],\
+            ["@yarnpkg/pnpify", "npm:4.0.0-rc.2"],\
             ["axios", "npm:0.26.1"],\
             ["clsx", "npm:1.1.1"],\
             ["cookies-next", "npm:2.0.4"],\
             ["dayjs", "npm:1.11.1"],\
             ["discord-api-types", "npm:0.31.2"],\
+            ["dotenv", "npm:16.0.0"],\
+            ["encoding", "npm:0.1.13"],\
             ["jsonwebtoken", "npm:8.5.1"],\
             ["next", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:12.1.4"],\
             ["npm-run-all", "npm:4.1.5"],\
@@ -1123,6 +1126,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react", "npm:18.0.0"],\
             ["react-dom", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:18.0.0"],\
             ["react-query", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:3.35.0"],\
+            ["react-spinners", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:0.11.0"],\
             ["superjson", "npm:1.8.1"],\
             ["tabler-icons-react", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:1.46.0"],\
             ["typescript", "patch:typescript@npm%3A4.4.4#~builtin<compat/typescript>::version=4.4.4&hash=bda367"],\
@@ -1138,6 +1142,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@sky-time/prisma", "workspace:packages/prisma"],\
             ["@prisma/client", "virtual:ede3b2356be5b7b2257261ecdde9e419f071b8654caf10007815a5393cc6054cb684c6dc3b3179b0401ec3a04ba612a26910713ea87b2ab766d8359437db4c00#npm:3.12.0"],\
             ["@yarnpkg/pnpify", "npm:4.0.0-rc.2"],\
+            ["encoding", "npm:0.1.13"],\
             ["ntl", "npm:5.1.0"],\
             ["prisma", "npm:3.12.0"]\
           ],\
@@ -1166,7 +1171,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["express", "npm:4.17.3"],\
             ["nodemon", "npm:2.0.15"],\
             ["ntl", "npm:5.1.0"],\
-            ["tslib", "npm:2.3.1"]\
+            ["tslib", "npm:2.3.1"],\
+            ["typescript", "patch:typescript@npm%3A4.6.3#~builtin<compat/typescript>::version=4.6.3&hash=bda367"]\
           ],\
           "linkType": "SOFT"\
         }]\
@@ -5921,6 +5927,33 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             "@types/react",\
             "react-dom",\
             "react-native",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["react-spinners", [\
+        ["npm:0.11.0", {\
+          "packageLocation": "./.yarn/cache/react-spinners-npm-0.11.0-65ea18c4a3-8ec67898c1.zip/node_modules/react-spinners/",\
+          "packageDependencies": [\
+            ["react-spinners", "npm:0.11.0"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:0.11.0", {\
+          "packageLocation": "./.yarn/__virtual__/react-spinners-virtual-3c332c280d/0/cache/react-spinners-npm-0.11.0-65ea18c4a3-8ec67898c1.zip/node_modules/react-spinners/",\
+          "packageDependencies": [\
+            ["react-spinners", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:0.11.0"],\
+            ["@emotion/react", "virtual:ce58e8ddea2a0ff43f02b473a1cc4956afe2f33a619df386f4c88ffb4f0ed394d303d4fa4d1462fff724268b01ab1304a296cf7212623a30bb598d3d0088b8ae#npm:11.9.0"],\
+            ["@types/react", "npm:17.0.44"],\
+            ["@types/react-dom", null],\
+            ["react", "npm:18.0.0"],\
+            ["react-dom", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:18.0.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/react-dom",\
+            "@types/react",\
+            "react-dom",\
             "react"\
           ],\
           "linkType": "HARD"\
