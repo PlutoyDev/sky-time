@@ -2,15 +2,14 @@ import { Group, Paper, Box, Text, Title, Center, Divider, Overlay } from '@manti
 import { useBooleanToggle } from '@mantine/hooks';
 import DiscordButton from '~/components/button/DiscordButton';
 import DiscordRedirectModal from '~/components/modal/DiscordRedirect';
-import { trpc } from '~/libs/trpc/client';
 
 function AddPage() {
-  const { data: authJson, isSuccess: isAuthUrlSuccess } = trpc.useQuery(['authUrl', { withBot: true }]);
+  // const { data: authJson, isSuccess: isAuthUrlSuccess } = trpc.useQuery(['authUrl', { withBot: true }]);
   const [isDRModelOpen, toggleDRModel] = useBooleanToggle(false);
   const onDiscordLoginClick = () => {
     setTimeout(() => {
       toggleDRModel();
-      if (isAuthUrlSuccess) location.href = authJson.authUrl;
+      // if (isAuthUrlSuccess) location.href = authJson.authUrl;
     }, 5000);
     toggleDRModel();
   };

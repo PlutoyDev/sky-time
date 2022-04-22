@@ -1,7 +1,11 @@
-import { createContext, Dispatch, SetStateAction, useState } from "react";
-import type { User, Guild } from "@sky-time/prisma";
+import { createContext, Dispatch, SetStateAction, useState } from 'react';
+// import type { User, Guild } from "@sky-time/prisma";
 
-type PubicUser = Omit<User, "accessToken" | "refreshToken" | "expiresAt">;
+//Temp Substitute
+type User = any;
+type Guild = any;
+
+type PubicUser = Omit<User, 'accessToken' | 'refreshToken' | 'expiresAt'>;
 
 type AuthContextValue = {
   user?: PubicUser;
@@ -18,10 +22,7 @@ type AuthProviderProps = {
 
 export const AuthContext = createContext<AuthContextValue>({});
 
-export const AuthProvider = ({
-  children,
-  setAccessToken,
-}: AuthProviderProps) => {
+export const AuthProvider = ({ children, setAccessToken }: AuthProviderProps) => {
   const [user, setUser] = useState<PubicUser>();
   const [guild, setGuild] = useState<Guild>();
 

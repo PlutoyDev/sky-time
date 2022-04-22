@@ -25,10 +25,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/client"\
       },\
       {\
-        "name": "@sky-time/prisma",\
-        "reference": "workspace:packages/prisma"\
-      },\
-      {\
         "name": "@sky-time/server",\
         "reference": "workspace:packages/server"\
       }\
@@ -37,7 +33,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
     "ignorePatternData": "(^(?:\\\\.yarn\\\\/sdks(?:\\\\/(?!\\\\.{1,2}(?:\\\\/|$))(?:(?:(?!(?:^|\\\\/)\\\\.{1,2}(?:\\\\/|$)).)*?)|$))$)",\
     "fallbackExclusionList": [\
       ["@sky-time/client", ["workspace:packages/client"]],\
-      ["@sky-time/prisma", ["workspace:packages/prisma"]],\
       ["@sky-time/server", ["workspace:packages/server"]],\
       ["sky-time", ["workspace:."]]\
     ],\
@@ -800,29 +795,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             "prisma"\
           ],\
           "linkType": "HARD"\
-        }],\
-        ["virtual:ede3b2356be5b7b2257261ecdde9e419f071b8654caf10007815a5393cc6054cb684c6dc3b3179b0401ec3a04ba612a26910713ea87b2ab766d8359437db4c00#npm:3.12.0", {\
-          "packageLocation": "./.yarn/unplugged/@prisma-client-virtual-114dd9ec13/node_modules/@prisma/client/",\
-          "packageDependencies": [\
-            ["@prisma/client", "virtual:ede3b2356be5b7b2257261ecdde9e419f071b8654caf10007815a5393cc6054cb684c6dc3b3179b0401ec3a04ba612a26910713ea87b2ab766d8359437db4c00#npm:3.12.0"],\
-            ["@prisma/engines-version", "npm:3.12.0-37.22b822189f46ef0dc5c5b503368d1bee01213980"],\
-            ["@types/prisma", null],\
-            ["prisma", "npm:3.12.0"]\
-          ],\
-          "packagePeers": [\
-            "@types/prisma",\
-            "prisma"\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["@prisma/engines", [\
-        ["npm:3.12.0-37.22b822189f46ef0dc5c5b503368d1bee01213980", {\
-          "packageLocation": "./.yarn/unplugged/@prisma-engines-npm-3.12.0-37.22b822189f46ef0dc5c5b503368d1bee01213980-e0ed682c55/node_modules/@prisma/engines/",\
-          "packageDependencies": [\
-            ["@prisma/engines", "npm:3.12.0-37.22b822189f46ef0dc5c5b503368d1bee01213980"]\
-          ],\
-          "linkType": "HARD"\
         }]\
       ]],\
       ["@prisma/engines-version", [\
@@ -1102,12 +1074,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@mantine/next", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:4.1.4"],\
             ["@mantine/notifications", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:4.1.4"],\
             ["@prisma/client", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:3.12.0"],\
-            ["@sky-time/prisma", "workspace:packages/prisma"],\
             ["@sky-time/server", "workspace:packages/server"],\
-            ["@trpc/client", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:9.22.0"],\
-            ["@trpc/next", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:9.22.0"],\
-            ["@trpc/react", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:9.22.0"],\
-            ["@trpc/server", "npm:9.22.0"],\
             ["@types/jsonwebtoken", "npm:8.5.8"],\
             ["@types/node", "npm:17.0.25"],\
             ["@types/react", "npm:17.0.44"],\
@@ -1118,7 +1085,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["dayjs", "npm:1.11.1"],\
             ["discord-api-types", "npm:0.31.2"],\
             ["dotenv", "npm:16.0.0"],\
-            ["encoding", "npm:0.1.13"],\
             ["jsonwebtoken", "npm:8.5.1"],\
             ["next", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:12.1.4"],\
             ["npm-run-all", "npm:4.1.5"],\
@@ -1135,27 +1101,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "SOFT"\
         }]\
       ]],\
-      ["@sky-time/prisma", [\
-        ["workspace:packages/prisma", {\
-          "packageLocation": "./packages/prisma/",\
-          "packageDependencies": [\
-            ["@sky-time/prisma", "workspace:packages/prisma"],\
-            ["@prisma/client", "virtual:ede3b2356be5b7b2257261ecdde9e419f071b8654caf10007815a5393cc6054cb684c6dc3b3179b0401ec3a04ba612a26910713ea87b2ab766d8359437db4c00#npm:3.12.0"],\
-            ["@yarnpkg/pnpify", "npm:4.0.0-rc.2"],\
-            ["encoding", "npm:0.1.13"],\
-            ["ntl", "npm:5.1.0"],\
-            ["prisma", "npm:3.12.0"]\
-          ],\
-          "linkType": "SOFT"\
-        }]\
-      ]],\
       ["@sky-time/server", [\
         ["workspace:packages/server", {\
           "packageLocation": "./packages/server/",\
           "packageDependencies": [\
             ["@sky-time/server", "workspace:packages/server"],\
             ["@luvies/lazy", "npm:1.7.2"],\
-            ["@sky-time/prisma", "workspace:packages/prisma"],\
             ["@types/cookie-parser", "npm:1.4.2"],\
             ["@types/cors", "npm:2.8.12"],\
             ["@types/cron", "npm:1.7.3"],\
@@ -1200,125 +1151,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@tootallnate-once-npm-2.0.0-e36cf4f140-ad87447820.zip/node_modules/@tootallnate/once/",\
           "packageDependencies": [\
             ["@tootallnate/once", "npm:2.0.0"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["@trpc/client", [\
-        ["npm:9.22.0", {\
-          "packageLocation": "./.yarn/cache/@trpc-client-npm-9.22.0-b40a3b04d2-f45b128e13.zip/node_modules/@trpc/client/",\
-          "packageDependencies": [\
-            ["@trpc/client", "npm:9.22.0"]\
-          ],\
-          "linkType": "SOFT"\
-        }],\
-        ["virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:9.22.0", {\
-          "packageLocation": "./.yarn/__virtual__/@trpc-client-virtual-c83a9ed39c/0/cache/@trpc-client-npm-9.22.0-b40a3b04d2-f45b128e13.zip/node_modules/@trpc/client/",\
-          "packageDependencies": [\
-            ["@trpc/client", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:9.22.0"],\
-            ["@babel/runtime", "npm:7.17.9"],\
-            ["@trpc/server", "npm:9.22.0"],\
-            ["@types/trpc__server", null]\
-          ],\
-          "packagePeers": [\
-            "@trpc/server",\
-            "@types/trpc__server"\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["@trpc/next", [\
-        ["npm:9.22.0", {\
-          "packageLocation": "./.yarn/cache/@trpc-next-npm-9.22.0-a50debe36b-edb444d879.zip/node_modules/@trpc/next/",\
-          "packageDependencies": [\
-            ["@trpc/next", "npm:9.22.0"]\
-          ],\
-          "linkType": "SOFT"\
-        }],\
-        ["virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:9.22.0", {\
-          "packageLocation": "./.yarn/__virtual__/@trpc-next-virtual-809109dbd4/0/cache/@trpc-next-npm-9.22.0-a50debe36b-edb444d879.zip/node_modules/@trpc/next/",\
-          "packageDependencies": [\
-            ["@trpc/next", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:9.22.0"],\
-            ["@babel/runtime", "npm:7.17.9"],\
-            ["@trpc/client", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:9.22.0"],\
-            ["@trpc/react", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:9.22.0"],\
-            ["@trpc/server", "npm:9.22.0"],\
-            ["@types/next", null],\
-            ["@types/react", "npm:17.0.44"],\
-            ["@types/react-dom", null],\
-            ["@types/react-query", null],\
-            ["@types/trpc__client", null],\
-            ["@types/trpc__react", null],\
-            ["@types/trpc__server", null],\
-            ["next", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:12.1.4"],\
-            ["react", "npm:18.0.0"],\
-            ["react-dom", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:18.0.0"],\
-            ["react-query", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:3.35.0"],\
-            ["react-ssr-prepass", "virtual:809109dbd4e45f7b849f93de4d2db5e0021501bce015827aaed163c6c9a4b10086f02a6250fea9915f05069a41b3ff6baa29df813704f35785931dc62bd4bbcb#npm:1.5.0"]\
-          ],\
-          "packagePeers": [\
-            "@trpc/client",\
-            "@trpc/react",\
-            "@trpc/server",\
-            "@types/next",\
-            "@types/react-dom",\
-            "@types/react-query",\
-            "@types/react",\
-            "@types/trpc__client",\
-            "@types/trpc__react",\
-            "@types/trpc__server",\
-            "next",\
-            "react-dom",\
-            "react-query",\
-            "react"\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["@trpc/react", [\
-        ["npm:9.22.0", {\
-          "packageLocation": "./.yarn/cache/@trpc-react-npm-9.22.0-e74af61591-1125dcf988.zip/node_modules/@trpc/react/",\
-          "packageDependencies": [\
-            ["@trpc/react", "npm:9.22.0"]\
-          ],\
-          "linkType": "SOFT"\
-        }],\
-        ["virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:9.22.0", {\
-          "packageLocation": "./.yarn/__virtual__/@trpc-react-virtual-412ae7cc08/0/cache/@trpc-react-npm-9.22.0-e74af61591-1125dcf988.zip/node_modules/@trpc/react/",\
-          "packageDependencies": [\
-            ["@trpc/react", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:9.22.0"],\
-            ["@babel/runtime", "npm:7.17.9"],\
-            ["@trpc/client", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:9.22.0"],\
-            ["@trpc/server", "npm:9.22.0"],\
-            ["@types/react", "npm:17.0.44"],\
-            ["@types/react-dom", null],\
-            ["@types/react-query", null],\
-            ["@types/trpc__client", null],\
-            ["@types/trpc__server", null],\
-            ["react", "npm:18.0.0"],\
-            ["react-dom", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:18.0.0"],\
-            ["react-query", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:3.35.0"]\
-          ],\
-          "packagePeers": [\
-            "@trpc/client",\
-            "@trpc/server",\
-            "@types/react-dom",\
-            "@types/react-query",\
-            "@types/react",\
-            "@types/trpc__client",\
-            "@types/trpc__server",\
-            "react-dom",\
-            "react-query",\
-            "react"\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["@trpc/server", [\
-        ["npm:9.22.0", {\
-          "packageLocation": "./.yarn/cache/@trpc-server-npm-9.22.0-f6950c9b63-fcdae14621.zip/node_modules/@trpc/server/",\
-          "packageDependencies": [\
-            ["@trpc/server", "npm:9.22.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -5643,16 +5475,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["prisma", [\
-        ["npm:3.12.0", {\
-          "packageLocation": "./.yarn/unplugged/prisma-npm-3.12.0-13b5606a4b/node_modules/prisma/",\
-          "packageDependencies": [\
-            ["prisma", "npm:3.12.0"],\
-            ["@prisma/engines", "npm:3.12.0-37.22b822189f46ef0dc5c5b503368d1bee01213980"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["process-nextick-args", [\
         ["npm:2.0.1", {\
           "packageLocation": "./.yarn/cache/process-nextick-args-npm-2.0.1-b8d7971609-1d38588e52.zip/node_modules/process-nextick-args/",\
@@ -5954,28 +5776,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             "@types/react-dom",\
             "@types/react",\
             "react-dom",\
-            "react"\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["react-ssr-prepass", [\
-        ["npm:1.5.0", {\
-          "packageLocation": "./.yarn/cache/react-ssr-prepass-npm-1.5.0-c07b4142ee-efe89b9f8b.zip/node_modules/react-ssr-prepass/",\
-          "packageDependencies": [\
-            ["react-ssr-prepass", "npm:1.5.0"]\
-          ],\
-          "linkType": "SOFT"\
-        }],\
-        ["virtual:809109dbd4e45f7b849f93de4d2db5e0021501bce015827aaed163c6c9a4b10086f02a6250fea9915f05069a41b3ff6baa29df813704f35785931dc62bd4bbcb#npm:1.5.0", {\
-          "packageLocation": "./.yarn/__virtual__/react-ssr-prepass-virtual-3bd44379af/0/cache/react-ssr-prepass-npm-1.5.0-c07b4142ee-efe89b9f8b.zip/node_modules/react-ssr-prepass/",\
-          "packageDependencies": [\
-            ["react-ssr-prepass", "virtual:809109dbd4e45f7b849f93de4d2db5e0021501bce015827aaed163c6c9a4b10086f02a6250fea9915f05069a41b3ff6baa29df813704f35785931dc62bd4bbcb#npm:1.5.0"],\
-            ["@types/react", "npm:17.0.44"],\
-            ["react", "npm:18.0.0"]\
-          ],\
-          "packagePeers": [\
-            "@types/react",\
             "react"\
           ],\
           "linkType": "HARD"\

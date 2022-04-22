@@ -1,8 +1,10 @@
 import jwt from 'jsonwebtoken';
-import { prisma } from './prisma';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { setCookies } from 'cookies-next';
 import getBaseUrl from '~/utils/getBaseUrl';
+
+//Temp Substitute
+let prisma: any;
 
 const RT_SECRET = process.env.RT_SECRET;
 const AT_SECRET = process.env.AT_SECRET;
