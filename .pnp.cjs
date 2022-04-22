@@ -1124,7 +1124,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-dom", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:18.0.0"],\
             ["react-query", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:3.35.0"],\
             ["superjson", "npm:1.8.1"],\
-            ["tabler-icons-react", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:1.45.0"],\
+            ["tabler-icons-react", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:1.46.0"],\
             ["typescript", "patch:typescript@npm%3A4.4.4#~builtin<compat/typescript>::version=4.4.4&hash=bda367"],\
             ["zod", "npm:3.14.4"]\
           ],\
@@ -6833,17 +6833,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["tabler-icons-react", [\
-        ["npm:1.45.0", {\
-          "packageLocation": "./.yarn/cache/tabler-icons-react-npm-1.45.0-beb35f89d9-f527a2a10e.zip/node_modules/tabler-icons-react/",\
+        ["npm:1.46.0", {\
+          "packageLocation": "./.yarn/cache/tabler-icons-react-npm-1.46.0-0a0411e6d5-50d08ddf01.zip/node_modules/tabler-icons-react/",\
           "packageDependencies": [\
-            ["tabler-icons-react", "npm:1.45.0"]\
+            ["tabler-icons-react", "npm:1.46.0"]\
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:1.45.0", {\
-          "packageLocation": "./.yarn/__virtual__/tabler-icons-react-virtual-55f4b5893f/0/cache/tabler-icons-react-npm-1.45.0-beb35f89d9-f527a2a10e.zip/node_modules/tabler-icons-react/",\
+        ["virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:1.46.0", {\
+          "packageLocation": "./.yarn/__virtual__/tabler-icons-react-virtual-fd1e93983d/0/cache/tabler-icons-react-npm-1.46.0-0a0411e6d5-50d08ddf01.zip/node_modules/tabler-icons-react/",\
           "packageDependencies": [\
-            ["tabler-icons-react", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:1.45.0"],\
+            ["tabler-icons-react", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:1.46.0"],\
             ["@types/react", "npm:17.0.44"],\
             ["react", "npm:18.0.0"]\
           ],\

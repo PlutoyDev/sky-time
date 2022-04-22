@@ -33,7 +33,7 @@
     "react-dom": "^18.0.0",
     "react-query": "^3.27.0",
     "superjson": "^1.7.4",
-    "tabler-icons-react": "^1.45.0",
+    "tabler-icons-react": "^1.46.0",
     "zod": "^3.0.0"
   },
   "devDependencies": {

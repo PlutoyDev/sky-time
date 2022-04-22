@@ -691,7 +691,7 @@ __metadata:
     react-dom: ^18.0.0
     react-query: ^3.27.0
     superjson: ^1.7.4
-    tabler-icons-react: ^1.45.0
+    tabler-icons-react: ^1.46.0
     typescript: 4.4.4
     zod: ^3.0.0
   languageName: unknown
@@ -5592,12 +5592,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tabler-icons-react@npm:^1.45.0":
-  version: 1.45.0
-  resolution: "tabler-icons-react@npm:1.45.0"
+"tabler-icons-react@npm:^1.46.0":
+  version: 1.46.0
+  resolution: "tabler-icons-react@npm:1.46.0"
   peerDependencies:
     react: ">= 16.8.0"
-  checksum: f527a2a10e70f757ddecd0ad0644e99358f06004796b73cd0a7dac768ce1097e8fa1227b8a667060922cee8698508756a4ff0007d664da3b35e2ae7cdf2b0410
+  checksum: 50d08ddf019b7e578237671be618d06f7b0601ee9e0a77718ec467a1274f59d159bf0eee258d0b8f20fea98efec7fdcf31e3ac58d008dfa4260f4218f549cd14
   languageName: node
   linkType: hard
 
