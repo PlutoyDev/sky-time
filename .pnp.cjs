@@ -27,6 +27,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       {\
         "name": "@sky-time/server",\
         "reference": "workspace:packages/server"\
+      },\
+      {\
+        "name": "@sky-time/shared",\
+        "reference": "workspace:packages/shared"\
       }\
     ],\
     "enableTopLevelFallback": true,\
@@ -34,6 +38,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
     "fallbackExclusionList": [\
       ["@sky-time/client", ["workspace:packages/client"]],\
       ["@sky-time/server", ["workspace:packages/server"]],\
+      ["@sky-time/shared", ["workspace:packages/shared"]],\
       ["sky-time", ["workspace:."]]\
     ],\
     "fallbackPool": [\
@@ -1075,6 +1080,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@mantine/notifications", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:4.1.4"],\
             ["@prisma/client", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:3.12.0"],\
             ["@sky-time/server", "workspace:packages/server"],\
+            ["@sky-time/shared", "workspace:packages/shared"],\
             ["@types/jsonwebtoken", "npm:8.5.8"],\
             ["@types/node", "npm:17.0.25"],\
             ["@types/react", "npm:17.0.44"],\
@@ -1107,6 +1113,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@sky-time/server", "workspace:packages/server"],\
             ["@luvies/lazy", "npm:1.7.2"],\
+            ["@sky-time/shared", "workspace:packages/shared"],\
             ["@types/cookie-parser", "npm:1.4.2"],\
             ["@types/cors", "npm:2.8.12"],\
             ["@types/cron", "npm:1.7.3"],\
@@ -1124,6 +1131,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["ntl", "npm:5.1.0"],\
             ["tslib", "npm:2.3.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.3#~builtin<compat/typescript>::version=4.6.3&hash=bda367"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
+      ["@sky-time/shared", [\
+        ["workspace:packages/shared", {\
+          "packageLocation": "./packages/shared/",\
+          "packageDependencies": [\
+            ["@sky-time/shared", "workspace:packages/shared"]\
           ],\
           "linkType": "SOFT"\
         }]\

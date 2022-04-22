@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@luvies/lazy": "^1.7.2",
+    "@sky-time/shared": "workspace:^",
     "axios": "^0.26.1",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
