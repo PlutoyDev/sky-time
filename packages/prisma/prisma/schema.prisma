@@ -17,26 +17,32 @@ model Guild {
   webhook_ids     String[] @unique @db.ObjectId
   main_config_id  String?  @unique @db.ObjectId
   rept_config_ids String[] @unique @db.ObjectId
+  last_update     DateTime @default(now())
+  last_update_by  String?  @unique @db.ObjectId
 
-  users       User[]       @relation(fields: [user_ids], references: [id])
-  webhooks    Webhook[]
-  mainConfig  MainConfig?
-  reptConfigs ReptConfig[]
+  users        User[]       @relation("GuildMember", fields: [user_ids], references: [id])
+  webhooks     Webhook[]
+  mainConfig   MainConfig?
+  reptConfigs  ReptConfig[]
+  lastUpdateBy User?        @relation("LastUpdate", fields: [last_update_by], references: [id])
 }
 
 model User {
-  id            String   @id @map("_id") @db.ObjectId
-  guild_ids     String[] @db.ObjectId
-  username      String
-  discriminator String
-  avatar        String?
-  refresh_token String
-  access_token  String
-  expires_at    DateTime
+  id              String   @id @map("_id") @db.ObjectId
+  guild_ids       String[] @db.ObjectId
+  username        String
+  discriminator   String
+  avatar          String?
+  refresh_token   String
+  access_token    String
+  expires_at      DateTime
+  last_login      DateTime @default(now())
+  last_update_for String?  @db.ObjectId
 
   admin Boolean @default(false)
 
-  guild Guild[] @relation(fields: [guild_ids], references: [id])
+  guild         Guild[] @relation("GuildMember", fields: [guild_ids], references: [id])
+  lastUpdateFor Guild?  @relation("LastUpdate")
 }
 
 model Webhook {
@@ -45,7 +51,7 @@ model Webhook {
   guild_id    String      @db.ObjectId
   channel_id  String      @db.ObjectId
   message_ids String[]    @db.ObjectId
-  username    String[]
+  username    String?
   avatar_url  String[]
   mention_ids String[]
   type        WebhookType
