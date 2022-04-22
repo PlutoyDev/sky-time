@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import { prisma } from './prisma';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { setCookies } from 'cookies-next';
+import getBaseUrl from '~/utils/getBaseUrl';
 
 const RT_SECRET = process.env.RT_SECRET;
 const AT_SECRET = process.env.AT_SECRET;
@@ -51,6 +52,27 @@ export type AuthParams = {
 
   res: NextApiResponse;
 };
+
+export function generateAuthUrl(withBot: boolean) {
+  if (!process.env.DISCORD_CLIENT_ID) {
+    throw new Error('DISCORD_CLIENT_ID is not defined');
+  }
+
+  const scopeArray = ['identify', 'guilds.members.read'];
+  if (withBot) scopeArray.push('bot');
+
+  const scope = scopeArray.join(' ');
+
+  const param = {
+    client_id: process.env.DISCORD_CLIENT_ID,
+    redirect_uri: getBaseUrl() + '/api/auth/callback',
+    permissions: '536871936',
+    response_type: 'code',
+    scope,
+  };
+
+  return `https://discordapp.com/api/oauth2/authorize?${new URLSearchParams(param)}`;
+}
 
 export default async function authenticate(params: AuthParams) {
   const { guild_id, user_id, webhook_id, res } = params;
