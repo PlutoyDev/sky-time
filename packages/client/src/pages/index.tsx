@@ -1,9 +1,7 @@
-import { trpc } from '../libs/trpc/client';
-import { NextPageWithLayout } from './_app';
-import Link from 'next/link';
+import Custom404 from './404';
 
-const IndexPage: NextPageWithLayout = () => {
-  return <div></div>
-};
+function IndexPage() {
+  return Custom404();
+}
 
 export default IndexPage;
