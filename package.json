@@ -10,7 +10,7 @@
     "wntl": "yarn workspace $(yarn wname | ipt | tr -d '\"') ntl",
     "client": "yarn workspace @sky-time/client",
     "server": "yarn workspace @sky-time/server",
-    "prisma": "yarn workspace @sky-time/prisma"
+    "shared": "yarn workspace @sky-time/shared"
   },
   "workspaces": [
     "packages/*"

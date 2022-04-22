@@ -662,7 +662,6 @@ __metadata:
     "@mantine/next": ^4.1.4
     "@mantine/notifications": ^4.1.4
     "@prisma/client": ^3.12.0
-    "@sky-time/server": ^0.1.0
     "@sky-time/shared": "workspace:^"
     "@types/jsonwebtoken": ^8
     "@types/node": ^17.0.10
@@ -689,7 +688,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@sky-time/server@^0.1.0, @sky-time/server@workspace:packages/server":
+"@sky-time/server@workspace:packages/server":
   version: 0.0.0-use.local
   resolution: "@sky-time/server@workspace:packages/server"
   dependencies:
@@ -718,6 +717,8 @@ __metadata:
 "@sky-time/shared@workspace:^, @sky-time/shared@workspace:packages/shared":
   version: 0.0.0-use.local
   resolution: "@sky-time/shared@workspace:packages/shared"
+  dependencies:
+    typescript: ^4.6.3
   languageName: unknown
   linkType: soft
 
