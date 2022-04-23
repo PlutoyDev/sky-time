@@ -1143,6 +1143,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["date-fns", "npm:2.28.0"],\
             ["date-fns-tz", "virtual:b3c635208145f9eb80cbb9b3f1c647b0c52c7db25d2c817728f09076be103ed754b33987259c2519d1833ca3e2a8ffa3070de71af686e3a4d37315636f066b72#npm:1.3.3"],\
             ["mongoose", "npm:6.3.1"],\
+            ["mongoose-autopopulate", "virtual:b3c635208145f9eb80cbb9b3f1c647b0c52c7db25d2c817728f09076be103ed754b33987259c2519d1833ca3e2a8ffa3070de71af686e3a4d37315636f066b72#npm:0.16.1"],\
+            ["tslib", "npm:2.4.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.3#~builtin<compat/typescript>::version=4.6.3&hash=bda367"]\
           ],\
           "linkType": "SOFT"\
@@ -4988,6 +4990,28 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["mongoose-autopopulate", [\
+        ["npm:0.16.1", {\
+          "packageLocation": "./.yarn/cache/mongoose-autopopulate-npm-0.16.1-03c5d1e0cc-13074bbe72.zip/node_modules/mongoose-autopopulate/",\
+          "packageDependencies": [\
+            ["mongoose-autopopulate", "npm:0.16.1"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:b3c635208145f9eb80cbb9b3f1c647b0c52c7db25d2c817728f09076be103ed754b33987259c2519d1833ca3e2a8ffa3070de71af686e3a4d37315636f066b72#npm:0.16.1", {\
+          "packageLocation": "./.yarn/__virtual__/mongoose-autopopulate-virtual-907913429e/0/cache/mongoose-autopopulate-npm-0.16.1-03c5d1e0cc-13074bbe72.zip/node_modules/mongoose-autopopulate/",\
+          "packageDependencies": [\
+            ["mongoose-autopopulate", "virtual:b3c635208145f9eb80cbb9b3f1c647b0c52c7db25d2c817728f09076be103ed754b33987259c2519d1833ca3e2a8ffa3070de71af686e3a4d37315636f066b72#npm:0.16.1"],\
+            ["@types/mongoose", null],\
+            ["mongoose", "npm:6.3.1"]\
+          ],\
+          "packagePeers": [\
+            "@types/mongoose",\
+            "mongoose"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["mpath", [\
         ["npm:0.8.4", {\
           "packageLocation": "./.yarn/cache/mpath-npm-0.8.4-52eedb1889-06ad1d4437.zip/node_modules/mpath/",\
@@ -7032,6 +7056,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/tslib-npm-2.3.1-0e21e18015-de17a98d46.zip/node_modules/tslib/",\
           "packageDependencies": [\
             ["tslib", "npm:2.3.1"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:2.4.0", {\
+          "packageLocation": "./.yarn/cache/tslib-npm-2.4.0-9cb6dc5030-8c4aa6a3c5.zip/node_modules/tslib/",\
+          "packageDependencies": [\
+            ["tslib", "npm:2.4.0"]\
           ],\
           "linkType": "HARD"\
         }]\
