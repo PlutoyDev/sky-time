@@ -2,9 +2,7 @@ import jwt from 'jsonwebtoken';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { setCookies } from 'cookies-next';
 import getBaseUrl from '~/utils/getBaseUrl';
-
-//Temp Substitute
-let prisma: any;
+import { connectDb, Guild, User, Webhook } from '@sky-time/shared';
 
 const RT_SECRET = process.env.RT_SECRET;
 const AT_SECRET = process.env.AT_SECRET;
@@ -31,7 +29,7 @@ export const verifyRefreshToken = (token: string) =>
 export const verifyAccessToken = (token: string) =>
   jwt.verify(token, AT_SECRET) as AccessTokenPayload & { iat: number };
 
-//Plutoy(Me, the Developer) and Clement(the Founder of Sky Infographics Discord Server) will have permenant access to admin console.
+//Plutoy(Me, the Developer) and Clement(the Founder of Sky Info-graphics Discord Server) will have permanent access to admin console.
 //Will not change :P
 const HARDCODED_ADMIN_ID = ['702740689846272002', '693802004018888714'].concat(
   ...(process.env.HARDCODED_ADMIN_ID?.split(',') ?? []),
@@ -79,9 +77,9 @@ export function generateAuthUrl(withBot: boolean) {
 export default async function authenticate(params: AuthParams) {
   const { guild_id, user_id, webhook_id, res } = params;
 
-  let user = user_id && (await prisma.user.findUnique({ where: { id: user_id } }));
-  let guild = guild_id && (await prisma.guild.findUnique({ where: { id: guild_id } }));
-  let webhook = webhook_id && (await prisma.webhook.findUnique({ where: { id: webhook_id } }));
+  let user = user_id && (await User.findById(user_id));
+  let guild = guild_id && (await Guild.findById(guild_id));
+  let webhook = webhook_id && (await Webhook.findById(webhook_id));
 
   if (user_id && !user) {
     const { username, discriminator, avatar, refresh_token, access_token, expires_at } = params;
@@ -90,33 +88,30 @@ export default async function authenticate(params: AuthParams) {
 
     const admin = HARDCODED_ADMIN_ID.includes(user_id);
 
-    const userData = { id: user_id, username, discriminator, avatar, refresh_token, access_token, expires_at, admin };
+    const userData = {
+      _id: user_id,
+      guild_ids: [guild_id],
+      username,
+      discriminator,
+      avatar,
+      refresh_token,
+      access_token,
+      expires_at,
+      admin,
+    };
 
-    user = await prisma.user.create({ data: userData });
+    user = await User.create(userData);
   }
 
   if (guild_id && !guild) {
-    guild = await prisma.guild.create({
-      data: {
-        id: guild_id,
-        users: user ? { connect: user } : undefined,
-      },
-    });
+    guild = await Guild.create({ _id: guild_id });
   }
 
   if (webhook_id && !webhook) {
     const { channel_id, webhook_token } = params;
     if (!guild_id || !channel_id || !webhook_token) throw new Error('Missing parameters for creating webhook');
 
-    webhook = await prisma.webhook.create({
-      data: {
-        id: webhook_id,
-        channel_id,
-        token: webhook_token,
-        type: 'TIMESTAMP',
-        guild: { connect: { id: guild_id } },
-      },
-    });
+    webhook = await Webhook.create({ _id: webhook_id, channel_id, webhook_token });
   }
 
   const refresh_token = genRefreshToken({ guild_id, user_id });

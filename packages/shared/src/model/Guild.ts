@@ -1,7 +1,14 @@
-import mongoose from 'mongoose';
-import { autoPopField, timestampMap } from './pre';
+import { Schema } from 'mongoose';
+import { autoPopField, timestamps, createModel } from './libs';
 
-export const guildSchema = new mongoose.Schema(
+export interface IGuild {
+  _id: string;
+  name: string;
+  user_ids: string[];
+  webhook_ids: string[];
+}
+
+export const guildSchema = new Schema<IGuild>(
   {
     _id: String,
     name: String,
@@ -9,8 +16,8 @@ export const guildSchema = new mongoose.Schema(
     webhook_ids: [autoPopField(String, 'Webhook')],
   },
   {
-    timestamps: timestampMap,
+    timestamps,
   },
 );
 
-export const Guild = mongoose.model('Guild', guildSchema);
+export const Guild = createModel('Guild', guildSchema);

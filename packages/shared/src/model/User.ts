@@ -1,7 +1,20 @@
-import mongoose from 'mongoose';
-import { autoPopField, timestampMap } from './pre';
+import { Schema } from 'mongoose';
+import { autoPopField, createModel, timestamps } from './libs';
 
-export const userSchema = new mongoose.Schema(
+export interface IUser {
+  _id: string;
+  guild_ids: string[];
+  username: string;
+  discriminator: string;
+  avatar: string;
+  refresh_token: string;
+  access_token: string;
+  expires_at: Date;
+  admin: boolean;
+  last_login: Date;
+}
+
+export const userSchema = new Schema<IUser>(
   {
     _id: String,
     guild_ids: [autoPopField(String, 'Guild')],
@@ -18,8 +31,8 @@ export const userSchema = new mongoose.Schema(
     },
   },
   {
-    timestamps: timestampMap,
+    timestamps,
   },
 );
 
-export const User = mongoose.model('User', userSchema);
+export const User = createModel('User', userSchema);

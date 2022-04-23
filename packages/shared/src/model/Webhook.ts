@@ -1,7 +1,14 @@
-import mongoose from 'mongoose';
-import { autoPopField, timestampMap } from './pre';
+import { Schema } from 'mongoose';
+import { autoPopField, createModel, timestamps } from './libs';
 
-export const webhookSchema = new mongoose.Schema(
+export interface IWebhook {
+  _id: string;
+  token: string;
+  guild_id: string;
+  channel_id: string;
+}
+
+export const webhookSchema = new Schema<IWebhook>(
   {
     _id: String,
     token: String,
@@ -9,8 +16,8 @@ export const webhookSchema = new mongoose.Schema(
     channel_id: String,
   },
   {
-    timestamps: timestampMap,
+    timestamps,
   },
 );
 
-export const Webhook = mongoose.model('Webhook', webhookSchema);
+export const Webhook = createModel('Webhook', webhookSchema);
