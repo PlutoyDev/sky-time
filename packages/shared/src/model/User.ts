@@ -1,38 +1,65 @@
 import { Schema } from 'mongoose';
-import { autoPopField, createModel, timestamps } from './libs';
+import { autoPopField, createModel, timestamps, Base } from './libs';
 
-export interface IUser {
+export interface IUser extends Base {
   _id: string;
-  guild_ids: string[];
   username: string;
   discriminator: string;
-  avatar: string;
+  guild_ids: string[];
+  last_login: Date;
+  avatar: string | undefined;
   refresh_token: string;
   access_token: string;
   expires_at: Date;
-  admin: boolean;
-  last_login: Date;
+
+  //Virtual
+  _discriminator: number;
 }
 
-export const userSchema = new Schema<IUser>(
-  {
-    _id: String,
-    guild_ids: [autoPopField(String, 'Guild')],
-    username: String,
-    discriminator: String,
-    avatar: String,
-    refresh_token: String,
-    access_token: String,
-    expires_at: Date,
-    admin: Boolean,
-    last_login: {
-      type: Date,
-      default: Date.now,
+export const userSchema = new Schema<IUser>({
+  _id: String,
+  username: {
+    type: String,
+    required: true,
+  },
+  discriminator: {
+    type: String,
+    required: true,
+  },
+  guild_ids: [
+    {
+      type: String,
+      ref: 'Guild',
+      autopopulate: true,
     },
+  ],
+  last_login: {
+    type: Date,
+    default: Date.now,
+    required: true,
   },
-  {
-    timestamps,
+
+  refresh_token: {
+    type: String,
+    required: true,
   },
-);
+  access_token: {
+    type: String,
+    required: true,
+  },
+  expires_at: {
+    type: Date,
+    required: true,
+  },
+});
+
+userSchema
+  .virtual('_discriminator')
+  .get(function (this: IUser) {
+    return parseInt(this.discriminator);
+  })
+  .set(function (this: IUser, value: number) {
+    this.discriminator = value.toString();
+  });
 
 export const User = createModel('User', userSchema);
