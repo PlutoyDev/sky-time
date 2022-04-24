@@ -1,5 +1,4 @@
-import { timeFormatter, formatter } from '../messages/time/main';
-import { ITimeConfig } from '../model/TimeConfig';
+import { timeFormatter, formatter } from '../../../messages/time/main';
 
 describe('timeFormatter', () => {
   const unixTime = 1598486400;
