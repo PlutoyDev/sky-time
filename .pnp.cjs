@@ -1093,7 +1093,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["discord-api-types", "npm:0.31.2"],\
             ["dotenv", "npm:16.0.0"],\
             ["jsonwebtoken", "npm:8.5.1"],\
-            ["mongoose", "npm:6.3.1"],\
+            ["mongoose", "npm:6.3.0"],\
             ["mongoose-autopopulate", "virtual:b3c635208145f9eb80cbb9b3f1c647b0c52c7db25d2c817728f09076be103ed754b33987259c2519d1833ca3e2a8ffa3070de71af686e3a4d37315636f066b72#npm:0.16.1"],\
             ["next", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:12.1.4"],\
             ["npm-run-all", "npm:4.1.5"],\
@@ -1105,6 +1105,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["superjson", "npm:1.8.1"],\
             ["tabler-icons-react", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:1.46.0"],\
             ["tslib", "npm:2.4.0"],\
+            ["typegoose", "virtual:b3c635208145f9eb80cbb9b3f1c647b0c52c7db25d2c817728f09076be103ed754b33987259c2519d1833ca3e2a8ffa3070de71af686e3a4d37315636f066b72#npm:5.9.1"],\
             ["typescript", "patch:typescript@npm%3A4.4.4#~builtin<compat/typescript>::version=4.4.4&hash=bda367"],\
             ["zod", "npm:3.14.4"]\
           ],\
@@ -1147,10 +1148,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:17.0.25"],\
             ["date-fns", "npm:2.28.0"],\
             ["date-fns-tz", "virtual:b3c635208145f9eb80cbb9b3f1c647b0c52c7db25d2c817728f09076be103ed754b33987259c2519d1833ca3e2a8ffa3070de71af686e3a4d37315636f066b72#npm:1.3.3"],\
-            ["mongoose", "npm:6.3.1"],\
+            ["mongoose", "npm:6.3.0"],\
             ["mongoose-autopopulate", "virtual:b3c635208145f9eb80cbb9b3f1c647b0c52c7db25d2c817728f09076be103ed754b33987259c2519d1833ca3e2a8ffa3070de71af686e3a4d37315636f066b72#npm:0.16.1"],\
             ["ntl", "npm:5.1.0"],\
             ["tslib", "npm:2.4.0"],\
+            ["typegoose", "virtual:b3c635208145f9eb80cbb9b3f1c647b0c52c7db25d2c817728f09076be103ed754b33987259c2519d1833ca3e2a8ffa3070de71af686e3a4d37315636f066b72#npm:5.9.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.3#~builtin<compat/typescript>::version=4.6.3&hash=bda367"]\
           ],\
           "linkType": "SOFT"\
@@ -4981,10 +4983,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["mongoose", [\
-        ["npm:6.3.1", {\
-          "packageLocation": "./.yarn/cache/mongoose-npm-6.3.1-dc057e5e41-5a9da91a79.zip/node_modules/mongoose/",\
+        ["npm:6.3.0", {\
+          "packageLocation": "./.yarn/cache/mongoose-npm-6.3.0-04a666a998-b5e239f76e.zip/node_modules/mongoose/",\
           "packageDependencies": [\
-            ["mongoose", "npm:6.3.1"],\
+            ["mongoose", "npm:6.3.0"],\
             ["bson", "npm:4.6.3"],\
             ["kareem", "npm:2.3.5"],\
             ["mongodb", "npm:4.5.0"],\
@@ -5009,7 +5011,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["mongoose-autopopulate", "virtual:b3c635208145f9eb80cbb9b3f1c647b0c52c7db25d2c817728f09076be103ed754b33987259c2519d1833ca3e2a8ffa3070de71af686e3a4d37315636f066b72#npm:0.16.1"],\
             ["@types/mongoose", null],\
-            ["mongoose", "npm:6.3.1"]\
+            ["mongoose", "npm:6.3.0"]\
           ],\
           "packagePeers": [\
             "@types/mongoose",\
@@ -6111,6 +6113,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["reflect-metadata", [\
+        ["npm:0.1.13", {\
+          "packageLocation": "./.yarn/cache/reflect-metadata-npm-0.1.13-c525998e20-798d379a7b.zip/node_modules/reflect-metadata/",\
+          "packageDependencies": [\
+            ["reflect-metadata", "npm:0.1.13"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["regenerator-runtime", [\
         ["npm:0.13.9", {\
           "packageLocation": "./.yarn/cache/regenerator-runtime-npm-0.13.9-6d02340eec-65ed455fe5.zip/node_modules/regenerator-runtime/",\
@@ -7131,6 +7142,29 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["typedarray-to-buffer", "npm:3.1.5"],\
             ["is-typedarray", "npm:1.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["typegoose", [\
+        ["npm:5.9.1", {\
+          "packageLocation": "./.yarn/cache/typegoose-npm-5.9.1-ce38de342d-e3ad3a19b0.zip/node_modules/typegoose/",\
+          "packageDependencies": [\
+            ["typegoose", "npm:5.9.1"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:b3c635208145f9eb80cbb9b3f1c647b0c52c7db25d2c817728f09076be103ed754b33987259c2519d1833ca3e2a8ffa3070de71af686e3a4d37315636f066b72#npm:5.9.1", {\
+          "packageLocation": "./.yarn/__virtual__/typegoose-virtual-90d1b79f5c/0/cache/typegoose-npm-5.9.1-ce38de342d-e3ad3a19b0.zip/node_modules/typegoose/",\
+          "packageDependencies": [\
+            ["typegoose", "virtual:b3c635208145f9eb80cbb9b3f1c647b0c52c7db25d2c817728f09076be103ed754b33987259c2519d1833ca3e2a8ffa3070de71af686e3a4d37315636f066b72#npm:5.9.1"],\
+            ["@types/mongoose", null],\
+            ["mongoose", "npm:6.3.0"],\
+            ["reflect-metadata", "npm:0.1.13"]\
+          ],\
+          "packagePeers": [\
+            "@types/mongoose",\
+            "mongoose"\
           ],\
           "linkType": "HARD"\
         }]\
