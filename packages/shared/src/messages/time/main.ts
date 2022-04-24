@@ -1,4 +1,5 @@
 export function timeFormatter(format: string, unix: number) {
+  return format.replaceAll(/%([tTdDfFR]?)/g, (match, f) => `<t:${unix}` + (f ? `:${f}>` : '>'));
 }
 
 export function formatter<
