@@ -7,7 +7,7 @@ const tsPivotNum = 52;
 
 const mainStrings = [
   ['title_main', '⏰ **__Main game Timestamps__**'],
-  ['label_last_update', 'Last Updated:'],
+  ['label_last_update', 'Last Updated: '],
   ['label_daily_reset', 'Daily Reset: '],
   ['label_eden_reset', 'Eden Reset: '],
   ['title_traveling_spirit', '__Traveling Spirit__'],
@@ -17,17 +17,23 @@ const mainStrings = [
 
 const mainEnables = [
   ['show_last_update', true],
-  ['show_traveling_spirit_number', true],
   ['show_promotion', true],
 ] as const;
 
 const mainFormats = [
   ['last_update', '%t (%R)'],
-  ['daily_reset', '%f (%R)'],
-  ['eden_reset', '%f (%R)'],
-  ['traveling_spirit_arrival', '%f (%R)'],
-  ['traveling_spirit_departure', '%f (%R)'],
+  ['daily_reset', '% (%R)'],
+  ['eden_reset', '% (%R)'],
+  ['traveling_spirit_arrival', '% (%R)'],
+  ['traveling_spirit_departure', '% (%R)'],
 ] as const;
+
+export type MainConfig = {
+  strings: Partial<Record<typeof mainStrings[number][0], string>>;
+  enables: Partial<Record<typeof mainEnables[number][0], boolean>>;
+  formats: Partial<Record<typeof mainFormats[number][0], string>>;
+};
+
 export function timeFormatter(format: string, unix: number) {
   return format.replaceAll(/%([tTdDfFR]?)/g, (match, f) => `<t:${unix}` + (f ? `:${f}>` : '>'));
 }
@@ -128,4 +134,39 @@ export function calculateUnixes(currentTime: number): Record<typeof mainFormats[
     traveling_spirit_arrival: skyToUnix(traveling_spirit_arrival),
     traveling_spirit_departure: skyToUnix(traveling_spirit_departure),
   };
+}
+
+export function main(config: MainConfig, currentTime: number): string {
+  const strings = Object.fromEntries(
+    mainStrings.map(([key, defaults]) => [key, config.strings[key] ?? defaults]),
+  ) as Record<typeof mainStrings[number][0], string>;
+
+  const enables = Object.fromEntries(
+    mainEnables.map(([key, defaults]) => [key, config.enables[key] ?? defaults]),
+  ) as Record<typeof mainEnables[number][0], boolean>;
+
+  const formats = Object.fromEntries(
+    mainFormats.map(([key, defaults]) => [key, config.formats[key] ?? defaults]),
+  ) as Record<typeof mainFormats[number][0], string>;
+
+  const unixes = calculateUnixes(currentTime);
+
+  const generator = generateMessage(unixes, strings, formats);
+
+  let message = generator`${'title_main'}`;
+
+  if (enables.show_last_update) {
+    message += generator` ${'label_last_update'}${'last_update'}`;
+  }
+
+  message += generator`
+
+${'label_daily_reset'}${'daily_reset'}
+${'label_eden_reset'}${'eden_reset'}
+
+${'title_traveling_spirit'}
+${'label_traveling_spirit_arrival'}${'traveling_spirit_arrival'}
+${'label_traveling_spirit_departure'}${'traveling_spirit_departure'}`;
+
+  return message;
 }
