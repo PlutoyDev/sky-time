@@ -1770,38 +1770,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["@prisma/client", [\
-        ["npm:3.12.0", {\
-          "packageLocation": "./.yarn/unplugged/@prisma-client-virtual-d650d85bdf/node_modules/@prisma/client/",\
-          "packageDependencies": [\
-            ["@prisma/client", "npm:3.12.0"]\
-          ],\
-          "linkType": "SOFT"\
-        }],\
-        ["virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:3.12.0", {\
-          "packageLocation": "./.yarn/unplugged/@prisma-client-virtual-d650d85bdf/node_modules/@prisma/client/",\
-          "packageDependencies": [\
-            ["@prisma/client", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:3.12.0"],\
-            ["@prisma/engines-version", "npm:3.12.0-37.22b822189f46ef0dc5c5b503368d1bee01213980"],\
-            ["@types/prisma", null],\
-            ["prisma", null]\
-          ],\
-          "packagePeers": [\
-            "@types/prisma",\
-            "prisma"\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["@prisma/engines-version", [\
-        ["npm:3.12.0-37.22b822189f46ef0dc5c5b503368d1bee01213980", {\
-          "packageLocation": "./.yarn/cache/@prisma-engines-version-npm-3.12.0-37.22b822189f46ef0dc5c5b503368d1bee01213980-1fb3805f07-e69f48def4.zip/node_modules/@prisma/engines-version/",\
-          "packageDependencies": [\
-            ["@prisma/engines-version", "npm:3.12.0-37.22b822189f46ef0dc5c5b503368d1bee01213980"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["@radix-ui/number", [\
         ["npm:0.1.0", {\
           "packageLocation": "./.yarn/cache/@radix-ui-number-npm-0.1.0-81f64d01fa-6d4efbf915.zip/node_modules/@radix-ui/number/",\
@@ -2089,7 +2057,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@mantine/hooks", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:4.1.4"],\
             ["@mantine/next", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:4.1.4"],\
             ["@mantine/notifications", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:4.1.4"],\
-            ["@prisma/client", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:3.12.0"],\
             ["@sky-time/shared", "workspace:packages/shared"],\
             ["@types/jsonwebtoken", "npm:8.5.8"],\
             ["@types/node", "npm:17.0.25"],\
