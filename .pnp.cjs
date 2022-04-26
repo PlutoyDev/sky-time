@@ -2051,6 +2051,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/client/",\
           "packageDependencies": [\
             ["@sky-time/client", "workspace:packages/client"],\
+            ["@luvies/lazy", "npm:1.7.2"],\
             ["@mantine/core", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:4.1.4"],\
             ["@mantine/dates", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:4.1.4"],\
             ["@mantine/form", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:4.1.4"],\
@@ -2122,6 +2123,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/shared/",\
           "packageDependencies": [\
             ["@sky-time/shared", "workspace:packages/shared"],\
+            ["@luvies/lazy", "npm:1.7.2"],\
             ["@types/jest", "npm:27.4.1"],\
             ["@types/node", "npm:17.0.25"],\
             ["date-fns", "npm:2.28.0"],\
