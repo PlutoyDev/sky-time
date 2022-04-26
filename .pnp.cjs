@@ -50,6 +50,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@types/jest", "npm:27.4.1"],\
             ["@types/node", "npm:17.0.25"],\
+            ["@yarnpkg/pnpify", "npm:4.0.0-rc.2"],\
             ["concurrently", "npm:7.1.0"],\
             ["ipt", "npm:3.2.0"],\
             ["jest", "virtual:b5def7bccb107b1d7a0bdb42e64006911494524f09bffdfe7ec5eee019215b5a7b9101da645e91a33438c0185b52f2b9c8f0b762047390328035b99d26eb2d56#npm:27.5.1"],\
@@ -2101,6 +2102,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/cors", "npm:2.8.12"],\
             ["@types/cron", "npm:1.7.3"],\
             ["@types/express", "npm:4.17.13"],\
+            ["@yarnpkg/pnpify", "npm:4.0.0-rc.2"],\
             ["axios", "npm:0.26.1"],\
             ["cookie-parser", "npm:1.4.6"],\
             ["cors", "npm:2.8.5"],\
@@ -2126,6 +2128,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@luvies/lazy", "npm:1.7.2"],\
             ["@types/jest", "npm:27.4.1"],\
             ["@types/node", "npm:17.0.25"],\
+            ["@yarnpkg/pnpify", "npm:4.0.0-rc.2"],\
             ["date-fns", "npm:2.28.0"],\
             ["date-fns-tz", "virtual:b3c635208145f9eb80cbb9b3f1c647b0c52c7db25d2c817728f09076be103ed754b33987259c2519d1833ca3e2a8ffa3070de71af686e3a4d37315636f066b72#npm:1.3.3"],\
             ["jest", "virtual:b5def7bccb107b1d7a0bdb42e64006911494524f09bffdfe7ec5eee019215b5a7b9101da645e91a33438c0185b52f2b9c8f0b762047390328035b99d26eb2d56#npm:27.5.1"],\
@@ -9280,6 +9283,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["sky-time", "workspace:."],\
             ["@types/jest", "npm:27.4.1"],\
             ["@types/node", "npm:17.0.25"],\
+            ["@yarnpkg/pnpify", "npm:4.0.0-rc.2"],\
             ["concurrently", "npm:7.1.0"],\
             ["ipt", "npm:3.2.0"],\
             ["jest", "virtual:b5def7bccb107b1d7a0bdb42e64006911494524f09bffdfe7ec5eee019215b5a7b9101da645e91a33438c0185b52f2b9c8f0b762047390328035b99d26eb2d56#npm:27.5.1"],\

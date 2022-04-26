@@ -13,6 +13,7 @@
   },
   "devDependencies": {
     "@types/jest": "^27.4.1",
+    "@yarnpkg/pnpify": "^4.0.0-rc.2",
     "jest": "^27.5.1",
     "ntl": "^5.1.0",
     "ts-jest": "^27.1.4",
