@@ -1,5 +1,5 @@
 import { Schema } from 'mongoose';
-import { autoPopField, createModel, timestamps, Base } from './libs';
+import { createModel, Base } from './libs';
 
 export interface IUser extends Base {
   _id: string;
@@ -30,7 +30,6 @@ export const userSchema = new Schema<IUser>({
     {
       type: String,
       ref: 'Guild',
-      autopopulate: true,
     },
   ],
   last_login: {

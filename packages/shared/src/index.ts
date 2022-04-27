@@ -1,2 +1,2 @@
 export * from './connect';
-export * as Modal from './model';
+export * as Model from './model';

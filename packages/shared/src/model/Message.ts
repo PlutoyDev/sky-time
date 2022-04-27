@@ -31,7 +31,6 @@ export const MessageSchema = new Schema<IMessage>(
       type: String,
       required: true,
       ref: 'Webhook',
-      autopopulate: true,
     },
   },
   schemaOptions,

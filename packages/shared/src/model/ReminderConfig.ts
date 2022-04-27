@@ -21,13 +21,11 @@ export const ReminderConfigSchema = new Schema<IReminderConfig>(
       type: String,
       required: true,
       ref: 'Webhook',
-      autopopulate: true,
     },
     guild_id: {
       type: String,
       required: true,
       ref: 'Guild',
-      autopopulate: true,
     },
     strings: {
       type: Map,

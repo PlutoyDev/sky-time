@@ -21,7 +21,6 @@ export const TimeConfigSchema = new Schema<ITimeConfig>(
     guild_id: {
       type: String,
       ref: 'Guild',
-      autopopulate: true,
     },
     type: {
       type: String,

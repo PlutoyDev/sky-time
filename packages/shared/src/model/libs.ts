@@ -1,9 +1,4 @@
-import { plugin, Schema, model, models, Model, Types } from 'mongoose';
-import autoPopulate from 'mongoose-autopopulate';
-
-plugin(autoPopulate);
-
-const autoPopField = <T>(type: T, ref: string, required = false) => ({ type, ref, required, autopopulate: true });
+import { Schema, model, models, Model, SchemaOptions } from 'mongoose';
 
 const timestamps = {
   createdAt: 'created_at',
@@ -26,4 +21,4 @@ export function createModel<TSchema extends Schema<any>, TData = TSchema extends
   return models[name] ?? model(name, schema);
 }
 
-export { autoPopField, timestamps, schemaOptions };
+export { timestamps, schemaOptions };

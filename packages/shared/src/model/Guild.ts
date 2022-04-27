@@ -19,40 +19,34 @@ export const GuildSchema = new Schema<IGuild>(
       {
         type: String,
         ref: 'User',
-        autopopulate: true,
       },
     ],
     webhook_ids: [
       {
         type: String,
         ref: 'Webhook',
-        autopopulate: true,
       },
     ],
     time_config_ids: [
       {
         type: String,
         ref: 'TimeConfig',
-        autopopulate: true,
       },
     ],
     reminder_config_ids: [
       {
         type: String,
         ref: 'ReminderConfig',
-        autopopulate: true,
       },
     ],
     info_config_id: {
       type: String,
       ref: 'InfoConfig',
-      autopopulate: true,
     },
     log_ids: [
       {
         type: String,
         ref: 'Log',
-        autopopulate: true,
       },
     ],
   },

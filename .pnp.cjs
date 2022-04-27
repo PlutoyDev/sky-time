@@ -2074,7 +2074,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["dotenv", "npm:16.0.0"],\
             ["jsonwebtoken", "npm:8.5.1"],\
             ["mongoose", "npm:6.3.1"],\
-            ["mongoose-autopopulate", "virtual:b3c635208145f9eb80cbb9b3f1c647b0c52c7db25d2c817728f09076be103ed754b33987259c2519d1833ca3e2a8ffa3070de71af686e3a4d37315636f066b72#npm:0.16.1"],\
             ["next", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:12.1.4"],\
             ["npm-run-all", "npm:4.1.5"],\
             ["ntl", "npm:5.1.0"],\
@@ -2133,7 +2132,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["date-fns-tz", "virtual:b3c635208145f9eb80cbb9b3f1c647b0c52c7db25d2c817728f09076be103ed754b33987259c2519d1833ca3e2a8ffa3070de71af686e3a4d37315636f066b72#npm:1.3.3"],\
             ["jest", "virtual:b5def7bccb107b1d7a0bdb42e64006911494524f09bffdfe7ec5eee019215b5a7b9101da645e91a33438c0185b52f2b9c8f0b762047390328035b99d26eb2d56#npm:27.5.1"],\
             ["mongoose", "npm:6.3.1"],\
-            ["mongoose-autopopulate", "virtual:b3c635208145f9eb80cbb9b3f1c647b0c52c7db25d2c817728f09076be103ed754b33987259c2519d1833ca3e2a8ffa3070de71af686e3a4d37315636f066b72#npm:0.16.1"],\
             ["ntl", "npm:5.1.0"],\
             ["ts-jest", "virtual:b5def7bccb107b1d7a0bdb42e64006911494524f09bffdfe7ec5eee019215b5a7b9101da645e91a33438c0185b52f2b9c8f0b762047390328035b99d26eb2d56#npm:27.1.4"],\
             ["ts-node", "virtual:b5def7bccb107b1d7a0bdb42e64006911494524f09bffdfe7ec5eee019215b5a7b9101da645e91a33438c0185b52f2b9c8f0b762047390328035b99d26eb2d56#npm:10.7.0"],\
@@ -7563,28 +7561,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["mquery", "npm:4.0.2"],\
             ["ms", "npm:2.1.3"],\
             ["sift", "npm:16.0.0"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["mongoose-autopopulate", [\
-        ["npm:0.16.1", {\
-          "packageLocation": "./.yarn/cache/mongoose-autopopulate-npm-0.16.1-03c5d1e0cc-13074bbe72.zip/node_modules/mongoose-autopopulate/",\
-          "packageDependencies": [\
-            ["mongoose-autopopulate", "npm:0.16.1"]\
-          ],\
-          "linkType": "SOFT"\
-        }],\
-        ["virtual:b3c635208145f9eb80cbb9b3f1c647b0c52c7db25d2c817728f09076be103ed754b33987259c2519d1833ca3e2a8ffa3070de71af686e3a4d37315636f066b72#npm:0.16.1", {\
-          "packageLocation": "./.yarn/__virtual__/mongoose-autopopulate-virtual-907913429e/0/cache/mongoose-autopopulate-npm-0.16.1-03c5d1e0cc-13074bbe72.zip/node_modules/mongoose-autopopulate/",\
-          "packageDependencies": [\
-            ["mongoose-autopopulate", "virtual:b3c635208145f9eb80cbb9b3f1c647b0c52c7db25d2c817728f09076be103ed754b33987259c2519d1833ca3e2a8ffa3070de71af686e3a4d37315636f066b72#npm:0.16.1"],\
-            ["@types/mongoose", null],\
-            ["mongoose", "npm:6.3.1"]\
-          ],\
-          "packagePeers": [\
-            "@types/mongoose",\
-            "mongoose"\
           ],\
           "linkType": "HARD"\
         }]\

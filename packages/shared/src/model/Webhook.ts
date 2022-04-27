@@ -21,13 +21,11 @@ export const WebhookSchema = new Schema<IWebhook>(
       {
         type: String,
         ref: 'Message',
-        autopopulate: true,
       },
     ],
     guild_id: {
       type: String,
       ref: 'Guild',
-      autopopulate: true,
     },
   },
   schemaOptions,
