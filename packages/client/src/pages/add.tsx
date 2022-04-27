@@ -1,22 +1,34 @@
 import { Group, Paper, Box, Text, Title, Center, Divider, Overlay } from '@mantine/core';
 import { useBooleanToggle } from '@mantine/hooks';
 import DiscordButton from '~/components/button/DiscordButton';
+import ComingSoonOverlay from '~/components/ComingSoonOverlay';
 import DiscordRedirectModal from '~/components/modal/DiscordRedirect';
+import axios from 'axios';
+import { useState } from 'react';
 
 function AddPage() {
-  // const { data: authJson, isSuccess: isAuthUrlSuccess } = trpc.useQuery(['authUrl', { withBot: true }]);
+  const [AuthUrlErr, setAuthUrlErr] = useState(false);
   const [isDRModelOpen, toggleDRModel] = useBooleanToggle(false);
   const onDiscordLoginClick = () => {
-    setTimeout(() => {
-      toggleDRModel();
-      // if (isAuthUrlSuccess) location.href = authJson.authUrl;
+    const authUrlPromise = axios
+      .get('/api/auth/oauth')
+      .then(res => res.data)
+      .catch(() => undefined);
+    setTimeout(async () => {
+      const authUrl = await authUrlPromise;
+      if (authUrl) {
+        window.location.href = authUrl;
+      } else {
+        setAuthUrlErr(true);
+        setTimeout(() => void toggleDRModel() || void setAuthUrlErr(false), 5000);
+      }
     }, 5000);
     toggleDRModel();
   };
 
   return (
     <>
-      <DiscordRedirectModal opened={isDRModelOpen} />
+      <DiscordRedirectModal opened={isDRModelOpen} error={AuthUrlErr} />
       <Paper p="md" pl="lg">
         <Center>
           <Group direction="column" align="center" spacing={0}>
@@ -38,14 +50,7 @@ function AddPage() {
         </section>
         <Divider my="xl" />
         <section>
-          <Box sx={{ height: 150, position: 'relative' }}>
-            <Overlay opacity={0.6} color="#000" zIndex={5} p={60}>
-              <Center>
-                <Text size="xl" color="white">
-                  Coming soon
-                </Text>
-              </Center>
-            </Overlay>
+          <ComingSoonOverlay height={150}>
             <Group style={{ justifyContent: 'space-between' }}>
               <Group direction="column" spacing="xs">
                 <Title order={2}>With Webhook Url</Title>
@@ -56,7 +61,7 @@ function AddPage() {
                //TODO: Add Webhook URL Field
               */}
             </Group>
-          </Box>
+          </ComingSoonOverlay>
         </section>
       </Paper>
     </>

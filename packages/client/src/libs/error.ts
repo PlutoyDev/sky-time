@@ -1,0 +1,15 @@
+export const enum ErrorType {
+  AUTH_INVALID_CODE = 'auth_invalid_code',
+  AUTH_MISSING_GUILD = 'auth_missing_guild',
+  AUTH_MISSING_PARAMS = 'auth_missing_params',
+}
+
+export class AppError extends Error {
+  get errorUrl(): string {
+    return `/error?=${this.type}`;
+  }
+
+  constructor(public type: ErrorType, public message: string) {
+    super(message);
+  }
+}

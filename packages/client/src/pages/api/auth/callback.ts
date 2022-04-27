@@ -55,19 +55,11 @@ export default async function OauthCallback(req: NextApiRequest, res: NextApiRes
       } = tokenData as BotResult;
 
       authParams['guild_id'] = guild_id;
-    } else if (scopeArray.includes('webhook.incoming')) {
-      const {
-        webhook: { guild_id, channel_id, id: webhook_id, token: webhook_token },
-      } = tokenData as WebhookResult;
-      authParams['guild_id'] = guild_id;
-      authParams['channel_id'] = channel_id;
-      authParams['webhook_id'] = webhook_id;
-      authParams['webhook_token'] = webhook_token;
     }
 
     await authenticate(authParams);
     return res.redirect('/');
   } catch (e) {
-    return res.redirect('/?error=invalid_webhook_url');
+    return res.redirect('/?error=unknown_error');
   }
 }

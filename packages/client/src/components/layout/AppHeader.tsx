@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 
 const HEADER_HEIGHT = 60;
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles(theme => ({
   inner: {
     height: HEADER_HEIGHT,
     display: 'flex',
@@ -62,10 +62,10 @@ interface NavLinks {
 }
 
 const links: NavLinks[] = [
-  {
-    label: 'Home',
-    link: '/',
-  },
+  // {
+  //   label: 'Home',
+  //   link: '/',
+  // },
   {
     label: 'Add To Server',
     link: '/add',
@@ -74,14 +74,14 @@ const links: NavLinks[] = [
     label: 'Configure Bot',
     link: '/configure',
   },
-  {
-    label: 'FAQ',
-    link: '/faq',
-  },
-  {
-    label: 'Contact Developer',
-    link: '/contact',
-  },
+  // {
+  //   label: 'FAQ',
+  //   link: '/faq',
+  // },
+  // {
+  //   label: 'Contact Developer',
+  //   link: '/contact',
+  // },
 ];
 
 interface AppHeaderProps {}
@@ -106,7 +106,7 @@ export function AppHeader({}: AppHeaderProps) {
   const { classes } = useStyles();
   const [opened, toggleOpened] = useBooleanToggle(false);
 
-  const items = links.map((link) => <NavButton key={link.label} {...link} />);
+  const items = links.map(link => <NavButton key={link.label} {...link} />);
 
   return (
     <Header height={HEADER_HEIGHT} sx={{ borderBottom: 0 }}>

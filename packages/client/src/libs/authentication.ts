@@ -2,7 +2,8 @@ import jwt from 'jsonwebtoken';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { setCookies } from 'cookies-next';
 import getBaseUrl from '~/utils/getBaseUrl';
-import { connectDb, Guild, User, Webhook } from '@sky-time/shared';
+import { connectDb, Model } from '@sky-time/shared';
+import { AppError, ErrorType } from './error';
 
 const RT_SECRET = process.env.RT_SECRET;
 const AT_SECRET = process.env.AT_SECRET;
@@ -58,7 +59,7 @@ export function generateAuthUrl(withBot: boolean) {
     throw new Error('DISCORD_CLIENT_ID is not defined');
   }
 
-  const scopeArray = ['identify', 'guilds.members.read'];
+  const scopeArray = ['identify', 'guilds', 'guilds.members.read'];
   if (withBot) scopeArray.push('bot');
 
   const scope = scopeArray.join(' ');
@@ -75,43 +76,58 @@ export function generateAuthUrl(withBot: boolean) {
 }
 
 export default async function authenticate(params: AuthParams) {
+  await connectDb();
   const { guild_id, user_id, webhook_id, res } = params;
 
-  let user = user_id && (await User.findById(user_id));
-  let guild = guild_id && (await Guild.findById(guild_id));
-  let webhook = webhook_id && (await Webhook.findById(webhook_id));
+  let user = user_id !== '' && (await Model.User.findById(user_id));
+  let guild = guild_id !== '' && (await Model.Guild.findById(guild_id));
+  let webhook = webhook_id !== '' && (await Model.Webhook.findById(webhook_id));
 
   if (user_id && !user) {
+    const guild_ids = guild_id ? [guild_id] : undefined;
+    //Add User with Guild ID
+    //Check params for user
     const { username, discriminator, avatar, refresh_token, access_token, expires_at } = params;
-    if (!username || !discriminator || !avatar || !refresh_token || !access_token || !expires_at)
-      throw new Error('Missing parameters for creating user');
-
-    const admin = HARDCODED_ADMIN_ID.includes(user_id);
-
-    const userData = {
+    if (!username || !discriminator || !avatar || !refresh_token || !access_token || !expires_at) {
+      throw new AppError(ErrorType.AUTH_MISSING_PARAMS, 'Missing params for creating user');
+    }
+    user = await Model.User.create({
       _id: user_id,
-      guild_ids: [guild_id],
+      guild_ids,
       username,
       discriminator,
       avatar,
       refresh_token,
       access_token,
       expires_at,
-      admin,
-    };
-
-    user = await User.create(userData);
-  }
-
-  if (guild_id && !guild) {
-    guild = await Guild.create({ _id: guild_id });
+    });
   }
 
   if (webhook_id && !webhook) {
-    const { channel_id, webhook_token } = params;
-    if (!guild_id || !channel_id || !webhook_token) throw new Error('Missing parameters for creating webhook');
+    if (!guild_id) {
+      throw new AppError(ErrorType.AUTH_MISSING_GUILD, 'guild_id is required');
+    }
+    const { webhook_token } = params;
+    if (!webhook_token) {
+      throw new AppError(ErrorType.AUTH_MISSING_PARAMS, 'webhook_token is required');
+    }
 
-    webhook = await Webhook.create({ _id: webhook_id, channel_id, webhook_token });
+    webhook = await Model.Webhook.create({
+      _id: webhook_id,
+      guild_id,
+      webhook_token,
+    });
+  }
+
+  if (guild_id && !guild) {
+    const user_ids = user_id ? [user_id] : undefined;
+    const webhook_ids = webhook_id ? [webhook_id] : undefined;
+
+    guild = await Model.Guild.create({
+      _id: guild_id,
+      user_ids,
+      webhook_ids,
+    });
   }
 
   const refresh_token = genRefreshToken({ guild_id, user_id });
