@@ -1,11 +1,11 @@
 import { Lazy } from '@luvies/lazy';
 import { add, addMinutes, fromUnixTime, getUnixTime, isAfter, isBefore, startOfDay } from 'date-fns';
-import { LaToUtc, utcToLa } from './lib';
+import { LaToUtc, timeFormatter, utcToLa } from './lib';
 
 const reptStrings = [
   ['title_repeating'],
-  ['symbol', '➡️'],
-  ['label_ongoing', 'Ongoing: '],
+  ['separator', '➡️'],
+  ['label_ongoing', 'Ongoing until: '],
   ['label_upcoming', 'Upcoming: '],
 ] as const;
 
@@ -15,7 +15,7 @@ const reptEnables = [
 ] as const;
 
 const reptFormats = [
-  ['interval', '%t'],
+  ['occurrence', '%t'],
   ['ongoing', '%t (%R)'],
   ['upcoming', '%t (%R)'],
 ] as const;
@@ -26,11 +26,15 @@ export type ReptConfig = {
   formats: Partial<Record<typeof reptFormats[number][0], string>>;
 };
 
-export type ReptAdminSetting = {
-  defaultTitle: string;
+export type ReptTimeSettings = {
   offset: number;
   interval: number;
   duration: number;
+};
+
+export type ReptStringsSettings = {
+  defaultTitle: string;
+  credits: string;
 };
 
 export interface IUnixes {
@@ -43,7 +47,7 @@ type calculateResult = {
   unixes: IUnixes;
 };
 
-export function calculate(currentTime: number, reptSettings: Omit<ReptAdminSetting, 'defaultTitle'>): calculateResult {
+export function calculate(currentTime: number, reptSettings: ReptTimeSettings): calculateResult {
   const now = fromUnixTime(currentTime);
   const today = LaToUtc(startOfDay(utcToLa(now)));
   const daily_reset = add(today, { days: 1 });
@@ -56,7 +60,7 @@ export function calculate(currentTime: number, reptSettings: Omit<ReptAdminSetti
     .select(getUnixTime)
     .toArray();
   const nextStart = DateIter.first(date => isAfter(date, now)) as Date;
-  const nextEnd = DateIter.first(date => isAfter(addMinutes(date, duration), now)) as Date;
+  const nextEnd = DateIter.select(date => addMinutes(date, duration)).first(date => isAfter(date, now)) as Date;
   const isOngoing = isAfter(nextStart, nextEnd);
   return {
     unixes: {
@@ -65,4 +69,40 @@ export function calculate(currentTime: number, reptSettings: Omit<ReptAdminSetti
       occurrences,
     },
   };
+}
+
+export function repeating(config: ReptConfig, unixes: IUnixes, settings: ReptStringsSettings): string {
+  const strings = Object.fromEntries(
+    reptStrings.map(([key, defaults]) => [
+      key,
+      config.strings[key] ?? key === 'title_repeating' ? settings.defaultTitle : defaults,
+    ]),
+  ) as Record<typeof reptStrings[number][0], string>;
+
+  const enables = Object.fromEntries(
+    reptEnables.map(([key, defaults]) => [key, config.enables[key] ?? defaults]),
+  ) as Record<typeof reptEnables[number][0], boolean>;
+
+  const formats = Object.fromEntries(
+    reptFormats.map(([key, defaults]) => [key, config.formats[key] ?? defaults]),
+  ) as Record<typeof reptFormats[number][0], string>;
+
+  const { ongoing, upcoming, occurrences } = unixes;
+
+  let message = `${strings.title_repeating} (${settings.credits})\n`;
+
+  message += occurrences.reduce((m, u, i) => {
+    if (i !== 0) m += strings.separator;
+    return m + timeFormatter(formats.occurrence, u);
+  }, '');
+
+  if (enables.show_ongoing && ongoing) {
+    message += `\n${strings.label_ongoing}${timeFormatter(formats.ongoing, ongoing)}`;
+  }
+
+  if (enables.show_upcoming) {
+    message += `\n${strings.label_upcoming}${timeFormatter(formats.upcoming, upcoming)}`;
+  }
+
+  return message;
 }
