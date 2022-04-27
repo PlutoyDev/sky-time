@@ -8,12 +8,9 @@ import {
   Routes as DiscordAPIRoutes,
 } from 'discord-api-types/v9';
 import authenticate, { AuthParams } from '~/libs/authentication';
-import getBaseUrl from '~/utils/getBaseUrl';
+import { BASE_URL, DISCORD_CLIENT_ID, DISCORD_CLIENT_SECRET } from '~/libs/constants';
 
 export default async function OauthCallback(req: NextApiRequest, res: NextApiResponse) {
-  if (!process.env.DISCORD_CLIENT_ID || !process.env.DISCORD_CLIENT_SECRET) {
-    throw new Error('DISCORD_CLIENT_ID or DISCORD_CLIENT_SECRET is not defined');
-  }
   try {
     const { code } = req.query;
     if (!code || typeof code !== 'string') {
@@ -21,9 +18,9 @@ export default async function OauthCallback(req: NextApiRequest, res: NextApiRes
     }
 
     const param = {
-      client_id: process.env.DISCORD_CLIENT_ID,
-      client_secret: process.env.DISCORD_CLIENT_SECRET,
-      redirect_uri: getBaseUrl() + '/api/auth/callback',
+      client_id: DISCORD_CLIENT_ID,
+      client_secret: DISCORD_CLIENT_SECRET,
+      redirect_uri: BASE_URL + '/api/auth/callback',
       grant_type: 'authorization_code',
       code,
     };

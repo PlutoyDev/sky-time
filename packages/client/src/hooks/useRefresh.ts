@@ -1,10 +1,9 @@
 import { useCallback } from 'react';
-import { useQuery } from 'react-query';
-import authAxios from '~/libs/axios/authAxios';
+import appAxios from '~/libs/axios/appAxios';
 
 export function useRefresh(setAccessToken: (token: string | undefined) => void) {
   const refresh = useCallback(async () => {
-    const { data } = await authAxios.get('/api/auth/refresh');
+    const { data } = await appAxios.get('/api/auth/refresh');
     setAccessToken(data.accessToken);
   }, []);
 

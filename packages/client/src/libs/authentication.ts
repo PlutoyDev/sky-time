@@ -1,40 +1,44 @@
 import jwt from 'jsonwebtoken';
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextApiResponse } from 'next';
 import { setCookies } from 'cookies-next';
-import getBaseUrl from '~/utils/getBaseUrl';
 import { connectDb, Model } from '@sky-time/shared';
 import { AppError, ErrorType } from './error';
+import {
+  BASE_URL,
+  DISCORD_CLIENT_ID,
+  DISCORD_CLIENT_SECRET,
+  JWT_ACCESS_TOKEN_SECRET,
+  JWT_REFRESH_TOKEN_SECRET,
+  NODE_ENV,
+} from './constants';
 
-const RT_SECRET = process.env.RT_SECRET;
-const AT_SECRET = process.env.AT_SECRET;
+type AccessTokenPayload =
+  | {
+      type: 'Oauth';
+      access_token: string;
+      user_id: string;
+    }
+  | {
+      type: 'Webhook';
+      guild_id: string;
+    };
 
-if (!RT_SECRET || !AT_SECRET) {
-  throw new Error('RT_SECRET or AT_SECRET is not defined');
-}
-
-type AccessTokenPayload = {
-  access_token?: string;
+type RefreshTokenPayload = {
   user_id?: string;
   guild_id?: string;
 };
 
-type RefreshTokenPayload = Omit<AccessTokenPayload, 'access_token'>;
+const genRefreshToken = (payload: RefreshTokenPayload) =>
+  jwt.sign(payload, JWT_REFRESH_TOKEN_SECRET, { expiresIn: '14d' });
 
-const genRefreshToken = (payload: RefreshTokenPayload) => jwt.sign(payload, RT_SECRET, { expiresIn: '14d' });
-
-export const genAccessToken = (payload: AccessTokenPayload) => jwt.sign(payload, AT_SECRET, { expiresIn: '30m' });
+export const genAccessToken = (payload: AccessTokenPayload) =>
+  jwt.sign(payload, JWT_ACCESS_TOKEN_SECRET, { expiresIn: '30m' });
 
 export const verifyRefreshToken = (token: string) =>
-  jwt.verify(token, RT_SECRET) as RefreshTokenPayload & { iat: number };
+  jwt.verify(token, JWT_REFRESH_TOKEN_SECRET) as RefreshTokenPayload & { iat: number };
 
 export const verifyAccessToken = (token: string) =>
-  jwt.verify(token, AT_SECRET) as AccessTokenPayload & { iat: number };
-
-//Plutoy(Me, the Developer) and Clement(the Founder of Sky Info-graphics Discord Server) will have permanent access to admin console.
-//Will not change :P
-const HARDCODED_ADMIN_ID = ['702740689846272002', '693802004018888714'].concat(
-  ...(process.env.HARDCODED_ADMIN_ID?.split(',') ?? []),
-);
+  jwt.verify(token, JWT_ACCESS_TOKEN_SECRET) as AccessTokenPayload & { iat: number };
 
 export type AuthParams = {
   guild_id?: string;
@@ -55,18 +59,14 @@ export type AuthParams = {
 };
 
 export function generateAuthUrl(withBot: boolean) {
-  if (!process.env.DISCORD_CLIENT_ID) {
-    throw new Error('DISCORD_CLIENT_ID is not defined');
-  }
-
   const scopeArray = ['identify', 'guilds', 'guilds.members.read'];
   if (withBot) scopeArray.push('bot');
 
   const scope = scopeArray.join(' ');
 
   const param = {
-    client_id: process.env.DISCORD_CLIENT_ID,
-    redirect_uri: getBaseUrl() + '/api/auth/callback',
+    client_id: DISCORD_CLIENT_ID,
+    redirect_uri: BASE_URL + '/api/auth/callback',
     permissions: '536871936',
     response_type: 'code',
     scope,
