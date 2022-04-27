@@ -1,8 +1,10 @@
 import jwt from 'jsonwebtoken';
-import { NextApiResponse } from 'next';
+import { NextApiResponse, NextApiRequest } from 'next';
 import { setCookies } from 'cookies-next';
 import { connectDb, Model } from '@sky-time/shared';
 import { AppError, ErrorType } from './error';
+import { OAuth2Routes, RESTPostOAuth2AccessTokenResult } from 'discord-api-types/v9';
+import discordAxios from './axios/discordAxios';
 import {
   BASE_URL,
   DISCORD_CLIENT_ID,
@@ -56,6 +58,7 @@ export type AuthParams = {
   webhook_token?: string;
 
   res: NextApiResponse;
+  req: NextApiRequest;
 };
 
 export function generateAuthUrl(withBot: boolean) {
@@ -77,13 +80,14 @@ export function generateAuthUrl(withBot: boolean) {
 
 export default async function authenticate(params: AuthParams) {
   await connectDb();
-  const { guild_id, user_id, webhook_id, res } = params;
+  const { guild_id, user_id, webhook_id, res, req } = params;
 
   let user = user_id !== '' && (await Model.User.findById(user_id));
   let guild = guild_id !== '' && (await Model.Guild.findById(guild_id));
   let webhook = webhook_id !== '' && (await Model.Webhook.findById(webhook_id));
 
   if (user_id && !user) {
+    console.log('user not found');
     const guild_ids = guild_id ? [guild_id] : undefined;
     //Add User with Guild ID
     //Check params for user
@@ -104,6 +108,7 @@ export default async function authenticate(params: AuthParams) {
   }
 
   if (webhook_id && !webhook) {
+    console.log('webhook not found');
     if (!guild_id) {
       throw new AppError(ErrorType.AUTH_MISSING_GUILD, 'guild_id is required');
     }
@@ -120,6 +125,7 @@ export default async function authenticate(params: AuthParams) {
   }
 
   if (guild_id && !guild) {
+    console.log('guild not found');
     const user_ids = user_id ? [user_id] : undefined;
     const webhook_ids = webhook_id ? [webhook_id] : undefined;
 
@@ -133,10 +139,11 @@ export default async function authenticate(params: AuthParams) {
   const refresh_token = genRefreshToken({ guild_id, user_id });
   setCookies('refresh_token', refresh_token, {
     res,
+    req,
     httpOnly: true,
     sameSite: 'strict',
     maxAge: 1000 * 60 * 60 * 24 * 14,
-    secure: process.env.NODE_ENV === 'production',
+    secure: NODE_ENV === 'production',
   });
 
   return;

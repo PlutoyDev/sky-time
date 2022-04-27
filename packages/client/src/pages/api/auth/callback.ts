@@ -34,11 +34,14 @@ export default async function OauthCallback(req: NextApiRequest, res: NextApiRes
 
     const {
       data: { id: user_id, username, discriminator, avatar },
-    } = await discordAxios.get<APIUser>(DiscordAPIRoutes.user());
+    } = await discordAxios.get<APIUser>(DiscordAPIRoutes.user(), {
+      headers: { Authorization: `Bearer ${tokenData.access_token}` },
+    });
 
     const authParams: AuthParams = {
       ...tokenData,
       res,
+      req,
       user_id,
       username,
       discriminator,
@@ -57,6 +60,7 @@ export default async function OauthCallback(req: NextApiRequest, res: NextApiRes
     await authenticate(authParams);
     return res.redirect('/');
   } catch (e) {
+    console.error(e);
     return res.redirect('/?error=unknown_error');
   }
 }
