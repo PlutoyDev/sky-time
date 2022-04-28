@@ -9,6 +9,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@discordjs/rest": "^0.4.1",
     "@luvies/lazy": "^1.7.2",
     "@mantine/core": "^4.1.4",
     "@mantine/dates": "^4.1.4",

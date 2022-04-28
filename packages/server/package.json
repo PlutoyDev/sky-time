@@ -11,6 +11,7 @@
     "start": "node ."
   },
   "dependencies": {
+    "@discordjs/rest": "^0.4.1",
     "@luvies/lazy": "^1.7.2",
     "@sky-time/shared": "workspace:^",
     "axios": "^0.27.2",
