@@ -4,7 +4,6 @@ import {
   APIUser,
   RESTPostOAuth2AccessTokenResult as AccessTokenResult,
   RESTPostOAuth2AccessTokenWithBotAndGuildsScopeResult as BotResult,
-  RESTPostOAuth2AccessTokenWithBotAndWebhookIncomingScopeResult as WebhookResult,
   Routes as DiscordAPIRoutes,
 } from 'discord-api-types/v9';
 import authenticate, { AuthParams } from '~/libs/authentication';
@@ -25,12 +24,10 @@ export default async function OauthCallback(req: NextApiRequest, res: NextApiRes
       code,
     };
 
-    const { data: tokenData } = await discordAxios.post<AccessTokenResult>(
+    const { data: tokenData } = await discordAxios.post<AccessTokenResult & Partial<BotResult>>(
       '/oauth2/token',
       new URLSearchParams(param).toString(),
     );
-
-    const scopeArray = tokenData.scope.split(' ');
 
     const {
       data: { id: user_id, username, discriminator, avatar },
@@ -39,23 +36,14 @@ export default async function OauthCallback(req: NextApiRequest, res: NextApiRes
     });
 
     const authParams: AuthParams = {
-      ...tokenData,
       res,
       req,
       user_id,
       username,
       discriminator,
       avatar: avatar ?? undefined,
-      expires_at: new Date(Date.now() + tokenData.expires_in * 1000),
+      guild_id: tokenData.guild?.id,
     };
-
-    if (scopeArray.includes('bot')) {
-      const {
-        guild: { id: guild_id },
-      } = tokenData as BotResult;
-
-      authParams['guild_id'] = guild_id;
-    }
 
     await authenticate(authParams);
     return res.redirect('/configure');
