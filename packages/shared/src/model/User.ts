@@ -8,9 +8,6 @@ export interface IUser extends Base {
   guild_ids: string[];
   last_login: Date;
   avatar: string | undefined;
-  refresh_token: string;
-  access_token: string;
-  expires_at: Date;
 
   //Virtual
   _discriminator: number;
@@ -35,19 +32,6 @@ export const userSchema = new Schema<IUser>({
   last_login: {
     type: Date,
     default: Date.now,
-    required: true,
-  },
-
-  refresh_token: {
-    type: String,
-    required: true,
-  },
-  access_token: {
-    type: String,
-    required: true,
-  },
-  expires_at: {
-    type: Date,
     required: true,
   },
 });

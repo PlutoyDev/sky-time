@@ -2,7 +2,14 @@ import { setCookies } from 'cookies-next';
 import { APIGuildChannel, GuildChannelType, Routes } from 'discord-api-types/v9';
 import jwt from 'jsonwebtoken';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { BASE_URL, DISCORD_CLIENT_ID, JWT_ACCESS_TOKEN_SECRET, JWT_REFRESH_TOKEN_SECRET, NODE_ENV } from './constants';
+import {
+  BASE_URL,
+  DISCORD_CLIENT_ID,
+  JWT_ACCESS_TOKEN_SECRET,
+  JWT_REFRESH_TOKEN_SECRET,
+  NODE_ENV,
+  REFRESH_TOKEN_COOKIE_NAME,
+} from './constants';
 import { Model } from './database';
 import { DiscordRest } from './discordRest';
 import { AppError, ErrorType } from './error';
@@ -45,9 +52,6 @@ export type AuthParams = {
   username?: string;
   discriminator?: string;
   avatar?: string;
-  refresh_token?: string;
-  access_token?: string;
-  expires_at?: Date;
 
   webhook_id?: string;
   channel_id?: string;
@@ -77,7 +81,7 @@ export function generateAuthUrl(withBot: boolean) {
 export default async function authenticate(params: AuthParams) {
   const { guild_id, user_id, webhook_id, res, req } = params;
 
-  let user = user_id &&  user_id !== '' && (await Model.User.findById(user_id));
+  let user = user_id && user_id !== '' && (await Model.User.findById(user_id));
   let guild = guild_id && guild_id !== '' && (await Model.Guild.findById(guild_id));
   let webhook = webhook_id && webhook_id !== '' && (await Model.Webhook.findById(webhook_id));
 
@@ -86,8 +90,8 @@ export default async function authenticate(params: AuthParams) {
     const guild_ids = guild_id ? [guild_id] : undefined;
     //Add User with Guild ID
     //Check params for user
-    const { username, discriminator, avatar, refresh_token, access_token, expires_at } = params;
-    if (!username || !discriminator || !avatar || !refresh_token || !access_token || !expires_at) {
+    const { username, discriminator, avatar } = params;
+    if (!username || !discriminator || !avatar) {
       throw new AppError(ErrorType.AUTH_MISSING_PARAMS, 'Missing params for creating user');
     }
     user = await Model.User.create({
@@ -96,9 +100,6 @@ export default async function authenticate(params: AuthParams) {
       username,
       discriminator,
       avatar,
-      refresh_token,
-      access_token,
-      expires_at,
     });
   }
 
@@ -132,7 +133,7 @@ export default async function authenticate(params: AuthParams) {
   }
 
   const refresh_token = genRefreshToken({ guild_id, user_id });
-  setCookies('refresh_token', refresh_token, {
+  setCookies(REFRESH_TOKEN_COOKIE_NAME, refresh_token, {
     res,
     req,
     httpOnly: true,
