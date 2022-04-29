@@ -1,11 +1,8 @@
 import { NextPage } from 'next';
 import { AppProps } from 'next/app';
-import { AppType } from 'next/dist/shared/lib/utils';
-import { ReactElement, ReactNode, useMemo, useState } from 'react';
-import superjson from 'superjson';
+import { ReactElement, ReactNode, useState } from 'react';
 import { AppLayout } from '~/components/layout/AppLayout';
 import { MantineThemeOverride, MantineProvider } from '@mantine/core';
-import getBaseUrl from '~/utils/getBaseUrl';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { AuthProvider } from '~/context/AuthContext';
 
@@ -22,12 +19,11 @@ type AppPropsWithLayout = AppProps & {
 };
 
 function addProviders(children: ReactNode) {
-  const [accessToken, setAccessToken] = useState<string>();
   const [queryClient] = useState(() => new QueryClient());
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider setAccessToken={setAccessToken}>
+      <AuthProvider>
         <MantineProvider theme={appTheme} withGlobalStyles emotionOptions={{ key: 'mantine', prepend: true }}>
           {children}
         </MantineProvider>

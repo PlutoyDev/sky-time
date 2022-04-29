@@ -58,7 +58,7 @@ export default async function OauthCallback(req: NextApiRequest, res: NextApiRes
     }
 
     await authenticate(authParams);
-    return res.redirect('/');
+    return res.redirect('/configure');
   } catch (e) {
     console.error(e);
     return res.redirect('/?error=unknown_error');

@@ -1,0 +1,42 @@
+//Refer to README for dotenvs
+
+@DiscordBaseURL=https://discord.com/api/v9
+@DiscordClientId={{$dotenv DISCORD_CLIENT_ID}}
+@DiscordClientSecret={{$dotenv DISCORD_CLIENT_SECRET}}
+@DiscordRedirectUri=http://localhost:4000/api/auth/callback
+@DiscordBotToken={{$dotenv DISCORD_BOT_TOKEN}}
+@DiscordRefreshToken={{$dotenv DISCORD_REFRESH_TOKEN}}
+@DiscordAccessToken={{RefreshToken.response.body.access_token}}
+
+@GuildId1=966624265317285928
+@ChannelId1=969086384172331010
+
+###
+# @name RefreshToken
+POST {{DiscordBaseURL}}/oauth2/token
+Content-Type: application/x-www-form-urlencoded
+Authorization: Basic {{DiscordClientId}} {{DiscordClientSecret}}
+
+grant_type=refresh_token
+&refresh_token={{DiscordRefreshToken}}
+
+###
+GET {{DiscordBaseURL}}/guilds/{{GuildId1}}/channels
+Authorization: Bot {{DiscordBotToken}}
+
+###
+POST {{DiscordBaseURL}}/channels/{{ChannelId1}}/webhooks
+Authorization: Bot {{DiscordBotToken}}
+Content-Type: application/json
+
+{
+  "name": "Hello, Webhook"
+}
+
+###
+GET {{DiscordBaseURL}}/channels/{{ChannelId1}}/webhooks
+Authorization: Bot {{DiscordBotToken}}
+
+###
+GET {{DiscordBaseURL}}/users/@me
+Authorization: Bearer {{DiscordAccessToken}}

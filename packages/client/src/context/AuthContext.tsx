@@ -1,39 +1,81 @@
-import { createContext, Dispatch, SetStateAction, useState } from 'react';
-// import type { User, Guild } from "@sky-time/prisma";
+import { createContext, useCallback, useContext, useEffect } from 'react';
+import { useQuery, useQueryClient } from 'react-query';
+import appAxios from '~/libs/axios/appAxios';
+import type { refresh } from '../libs/authentication';
 
-//Temp Substitute
-type User = any;
-type Guild = any;
+type UserData = Awaited<ReturnType<typeof refresh>>;
 
-type PubicUser = Omit<User, 'accessToken' | 'refreshToken' | 'expiresAt'>;
-
-type AuthContextValue = {
-  user?: PubicUser;
-  guild?: Guild;
-  setUser?: Dispatch<SetStateAction<PubicUser | undefined>>;
-  setGuild?: Dispatch<SetStateAction<Guild | undefined>>;
-  setAccessToken?: Dispatch<SetStateAction<string | undefined>>;
+type AuthContextValue = UserData & {
+  refresh: () => Promise<void>;
+  logout: () => void;
 };
 
 type AuthProviderProps = {
   children: React.ReactNode;
-  setAccessToken: Dispatch<SetStateAction<string | undefined>>;
 };
 
-export const AuthContext = createContext<AuthContextValue>({});
+export const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
-export const AuthProvider = ({ children, setAccessToken }: AuthProviderProps) => {
-  const [user, setUser] = useState<PubicUser>();
-  const [guild, setGuild] = useState<Guild>();
+const getUserData = async () => {
+  return (await appAxios.post<UserData>('/api/auth/refresh')).data;
+};
 
-  //prettier-ignore
-  const value: AuthContextValue = {
-    user, setUser,
-    guild, setGuild,
-    setAccessToken
-  };
+export const AuthProvider = ({ children }: AuthProviderProps) => {
+  const {
+    data: userAuthData,
+    isSuccess,
+    refetch,
+  } = useQuery({
+    queryKey: 'userAuthData',
+    queryFn: getUserData,
+    retry: false,
+  });
+  const queryClient = useQueryClient();
+
+  const refresh = useCallback(async () => {
+    await refetch({ throwOnError: true });
+  }, []);
+
+  const logout = useCallback(() => {
+    throw new Error('Not implemented');
+  }, []);
+
+  useEffect(() => {
+    appAxios.defaults.headers.common.Authorization = `Bearer ${userAuthData?.access_token}`;
+  }, []);
+
+  useEffect(() => {
+    queryClient.setDefaultOptions({
+      queries: {
+        queryFn: async ({ queryKey: [route] }) => {
+          const response = await appAxios.get(route as string);
+          return response.data;
+        },
+        onError: async (...params: unknown[]) => {
+          console.log('Query Client (onQueryError)', ...params);
+        },
+      },
+      mutations: {
+        onError: async (...params: unknown[]) => {
+          console.log('Query Client (onMutationError)', ...params);
+        },
+      },
+    });
+  }, []);
+
+  const value: AuthContextValue | undefined = !userAuthData
+    ? undefined
+    : {
+        refresh,
+        logout,
+        ...userAuthData,
+      };
 
   return <AuthContext.Provider value={value} children={children} />;
 };
+
+export function useAuth() {
+  return useContext(AuthContext);
+}
 
 export default AuthContext;

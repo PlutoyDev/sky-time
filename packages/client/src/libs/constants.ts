@@ -14,8 +14,10 @@ export const REFRESH_TOKEN_COOKIE_NAME = 'refresh_token';
 export const JWT_REFRESH_TOKEN_SECRET = process.env.JWT_REFRESH_TOKEN_SECRET as string;
 export const JWT_ACCESS_TOKEN_SECRET = process.env.JWT_ACCESS_TOKEN_SECRET as string;
 //discord
-export const DISCORD_CLIENT_ID = process.env.DISCORD_CLIENT_ID as string;
+export const DISCORD_APPLICATION_ID = (process.env.DISCORD_APPLICATION_ID ?? '966981144237207562') as string;
+export const DISCORD_CLIENT_ID = (process.env.DISCORD_CLIENT_ID ?? '966981144237207562') as string;
 export const DISCORD_CLIENT_SECRET = process.env.DISCORD_CLIENT_SECRET as string;
+export const DISCORD_BOT_TOKEN = process.env.DISCORD_BOT_TOKEN as string;
 
 //Console Log NODE_ENV
 console.log(`NODE_ENV: ${NODE_ENV}`);
@@ -24,8 +26,8 @@ console.log(`NODE_ENV: ${NODE_ENV}`);
 const envObject = {
   JWT_REFRESH_TOKEN_SECRET,
   JWT_ACCESS_TOKEN_SECRET,
-  DISCORD_CLIENT_ID,
   DISCORD_CLIENT_SECRET,
+  DISCORD_BOT_TOKEN,
 };
 Object.entries(envObject).forEach(([key, value]) => {
   if (!value) {

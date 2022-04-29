@@ -1,28 +1,24 @@
-import jwt from 'jsonwebtoken';
-import { NextApiResponse, NextApiRequest } from 'next';
 import { setCookies } from 'cookies-next';
-import { connectDb, Model } from '@sky-time/shared';
+import { APIGuildChannel, GuildChannelType, Routes } from 'discord-api-types/v9';
+import jwt from 'jsonwebtoken';
+import { NextApiRequest, NextApiResponse } from 'next';
+import { BASE_URL, DISCORD_CLIENT_ID, JWT_ACCESS_TOKEN_SECRET, JWT_REFRESH_TOKEN_SECRET, NODE_ENV } from './constants';
+import { Model } from './database';
+import { DiscordRest } from './discordRest';
 import { AppError, ErrorType } from './error';
-import { OAuth2Routes, RESTPostOAuth2AccessTokenResult } from 'discord-api-types/v9';
-import discordAxios from './axios/discordAxios';
-import {
-  BASE_URL,
-  DISCORD_CLIENT_ID,
-  DISCORD_CLIENT_SECRET,
-  JWT_ACCESS_TOKEN_SECRET,
-  JWT_REFRESH_TOKEN_SECRET,
-  NODE_ENV,
-} from './constants';
 
 type AccessTokenPayload =
   | {
       type: 'Oauth';
-      access_token: string;
       user_id: string;
+      guild_ids: string[];
+      webhook_ids: string[];
+      channel_ids: string[];
     }
   | {
       type: 'Webhook';
       guild_id: string;
+      webhook_ids: string[];
     };
 
 type RefreshTokenPayload = {
@@ -79,7 +75,6 @@ export function generateAuthUrl(withBot: boolean) {
 }
 
 export default async function authenticate(params: AuthParams) {
-  await connectDb();
   const { guild_id, user_id, webhook_id, res, req } = params;
 
   let user = user_id !== '' && (await Model.User.findById(user_id));
@@ -147,4 +142,63 @@ export default async function authenticate(params: AuthParams) {
   });
 
   return;
+}
+
+export async function getDiscordGuildChannels(guild_id: string) {
+  try {
+    const channels = (await DiscordRest.get(Routes.guildChannels(guild_id))) as APIGuildChannel<GuildChannelType>[];
+    return channels.map(({ id }) => id);
+  } catch (e) {
+    return [];
+  }
+}
+
+export async function refresh(refresh_token: string) {
+  const payload = verifyRefreshToken(refresh_token);
+  const { guild_id, user_id } = payload;
+
+  if (user_id) {
+    const user = await Model.User.findById(user_id);
+    if (!user) {
+      throw new AppError(ErrorType.AUTH_USER_NOT_FOUND, 'User not found');
+    }
+    let { username, discriminator, avatar, guild_ids } = user;
+
+    const channel_ids = (await Promise.all(guild_ids.map(getDiscordGuildChannels))).flat();
+    const webhook_ids = (
+      await Model.Guild.find().where('_id').in(guild_ids).select('webhook_ids').lean().exec()
+    ).flatMap(({ webhook_ids }) => webhook_ids);
+
+    console.log({ channel_ids, webhook_ids });
+
+    return {
+      guild_ids,
+      username,
+      discriminator,
+      avatar,
+      access_token: genAccessToken({
+        type: 'Oauth',
+        user_id,
+        guild_ids,
+        channel_ids,
+        webhook_ids,
+      }),
+    };
+  } else if (guild_id) {
+    const guild = await Model.Guild.findById(guild_id);
+    if (!guild) {
+      throw new AppError(ErrorType.AUTH_GUILD_NOT_FOUND, 'Guild not found');
+    }
+    const { webhook_ids } = guild;
+    return {
+      guild_ids: [guild_id],
+      access_token: genAccessToken({
+        type: 'Webhook',
+        guild_id,
+        webhook_ids,
+      }),
+    };
+  } else {
+    throw new AppError(ErrorType.AUTH_MISSING_PARAMS, 'Missing params');
+  }
 }
