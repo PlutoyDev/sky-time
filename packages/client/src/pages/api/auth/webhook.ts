@@ -19,7 +19,7 @@ export default async function webhookAuth(req: NextApiRequest, res: NextApiRespo
       throw new Error('guild_id is not defined');
     }
 
-    await authenticate({ res, guild_id, webhook_id, webhook_token });
+    await authenticate({ req, res, guild_id, webhook_id, webhook_token });
 
     return res.redirect('/');
   } catch (e) {
