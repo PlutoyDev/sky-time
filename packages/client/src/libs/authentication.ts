@@ -77,9 +77,9 @@ export function generateAuthUrl(withBot: boolean) {
 export default async function authenticate(params: AuthParams) {
   const { guild_id, user_id, webhook_id, res, req } = params;
 
-  let user = user_id !== '' && (await Model.User.findById(user_id));
-  let guild = guild_id !== '' && (await Model.Guild.findById(guild_id));
-  let webhook = webhook_id !== '' && (await Model.Webhook.findById(webhook_id));
+  let user = user_id &&  user_id !== '' && (await Model.User.findById(user_id));
+  let guild = guild_id && guild_id !== '' && (await Model.Guild.findById(guild_id));
+  let webhook = webhook_id && webhook_id !== '' && (await Model.Webhook.findById(webhook_id));
 
   if (user_id && !user) {
     console.log('user not found');
