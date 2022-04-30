@@ -1,7 +1,9 @@
-import { Schema, Types } from 'mongoose';
+import { Schema } from 'mongoose';
 import { createModel, schemaOptions, Base } from './libs';
+import { v4 as uuid } from 'uuid';
 
 export interface ITimeConfig extends Base {
+  _id: string;
   name: string | undefined;
   webhook_id: string;
   guild_id: string;
@@ -13,6 +15,10 @@ export interface ITimeConfig extends Base {
 
 export const TimeConfigSchema = new Schema<ITimeConfig>(
   {
+    _id: {
+      type: String,
+      default: uuid,
+    },
     name: String,
     webhook_id: {
       type: String,

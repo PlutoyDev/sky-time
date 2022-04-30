@@ -2108,6 +2108,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jsonwebtoken", "npm:8.5.8"],\
             ["@types/node", "npm:17.0.29"],\
             ["@types/react", "npm:17.0.44"],\
+            ["@types/uuid", "npm:8.3.4"],\
             ["@yarnpkg/pnpify", "npm:4.0.0-rc.3"],\
             ["axios", "npm:0.27.2"],\
             ["clsx", "npm:1.1.1"],\
@@ -2131,6 +2132,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["tabler-icons-react", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:1.46.0"],\
             ["tslib", "npm:2.4.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.3#~builtin<compat/typescript>::version=4.6.3&hash=bda367"],\
+            ["uuid", "npm:8.3.2"],\
             ["zod", "npm:3.14.4"]\
           ],\
           "linkType": "SOFT"\
@@ -2175,6 +2177,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@luvies/lazy", "npm:1.7.2"],\
             ["@types/jest", "npm:27.4.1"],\
             ["@types/node", "npm:17.0.29"],\
+            ["@types/uuid", "npm:8.3.4"],\
             ["@yarnpkg/pnpify", "npm:4.0.0-rc.3"],\
             ["date-fns", "npm:2.28.0"],\
             ["date-fns-tz", "virtual:b3c635208145f9eb80cbb9b3f1c647b0c52c7db25d2c817728f09076be103ed754b33987259c2519d1833ca3e2a8ffa3070de71af686e3a4d37315636f066b72#npm:1.3.3"],\
@@ -2184,7 +2187,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["ts-jest", "virtual:b5def7bccb107b1d7a0bdb42e64006911494524f09bffdfe7ec5eee019215b5a7b9101da645e91a33438c0185b52f2b9c8f0b762047390328035b99d26eb2d56#npm:27.1.4"],\
             ["ts-node", "virtual:b5def7bccb107b1d7a0bdb42e64006911494524f09bffdfe7ec5eee019215b5a7b9101da645e91a33438c0185b52f2b9c8f0b762047390328035b99d26eb2d56#npm:10.7.0"],\
             ["tslib", "npm:2.4.0"],\
-            ["typescript", "patch:typescript@npm%3A4.6.3#~builtin<compat/typescript>::version=4.6.3&hash=bda367"]\
+            ["typescript", "patch:typescript@npm%3A4.6.3#~builtin<compat/typescript>::version=4.6.3&hash=bda367"],\
+            ["uuid", "npm:8.3.2"]\
           ],\
           "linkType": "SOFT"\
         }]\
@@ -2669,6 +2673,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-treeify-npm-1.0.0-b5e04e9cd3-1b2397030d.zip/node_modules/@types/treeify/",\
           "packageDependencies": [\
             ["@types/treeify", "npm:1.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@types/uuid", [\
+        ["npm:8.3.4", {\
+          "packageLocation": "./.yarn/cache/@types-uuid-npm-8.3.4-7547f4402c-6f11f3ff70.zip/node_modules/@types/uuid/",\
+          "packageDependencies": [\
+            ["@types/uuid", "npm:8.3.4"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -10500,6 +10513,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/utils-merge-npm-1.0.1-363bbdfbca-c810954932.zip/node_modules/utils-merge/",\
           "packageDependencies": [\
             ["utils-merge", "npm:1.0.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["uuid", [\
+        ["npm:8.3.2", {\
+          "packageLocation": "./.yarn/cache/uuid-npm-8.3.2-eca0baba53-5575a8a75c.zip/node_modules/uuid/",\
+          "packageDependencies": [\
+            ["uuid", "npm:8.3.2"]\
           ],\
           "linkType": "HARD"\
         }]\

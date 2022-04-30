@@ -1,7 +1,9 @@
 import { Schema, Types } from 'mongoose';
 import { createModel, schemaOptions, Base } from './libs';
+import { v4 as uuid } from 'uuid';
 
 export interface IReminderConfig extends Base {
+  _id: string;
   name: string | undefined;
   type: string;
   webhook_id: string;
@@ -12,6 +14,10 @@ export interface IReminderConfig extends Base {
 
 export const ReminderConfigSchema = new Schema<IReminderConfig>(
   {
+    _id: {
+      type: String,
+      default: uuid,
+    },
     name: String,
     type: {
       type: String,
