@@ -7,8 +7,11 @@ export const createTimeConfig = (timeConfig: ITimeConfig) => {
 };
 
 export const getTimeConfigs = (timeConfig_ids: string | string[], lean = true) => {
-  const filter = typeof timeConfig_ids === 'string' ? { _id: timeConfig_ids } : { _id: { $in: timeConfig_ids } };
-  return TimeConfig.find(filter, { lean }).exec();
+  if (typeof timeConfig_ids === 'string') {
+    return TimeConfig.findOne({ _id: timeConfig_ids }, { lean }).exec();
+  } else {
+    return TimeConfig.find({ _id: { $in: timeConfig_ids } }, { lean }).exec();
+  }
 };
 
 export const updateTimeConfig = (timeConfig: ITimeConfig) => {
@@ -17,4 +20,13 @@ export const updateTimeConfig = (timeConfig: ITimeConfig) => {
 
 export const deleteTimeConfig = (timeConfig_id: string) => {
   return TimeConfig.findByIdAndDelete(timeConfig_id).lean().exec();
+};
+
+//Relations
+export const getGuildTimeConfigs = (guild_id: string, lean = true) => {
+  return TimeConfig.find({ guild_ids: { $elemMatch: guild_id } }, { lean }).exec();
+};
+
+export const getWebhookTimeConfig = (webhook_id: string, lean = true) => {
+  return TimeConfig.findOne({ webhook_ids: { $elemMatch: webhook_id } }, { lean }).exec();
 };

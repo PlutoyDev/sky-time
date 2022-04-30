@@ -7,8 +7,11 @@ export const createUser = (user: IUser) => {
 };
 
 export const getUsers = (user_ids: string | string[], lean = true) => {
-  const filter = typeof user_ids === 'string' ? { _id: user_ids } : { _id: { $in: user_ids } };
-  return User.find(filter, { lean }).exec();
+  if (typeof user_ids === 'string') {
+    return User.findOne({ _id: user_ids }, { lean }).exec();
+  } else {
+    return User.find({ _id: { $in: user_ids } }, { lean }).exec();
+  }
 };
 
 export const updateUser = (user: IUser) => {
@@ -19,14 +22,7 @@ export const deleteUser = (user_id: string) => {
   return User.findByIdAndDelete(user_id).lean().exec();
 };
 
-// * maybe
-//User's Guilds
-// export const addUserGuild = (user_id: string, guild_ids: string | string[]) => {
-//   const $addToSet = typeof guild_ids === 'string' ? { guild_ids: guild_ids } : { guild_ids: { $each: guild_ids } };
-//   return User.findByIdAndUpdate(user_id, { $addToSet }, { new: true }).lean().exec();
-// };
-
-// export const removeUserGuild = (user_id: string, guild_ids: string | string[]) => {
-//   const $pull = typeof guild_ids === 'string' ? { guild_ids: guild_ids } : { guild_ids: { $in: guild_ids } };
-//   return User.findByIdAndUpdate(user_id, { $pull }, { new: true }).lean().exec();
-// };
+//Relations
+export const getGuildUsers = (guild_id: string, lean = true) => {
+  return User.find({ guild_ids: { $elemMatch: guild_id } }, { lean }).exec();
+};

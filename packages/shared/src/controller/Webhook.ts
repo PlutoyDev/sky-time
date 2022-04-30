@@ -7,8 +7,11 @@ export const createWebhook = (webhook: IWebhook) => {
 };
 
 export const getWebhooks = (webhook_ids: string | string[], lean = true) => {
-  const filter = typeof webhook_ids === 'string' ? { _id: webhook_ids } : { _id: { $in: webhook_ids } };
-  return Webhook.find(filter, { lean }).exec();
+  if (typeof webhook_ids === 'string') {
+    return Webhook.findOne({ _id: webhook_ids }, { lean }).exec();
+  } else {
+    return Webhook.find({ _id: { $in: webhook_ids } }, { lean }).exec();
+  }
 };
 
 export const updateWebhook = (webhook: IWebhook) => {
@@ -19,15 +22,11 @@ export const deleteWebhook = (webhook_id: string) => {
   return Webhook.findByIdAndDelete(webhook_id).lean().exec();
 };
 
-// * maybe
-// Webhook's Messages
-// export const addWebhookMessage = (webhook_id: string, message_ids: string | string[]) => {
-//   const $addToSet =
-//     typeof message_ids === 'string' ? { message_ids: message_ids } : { message_ids: { $each: message_ids } };
-//   return Webhook.findByIdAndUpdate(webhook_id, { $addToSet }, { new: true }).lean().exec();
-// };
+//Relations
+export const getGuildWebhooks = (guild_id: string, lean = true) => {
+  return Webhook.find({ guild_ids: { $elemMatch: guild_id } }, { lean }).exec();
+};
 
-// export const removeWebhookMessage = (webhook_id: string, message_ids: string | string[]) => {
-//   const $pull = typeof message_ids === 'string' ? { message_ids: message_ids } : { message_ids: { $in: message_ids } };
-//   return Webhook.findByIdAndUpdate(webhook_id, { $pull }, { new: true }).lean().exec();
-// };
+export const getMessageWebhook = (message_id: string, lean = true) => {
+  return Webhook.findOne({ message_ids: { $elemMatch: message_id } }, { lean }).exec();
+};
