@@ -5,9 +5,9 @@ export interface IUser extends Base {
   _id: string;
   username: string;
   discriminator: string;
-  guild_ids: string[] | undefined;
-  last_login: Date | undefined;
   avatar: string | undefined;
+  guild_ids: string[];
+  last_login: Date | undefined;
 }
 
 export const userSchema = new Schema<IUser>({
@@ -19,6 +19,9 @@ export const userSchema = new Schema<IUser>({
   discriminator: {
     type: String,
     required: true,
+  },
+  avatar: {
+    type: String,
   },
   guild_ids: [
     {

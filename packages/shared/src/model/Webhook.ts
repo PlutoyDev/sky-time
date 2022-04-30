@@ -5,7 +5,7 @@ export interface IWebhook extends Base {
   _id: string;
   name: string | undefined;
   token: string;
-  message_ids: string[] | undefined;
+  message_ids: string[];
   guild_id: string;
 }
 
