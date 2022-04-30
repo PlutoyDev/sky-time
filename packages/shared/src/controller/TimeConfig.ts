@@ -6,12 +6,12 @@ export const createTimeConfig = (timeConfig: ITimeConfig) => {
   return TimeConfig.create(timeConfig);
 };
 
+export const getTimeConfig = (timeConfig_id: string, lean = true) => {
+  return TimeConfig.findOne({ _id: timeConfig_id }, { lean }).exec();
+};
+
 export const getTimeConfigs = (timeConfig_ids: string | string[], lean = true) => {
-  if (typeof timeConfig_ids === 'string') {
-    return TimeConfig.findOne({ _id: timeConfig_ids }, { lean }).exec();
-  } else {
-    return TimeConfig.find({ _id: { $in: timeConfig_ids } }, { lean }).exec();
-  }
+  return TimeConfig.find({ _id: { $in: timeConfig_ids } }, { lean }).exec();
 };
 
 export const updateTimeConfig = (timeConfig: ITimeConfig) => {

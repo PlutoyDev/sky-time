@@ -4,12 +4,12 @@ export const createMessage = (message: IMessage) => {
   return Message.create(message);
 };
 
+export const getMessage = (message_id: string, lean = true) => {
+  return Message.findOne({ _id: message_id }, { lean }).exec();
+};
+
 export const getMessages = (message_ids: string | string[], lean = true) => {
-  if (typeof message_ids === 'string') {
-    return Message.findOne({ _id: message_ids }, { lean }).exec();
-  } else {
-    return Message.find({ _id: { $in: message_ids } }, { lean }).exec();
-  }
+  return Message.find({ _id: { $in: message_ids } }, { lean }).exec();
 };
 
 export const updateMessage = (message: IMessage) => {

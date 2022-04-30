@@ -6,12 +6,12 @@ export const createWebhook = (webhook: IWebhook) => {
   return Webhook.create(webhook);
 };
 
+export const getWebhook = (webhook_id: string, lean = true) => {
+  return Webhook.findOne({ _id: webhook_id }, { lean }).exec();
+};
+
 export const getWebhooks = (webhook_ids: string | string[], lean = true) => {
-  if (typeof webhook_ids === 'string') {
-    return Webhook.findOne({ _id: webhook_ids }, { lean }).exec();
-  } else {
-    return Webhook.find({ _id: { $in: webhook_ids } }, { lean }).exec();
-  }
+  return Webhook.find({ _id: { $in: webhook_ids } }, { lean }).exec();
 };
 
 export const updateWebhook = (webhook: IWebhook) => {

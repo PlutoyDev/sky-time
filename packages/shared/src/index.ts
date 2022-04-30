@@ -1,2 +1,1 @@
-export * from './connect';
-export * as Model from './model';
+export * as Database from './database';

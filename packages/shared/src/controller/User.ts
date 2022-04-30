@@ -6,12 +6,12 @@ export const createUser = (user: IUser) => {
   return User.create(user);
 };
 
-export const getUsers = (user_ids: string | string[], lean = true) => {
-  if (typeof user_ids === 'string') {
-    return User.findOne({ _id: user_ids }, { lean }).exec();
-  } else {
-    return User.find({ _id: { $in: user_ids } }, { lean }).exec();
-  }
+export const getUser = (user_id: string, lean = true) => {
+  return User.findOne({ _id: user_id }, { lean }).exec();
+};
+
+export const getUsers = (user_ids: string[], lean = true) => {
+  return User.find({ _id: { $in: user_ids } }, { lean }).exec();
 };
 
 export const updateUser = (user: IUser) => {

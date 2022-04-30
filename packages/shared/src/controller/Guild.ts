@@ -6,12 +6,12 @@ export const createGuild = (guild: IGuild) => {
   return Guild.create(guild);
 };
 
+export const getGuild = (guild_id: string, lean = true) => {
+  return Guild.findOne({ _id: guild_id }, { lean }).exec();
+};
+
 export const getGuilds = (guild_ids: string | string[], lean = true) => {
-  if (typeof guild_ids === 'string') {
-    return Guild.findOne({ _id: guild_ids }, { lean }).exec();
-  } else {
-    return Guild.find({ _id: { $in: guild_ids } }, { lean }).exec();
-  }
+  return Guild.find({ _id: { $in: guild_ids } }, { lean }).exec();
 };
 
 export const updateGuild = (guild: IGuild) => {
