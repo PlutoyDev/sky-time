@@ -1,8 +1,8 @@
 import { TimeConfig, ITimeConfig } from '../model';
-
+import { OptionalBase } from './lib';
 // Time Config
 
-export const createTimeConfig = (timeConfig: ITimeConfig) => {
+export const createTimeConfig = (timeConfig: OptionalBase<ITimeConfig>) => {
   return TimeConfig.create(timeConfig);
 };
 

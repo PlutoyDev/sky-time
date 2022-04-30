@@ -3,7 +3,7 @@ import { createModel, schemaOptions, Base } from './libs';
 
 export interface IWebhook extends Base {
   _id: string;
-  name: string | undefined;
+  name?: string | undefined;
   token: string;
   message_ids: string[];
   guild_id: string;

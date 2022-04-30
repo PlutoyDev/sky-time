@@ -7,7 +7,7 @@ export interface IUser extends Base {
   discriminator: string;
   avatar: string | undefined;
   guild_ids: string[];
-  last_login: Date | undefined;
+  last_login?: Date | undefined;
 }
 
 export const userSchema = new Schema<IUser>({

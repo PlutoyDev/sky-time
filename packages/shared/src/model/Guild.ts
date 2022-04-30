@@ -2,11 +2,12 @@ import { Schema } from 'mongoose';
 import { schemaOptions, createModel, Base } from './libs';
 export interface IGuild extends Base {
   _id: string;
-  name: string | undefined;
+  name?: string | undefined;
   user_ids: string[];
   webhook_ids: string[];
   time_config_ids: string[];
   reminder_config_ids: string[];
+  info_config_id?: string | undefined; //TODO: Merge with Guild
 }
 
 export const GuildSchema = new Schema<IGuild>(
@@ -41,12 +42,6 @@ export const GuildSchema = new Schema<IGuild>(
       type: String,
       ref: 'InfoConfig',
     },
-    log_ids: [
-      {
-        type: String,
-        ref: 'Log',
-      },
-    ],
   },
   schemaOptions,
 );

@@ -1,8 +1,14 @@
 import { Guild, IGuild } from '../model';
+import { Optional, OptionalBase } from './lib';
 
 //Guild
 
-export const createGuild = (guild: IGuild) => {
+type TGuildInput = Optional<
+  IGuild,
+  'created_at' | 'updated_at' | 'user_ids' | 'webhook_ids' | 'time_config_ids' | 'reminder_config_ids'
+>;
+
+export const createGuild = (guild: TGuildInput) => {
   return Guild.create(guild);
 };
 

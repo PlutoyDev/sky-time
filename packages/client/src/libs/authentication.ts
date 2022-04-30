@@ -10,7 +10,7 @@ import {
   NODE_ENV,
   REFRESH_TOKEN_COOKIE_NAME,
 } from './constants';
-import { Model } from './database';
+import db from './database';
 import { DiscordRest } from './discordRest';
 import { AppError, ErrorType } from './error';
 
@@ -24,7 +24,7 @@ type AccessTokenPayload =
     }
   | {
       type: 'Webhook';
-      guild_id: string;
+      guild_ids: string[];
       webhook_ids: string[];
     };
 
@@ -81,20 +81,20 @@ export function generateAuthUrl(withBot: boolean) {
 export default async function authenticate(params: AuthParams) {
   const { guild_id, user_id, webhook_id, res, req } = params;
 
-  let user = user_id && user_id !== '' && (await Model.User.findById(user_id));
-  let guild = guild_id && guild_id !== '' && (await Model.Guild.findById(guild_id));
-  let webhook = webhook_id && webhook_id !== '' && (await Model.Webhook.findById(webhook_id));
+  let user = user_id && user_id !== '' && (await db.getUser(user_id));
+  let guild = guild_id && guild_id !== '' && (await db.getGuild(guild_id));
+  let webhook = webhook_id && webhook_id !== '' && (await db.getWebhook(webhook_id));
 
   if (user_id && !user) {
     console.log('user not found');
-    const guild_ids = guild_id ? [guild_id] : undefined;
+    const guild_ids = guild_id ? [guild_id] : [];
     //Add User with Guild ID
     //Check params for user
     const { username, discriminator, avatar } = params;
-    if (!username || !discriminator || !avatar) {
+    if (!username || !discriminator) {
       throw new AppError(ErrorType.AUTH_MISSING_PARAMS, 'Missing params for creating user');
     }
-    user = await Model.User.create({
+    user = await db.createUser({
       _id: user_id,
       guild_ids,
       username,
@@ -113,10 +113,11 @@ export default async function authenticate(params: AuthParams) {
       throw new AppError(ErrorType.AUTH_MISSING_PARAMS, 'webhook_token is required');
     }
 
-    webhook = await Model.Webhook.create({
+    webhook = await db.createWebhook({
       _id: webhook_id,
       guild_id,
-      webhook_token,
+      token: webhook_token,
+      message_ids: [],
     });
   }
 
@@ -125,7 +126,7 @@ export default async function authenticate(params: AuthParams) {
     const user_ids = user_id ? [user_id] : undefined;
     const webhook_ids = webhook_id ? [webhook_id] : undefined;
 
-    guild = await Model.Guild.create({
+    guild = await db.createGuild({
       _id: guild_id,
       user_ids,
       webhook_ids,
@@ -159,16 +160,14 @@ export async function refresh(refresh_token: string) {
   const { guild_id, user_id } = payload;
 
   if (user_id) {
-    const user = await Model.User.findById(user_id);
+    const user = await db.getUser(user_id);
     if (!user) {
       throw new AppError(ErrorType.AUTH_USER_NOT_FOUND, 'User not found');
     }
     let { username, discriminator, avatar, guild_ids } = user;
 
     const channel_ids = (await Promise.all(guild_ids.map(getDiscordGuildChannels))).flat();
-    const webhook_ids = (
-      await Model.Guild.find().where('_id').in(guild_ids).select('webhook_ids').lean().exec()
-    ).flatMap(({ webhook_ids }) => webhook_ids);
+    const webhook_ids = (await db.getGuilds(guild_ids)).flatMap(({ webhook_ids }) => webhook_ids);
 
     console.log({ channel_ids, webhook_ids });
 
@@ -186,16 +185,17 @@ export async function refresh(refresh_token: string) {
       }),
     };
   } else if (guild_id) {
-    const guild = await Model.Guild.findById(guild_id);
+    const guild = await db.getGuild(guild_id);
     if (!guild) {
       throw new AppError(ErrorType.AUTH_GUILD_NOT_FOUND, 'Guild not found');
     }
     const { webhook_ids } = guild;
+    const guild_ids = [guild_id];
     return {
       guild_ids: [guild_id],
       access_token: genAccessToken({
         type: 'Webhook',
-        guild_id,
+        guild_ids,
         webhook_ids,
       }),
     };

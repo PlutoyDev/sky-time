@@ -1,8 +1,9 @@
 import { Webhook, IWebhook } from '../model';
+import { OptionalBase } from './lib';
 
 // Webhook
 
-export const createWebhook = (webhook: IWebhook) => {
+export const createWebhook = (webhook: OptionalBase<IWebhook>) => {
   return Webhook.create(webhook);
 };
 

@@ -4,7 +4,7 @@ import { v4 as uuid } from 'uuid';
 
 export interface ITimeConfig extends Base {
   _id: string;
-  name: string | undefined;
+  name?: string | undefined;
   webhook_id: string;
   guild_id: string;
   type: string;

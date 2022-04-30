@@ -1,8 +1,9 @@
 import { User, IUser } from '../model';
+import { OptionalBase } from './lib';
 
 //User
 
-export const createUser = (user: IUser) => {
+export const createUser = (user: OptionalBase<IUser>) => {
   return User.create(user);
 };
 

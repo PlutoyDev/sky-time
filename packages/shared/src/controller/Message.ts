@@ -1,6 +1,7 @@
 import { Message, IMessage } from '../model/Message';
+import { OptionalBase } from './lib';
 
-export const createMessage = (message: IMessage) => {
+export const createMessage = (message: OptionalBase<IMessage>) => {
   return Message.create(message);
 };
 
