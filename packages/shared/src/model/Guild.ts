@@ -3,10 +3,10 @@ import { schemaOptions, createModel, Base } from './libs';
 export interface IGuild extends Base {
   _id: string;
   name: string | undefined;
-  user_ids: string[];
-  webhook_ids: string[];
-  time_config_ids: string[];
-  reminder_config_ids: string[];
+  user_ids: string[] | undefined;
+  webhook_ids: string[] | undefined;
+  time_config_ids: string[] | undefined;
+  reminder_config_ids: string[] | undefined;
   info_config_id: string | undefined;
   log_ids: string[];
 }

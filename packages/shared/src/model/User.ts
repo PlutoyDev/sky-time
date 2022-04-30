@@ -5,12 +5,9 @@ export interface IUser extends Base {
   _id: string;
   username: string;
   discriminator: string;
-  guild_ids: string[];
-  last_login: Date;
+  guild_ids: string[] | undefined;
+  last_login: Date | undefined;
   avatar: string | undefined;
-
-  //Virtual
-  _discriminator: number;
 }
 
 export const userSchema = new Schema<IUser>({
@@ -35,14 +32,5 @@ export const userSchema = new Schema<IUser>({
     required: true,
   },
 });
-
-userSchema
-  .virtual('_discriminator')
-  .get(function (this: IUser) {
-    return parseInt(this.discriminator);
-  })
-  .set(function (this: IUser, value: number) {
-    this.discriminator = value.toString();
-  });
 
 export const User = createModel('User', userSchema);
