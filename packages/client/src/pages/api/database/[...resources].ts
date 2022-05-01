@@ -192,3 +192,24 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     }
   }
 };
+
+export const BaseRoute = '/api/database' as const;
+
+export type DatabaseRoutes = {
+  '/api/database/guilds': db.IGuild[];
+  '/api/database/users': db.IUser[];
+  '/api/database/webhooks': db.IWebhook[];
+  '/api/database/timeConfigs': db.ITimeConfig[];
+  '/api/database/reminderConfigs': db.IReminderConfig[];
+
+  [key: `/api/database/guilds/${number}`]: db.IGuild;
+  [key: `/api/database/users/${number}`]: db.IUser;
+  [key: `/api/database/webhooks/${number}`]: db.IWebhook;
+  [key: `/api/database/timeConfigs/${number}`]: db.ITimeConfig;
+  [key: `/api/database/reminderConfigs/${number}`]: db.IReminderConfig;
+
+  [key: `/api/database/guilds/${number}/users`]: db.IUser;
+  [key: `/api/database/guilds/${number}/webhooks`]: db.IWebhook;
+  [key: `/api/database/guilds/${number}/timeConfigs`]: db.ITimeConfig;
+  [key: `/api/database/guilds/${number}/reminderConfigs`]: db.IReminderConfig;
+};
