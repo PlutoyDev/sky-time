@@ -1,0 +1,19 @@
+@BaseURL=http://localhost:3000
+@AppRefreshToken={{$dotenv APP_REFRESH_TOKEN}}
+@AppAccessToken={{RefreshToken.response.body.access_token}}
+@GuildId1=966624265317285928
+@ChannelId1=969086384172331010
+
+###
+# @name RefreshToken
+POST {{BaseURL}}/api/auth/refresh
+Cookie: refresh_token={{AppRefreshToken}}
+
+###
+POST {{BaseURL}}/api/auth/oauth
+
+###
+GET http://localhost:3000/api/database/guilds/{{GuildId1}}/users
+Authorization: Bearer {{AppAccessToken}}
+
+
