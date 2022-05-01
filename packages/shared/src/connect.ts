@@ -1,11 +1,18 @@
 import mongoose from 'mongoose';
 
-export default async function connectDb() {
-  const mongoUri = process.env.MONGO_URI;
-  if (!mongoUri) {
-    throw new Error('MONGO_URI must be defined');
-  }
+type globalDbc = typeof global & {
+  dbConnected: boolean;
+};
 
-  await mongoose.connect(mongoUri);
-  console.log(`Connected to MongoDB`);
+export default async function connectDb() {
+  if (!(global as globalDbc).dbConnected) {
+    const mongoUri = process.env.MONGO_URI;
+    if (!mongoUri) {
+      throw new Error('MONGO_URI must be defined');
+    }
+
+    await mongoose.connect(mongoUri);
+    console.log(`Connected to MongoDB`);
+    (global as globalDbc).dbConnected = true;
+  }
 }
