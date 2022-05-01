@@ -1,7 +1,7 @@
 import { JsonWebTokenError, TokenExpiredError } from 'jsonwebtoken';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { verifyAccessToken } from '~/libs/authentication';
-import { AppError, ErrorType } from '~/libs/error';
+import { apiErrorHandler, AppError, ErrorType } from '~/libs/error';
 import db from '~/libs/database';
 import { NODE_ENV } from '~/libs/constants';
 
@@ -159,37 +159,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       throw new AppError(ErrorType.RESOURCE_NOT_FOUND, `Resource ${tlr} not found`);
     }
   } catch (error) {
-    if (error instanceof TokenExpiredError) {
-      res.status(401).json({
-        error,
-      });
-      return;
-    } else if (error instanceof JsonWebTokenError) {
-      res.status(403).json({
-        error,
-      });
-      return;
-    } else if (error instanceof AppError) {
-      res.status(error.status).json(
-        NODE_ENV === 'production'
-          ? { error }
-          : {
-              error,
-              request: {
-                method,
-                headers,
-                body,
-                query,
-              },
-            },
-      );
-      return;
-    } else {
-      res.status(500).json({
-        error,
-      });
-      return;
-    }
+    apiErrorHandler(req, res, error);
   }
 };
 

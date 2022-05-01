@@ -1,3 +1,7 @@
+import { TokenExpiredError, JsonWebTokenError } from 'jsonwebtoken';
+import { NODE_ENV } from './constants';
+import type { NextApiRequest, NextApiResponse } from 'next';
+
 export const enum ErrorType {
   AUTH_INVALID_CODE = 'auth_invalid_code',
   AUTH_MISSING_GUILD = 'auth_missing_guild',
@@ -66,3 +70,41 @@ export class AppError extends Error {
     super(message ?? type.split('_').join(' '));
   }
 }
+
+export const apiErrorHandler = (req: NextApiRequest, res: NextApiResponse, error: any) => {
+  const { method, headers, body, query } = req;
+  //TODO: Add MongoDB error handling
+  //TODO: Add Mongoose Error Handling
+
+  if (error instanceof TokenExpiredError) {
+    res.status(401).json({
+      error,
+    });
+    return;
+  } else if (error instanceof JsonWebTokenError) {
+    res.status(403).json({
+      error,
+    });
+    return;
+  } else if (error instanceof AppError) {
+    res.status(error.status).json(
+      NODE_ENV === 'production'
+        ? { error }
+        : {
+            error,
+            request: {
+              method,
+              headers,
+              body,
+              query,
+            },
+          },
+    );
+    return;
+  } else {
+    res.status(500).json({
+      error,
+    });
+    return;
+  }
+};
