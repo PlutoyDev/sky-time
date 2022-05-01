@@ -11,6 +11,16 @@
 @GuildId1=966624265317285928
 @ChannelId1=969086384172331010
 
+### COPY as cURL, then paste into terminal
+POST {{DiscordBaseURL}}/oauth2/token
+Content-Type: application/x-www-form-urlencoded
+Authorization: Basic {{DiscordClientId}} {{DiscordClientSecret}}
+
+grant_type=authorization_code
+&redirect_uri={{DiscordRedirectUri}}
+&code=
+
+
 ###
 # @name RefreshToken
 POST {{DiscordBaseURL}}/oauth2/token
@@ -39,4 +49,13 @@ Authorization: Bot {{DiscordBotToken}}
 
 ###
 GET {{DiscordBaseURL}}/users/@me
+Authorization: Bearer {{DiscordAccessToken}}
+
+###
+GET {{DiscordBaseURL}}/users/702740689846272002
+Authorization: Bot {{DiscordBotToken}}
+
+
+###
+DELETE {{DiscordBaseURL}}/users/@me/guilds/923763075428003870
 Authorization: Bearer {{DiscordAccessToken}}
