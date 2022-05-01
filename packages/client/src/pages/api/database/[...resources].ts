@@ -77,102 +77,87 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         res.status(200).json(guilds);
         return;
       }
+    } else if (tlr === 'users') {
+      if (access.type !== 'Oauth') {
+        throw new AppError(ErrorType.FORBIDDEN, 'You are not allowed to access this resource');
+      }
+      if (!tlr_id && tlr_id === access.user_id) {
+        throw new AppError(ErrorType.FORBIDDEN, 'You are not allowed to access this resource');
+      }
+      if (slr) {
+        if (slr === 'guilds') {
+          assertMethod(method === 'GET');
+          const guilds = await db.getUserGuilds(tlr_id);
+          res.status(200).json(guilds);
+          return;
+        } else {
+          throw new AppError(ErrorType.RESOURCE_NOT_FOUND, `Resource ${slr} not found`);
+        }
+      } else {
+        assertMethod(method === 'GET');
+        const user = await db.getUser(tlr_id);
+        res.status(200).json(user);
+        return;
+      }
+    } else if (tlr === 'webhooks') {
+      if (slr) {
+        throw new AppError(ErrorType.RESOURCE_NOT_FOUND, `No sub-level (${slr}) for ${tlr}`);
+      } else if (tlr_id) {
+        if (method === 'GET') {
+          const webhook = await db.getWebhook(tlr_id);
+          res.status(200).json(webhook);
+          return;
+        } else if (method === 'PATCH') {
+          if (body.id !== tlr_id) {
+            throw new AppError(ErrorType.MISSING_PARAMS, 'id does not match');
+          }
+          const webhook = await db.updateWebhook(body);
+          res.status(200).json(webhook);
+          return;
+        } else if (method === 'DELETE') {
+          const webhook = await db.deleteWebhook(tlr_id);
+          res.status(200).json(webhook);
+          return;
+        } else {
+          throw new AppError(ErrorType.METHOD_NOT_ALLOWED);
+        }
+      } else {
+        assertMethod(method === 'GET');
+        const webhooks = await db.getWebhooks(access.webhook_ids);
+        res.status(200).json(webhooks);
+        return;
+      }
+    } else if (tlr === 'timeConfigs') {
+      if (slr) {
+        throw new AppError(ErrorType.RESOURCE_NOT_FOUND, `No sub-level (${slr}) for ${tlr}`);
+      } else if (tlr_id) {
+        if (method === 'GET') {
+          const timeConfig = await db.getTimeConfig(tlr_id);
+          res.status(200).json(timeConfig);
+          return;
+        } else if (method === 'PATCH') {
+          if (body.id !== tlr_id) {
+            throw new AppError(ErrorType.MISSING_PARAMS, 'id does not match');
+          }
+          const timeConfig = await db.updateTimeConfig(body);
+          res.status(200).json(timeConfig);
+          return;
+        } else if (method === 'DELETE') {
+          const timeConfig = await db.deleteTimeConfig(tlr_id);
+          res.status(200).json(timeConfig);
+          return;
+        } else {
+          throw new AppError(ErrorType.METHOD_NOT_ALLOWED);
+        }
+      } else {
+        throw new AppError(ErrorType.BAD_REQUEST, 'No id provided');
+      }
+    } else if (tlr === 'reminderConfigs') {
+      //TODO
+      throw new AppError(ErrorType.NOT_IMPLEMENTED, 'reminder configs are not implemented yet');
+    } else {
+      throw new AppError(ErrorType.RESOURCE_NOT_FOUND, `Resource ${tlr} not found`);
     }
-
-    throw new AppError(ErrorType.RESOURCE_NOT_FOUND, `Resource ${tlr} not found`);
-
-    //* Move database logic to controller
-    // if (tlr === 'guilds') {
-    //   if (tlr_id && !access.guild_ids.includes(tlr_id)) {
-    //     throw new AppError(ErrorType.FORBIDDEN, `You are not allowed to access this guild (${tlr_id})`);
-    //   } else if (tlr_id && slr) {
-    //     //TODO: Sub-resources User for Guilds
-    //     //TODO: Sub-resources Webhook for Guilds
-    //     //TODO: Sub-resources TimeConfig for Guilds
-    //     //TODO: Sub-resources ReminderConfig for Guilds
-    //   } else if (method === 'GET') {
-    //     const guild_ids = tlr_id ? [tlr_id] : access.guild_ids;
-    //     const guilds = await Model.Guild.find({ _id: { $in: guild_ids } });
-    //     res.status(200).json(guilds);
-    //   } else if (method === 'PATCH') {
-    //     //? use json patch instead
-    //     if (!tlr_id) {
-    //       throw new AppError(ErrorType.AUTH_MISSING_PARAMS, 'guild_id is required');
-    //     } else {
-    //       //! Add Modification Checks
-    //       const guild = await Model.Guild.findByIdAndUpdate(tlr_id, body, { new: true });
-    //       res.status(200).json(guild);
-    //     }
-    //   } else {
-    //     throw new AppError(ErrorType.METHOD_NOT_ALLOWED, `${method} is not allowed`);
-    //   }
-    // } else if (tlr === 'users') {
-    //   if (method === 'GET') {
-    //     if (tlr_id) {
-    //       const user = await Model.User.findById(tlr_id);
-    //       if (!user) {
-    //         throw new AppError(ErrorType.RESOURCE_NOT_FOUND, `User not found (${tlr_id})`);
-    //       } else if (!user.guild_ids.find(id => access.guild_ids.includes(id))) {
-    //         throw new AppError(ErrorType.FORBIDDEN, `You are not allowed to access this user (${tlr_id})`);
-    //       } else {
-    //         res.status(200).json(user);
-    //       }
-    //     } else {
-    //       const users = await Model.User.find({ guild_ids: { $elemMatch: { $in: access.guild_ids } } });
-    //       res.status(200).json(users);
-    //     }
-    //   } else {
-    //     throw new AppError(ErrorType.METHOD_NOT_ALLOWED, `${method} is not allowed`);
-    //   }
-    // } else if (tlr === 'webhooks') {
-    //   if (method === 'GET') {
-    //     if (tlr_id) {
-    //       const webhook = await Model.Webhook.findById(tlr_id);
-    //       if (!webhook) {
-    //         throw new AppError(ErrorType.RESOURCE_NOT_FOUND, `Webhook not found (${tlr_id})`);
-    //       } else if (!access.guild_ids.includes(webhook.guild_id)) {
-    //         throw new AppError(ErrorType.FORBIDDEN, `You are not allowed to access this webhook (${tlr_id})`);
-    //       } else {
-    //         res.status(200).json(webhook);
-    //       }
-    //     } else {
-    //       const webhooks = await Model.Webhook.find({ guild_id: { $in: access.guild_ids } });
-    //       res.status(200).json(webhooks);
-    //     }
-    //   } else {
-    //     throw new AppError(ErrorType.METHOD_NOT_ALLOWED, `${method} is not allowed`);
-    //   }
-    // } else if (tlr === 'timeConfigs') {
-    //   if (!tlr_id) {
-    //     throw new AppError(ErrorType.AUTH_MISSING_PARAMS, 'timeConfig_id is required');
-    //   }
-    // } else if (tlr === 'reminderConfigs') {
-    //   if (!tlr_id) {
-    //     throw new AppError(ErrorType.AUTH_MISSING_PARAMS, 'reminderConfig_id is required');
-    //   }
-    // } else {
-    //   throw new AppError(ErrorType.RESOURCE_NOT_FOUND, `Resource ${tlr} not supported`);
-    // }
-
-    // if (tlr === 'guilds') {
-    //   if (method === 'GET') {
-    //     if (tlr_id) {
-    //       const hasAccess =
-    //         access.type === 'Oauth' ? access.guild_ids.includes(tlr_id) : access.guild_id === access.guild_id;
-    //       if (hasAccess) {
-    //         const guild = await Model.Guild.findById(tlr_id);
-    //         if (!guild) {
-    //           throw new AppError(ErrorType.RESOURCE_NOT_FOUND, `Guild with ID ${tlr_id} not found.`);
-    //         }
-    //         res.status(200).json(guild);
-    //       } else {
-    //       }
-    //     } else {
-    //       const guild_ids = access.type === 'Oauth' ? access.guild_ids : [access.guild_id];
-    //       res.json(guild_ids);
-    //     }
-    //   }
-    // }
   } catch (error) {
     if (error instanceof TokenExpiredError) {
       res.status(401).json({
