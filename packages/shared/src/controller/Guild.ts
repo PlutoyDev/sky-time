@@ -13,11 +13,11 @@ export const createGuild = (guild: TGuildInput) => {
 };
 
 export const getGuild = (guild_id: string, lean = true) => {
-  return Guild.findOne({ _id: guild_id }, { lean }).exec();
+  return Guild.findOne({ _id: guild_id }, null, { lean }).exec();
 };
 
 export const getGuilds = (guild_ids: string | string[], lean = true) => {
-  return Guild.find({ _id: { $in: guild_ids } }, { lean }).exec();
+  return Guild.find({ _id: { $in: guild_ids } }, null, { lean }).exec();
 };
 
 export const updateGuild = (guild: IGuild) => {
@@ -30,17 +30,17 @@ export const deleteGuild = (guild_id: string) => {
 
 //Relations
 export const getUserGuilds = (user_id: string, lean = true) => {
-  return Guild.find({ user_ids: { $elemMatch: user_id } }, { lean }).exec();
+  return Guild.find({ user_ids: { $elemMatch: { $eq: user_id } } }, null, { lean }).exec();
 };
 
 export const getWebhookGuild = (webhook_id: string, lean = true) => {
-  return Guild.findOne({ webhook_ids: { $elemMatch: webhook_id } }, { lean }).exec();
+  return Guild.findOne({ webhook_ids: { $elemMatch: { $eq: webhook_id } } }, null, { lean }).exec();
 };
 
 export const getTimeConfigGuild = (timeConfig_id: string, lean = true) => {
-  return Guild.findOne({ timeConfig_ids: { $elemMatch: timeConfig_id } }, { lean }).exec();
+  return Guild.findOne({ timeConfig_ids: { $elemMatch: { $eq: timeConfig_id } } }, null, { lean }).exec();
 };
 
 export const getReminderConfigGuild = (reminder_id: string, lean = true) => {
-  return Guild.findOne({ reminder_ids: { $elemMatch: reminder_id } }, { lean }).exec();
+  return Guild.findOne({ reminder_ids: { $elemMatch: { $eq: reminder_id } } }, null, { lean }).exec();
 };

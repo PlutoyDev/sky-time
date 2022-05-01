@@ -8,11 +8,11 @@ export const createUser = (user: OptionalBase<IUser>) => {
 };
 
 export const getUser = (user_id: string, lean = true) => {
-  return User.findOne({ _id: user_id }, { lean }).exec();
+  return User.findOne({ _id: user_id }, null, { lean }).exec();
 };
 
 export const getUsers = (user_ids: string[], lean = true) => {
-  return User.find({ _id: { $in: user_ids } }, { lean }).exec();
+  return User.find({ _id: { $in: user_ids } }, null, { lean }).exec();
 };
 
 export const updateUser = (user: IUser) => {
@@ -25,5 +25,5 @@ export const deleteUser = (user_id: string) => {
 
 //Relations
 export const getGuildUsers = (guild_id: string, lean = true) => {
-  return User.find({ guild_ids: { $elemMatch: guild_id } }, { lean }).exec();
+  return User.find({ guild_ids: { $elemMatch: { $eq: guild_id } } }, null, { lean }).exec();
 };

@@ -6,11 +6,11 @@ export const createMessage = (message: OptionalBase<IMessage>) => {
 };
 
 export const getMessage = (message_id: string, lean = true) => {
-  return Message.findOne({ _id: message_id }, { lean }).exec();
+  return Message.findOne({ _id: message_id }, null, { lean }).exec();
 };
 
 export const getMessages = (message_ids: string | string[], lean = true) => {
-  return Message.find({ _id: { $in: message_ids } }, { lean }).exec();
+  return Message.find({ _id: { $in: message_ids } }, null, { lean }).exec();
 };
 
 export const updateMessage = (message: IMessage) => {
@@ -23,5 +23,5 @@ export const deleteMessage = (message_id: string) => {
 
 //Relations
 export const getWebhookMessages = (webhook_id: string, lean = true) => {
-  return Message.find({ webhook_ids: { $elemMatch: webhook_id } }, { lean }).exec();
+  return Message.find({ webhook_ids: { $elemMatch: { $eq: webhook_id } } }, null, { lean }).exec();
 };
