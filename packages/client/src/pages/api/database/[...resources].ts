@@ -1,6 +1,6 @@
 import { JsonWebTokenError, TokenExpiredError } from 'jsonwebtoken';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { verifyAccessToken } from '~/libs/authentication';
+import { verifyAccessToken } from '~/libs/appAuth';
 import { apiErrorHandler, AppError, ErrorType } from '~/libs/error';
 import db from '~/libs/database';
 import { NODE_ENV } from '~/libs/constants';

@@ -1,15 +1,11 @@
-import { refresh, verifyRefreshToken } from '~/libs/authentication';
+import { refresh } from '~/libs/appAuth';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { REFRESH_TOKEN_COOKIE_NAME } from '~/libs/constants';
+import { apiErrorHandler } from '~/libs/error';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const refresh_token = req.cookies[REFRESH_TOKEN_COOKIE_NAME];
-  if (!refresh_token) {
-    return res.status(401).json({
-      error: 'refresh_token_not_found',
-    });
+  try {
+    res.json(await refresh(req.cookies));
+  } catch (e) {
+    apiErrorHandler(req, res, e);
   }
-  const data = await refresh(refresh_token);
-
-  res.json(data);
 };

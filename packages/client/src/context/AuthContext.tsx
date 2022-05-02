@@ -1,7 +1,7 @@
 import { createContext, useCallback, useContext, useEffect } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
 import appAxios from '~/libs/axios/appAxios';
-import type { refresh } from '../libs/authentication';
+import type { refresh } from '../libs/appAuth';
 
 type UserData = Awaited<ReturnType<typeof refresh>>;
 

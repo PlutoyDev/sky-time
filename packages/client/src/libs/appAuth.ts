@@ -3,8 +3,7 @@ import { APIGuildChannel, GuildChannelType, Routes } from 'discord-api-types/v9'
 import jwt from 'jsonwebtoken';
 import { NextApiRequest, NextApiResponse } from 'next';
 import {
-  BASE_URL,
-  DISCORD_CLIENT_ID,
+  DISCORD_ACCESS_TOKEN_COOKIE_NAME,
   JWT_ACCESS_TOKEN_SECRET,
   JWT_REFRESH_TOKEN_SECRET,
   NODE_ENV,
@@ -14,6 +13,19 @@ import db from './database';
 import { DiscordRest } from './discordRest';
 import { AppError, ErrorType } from './error';
 
+//JWT Refresh Token
+type RefreshTokenPayload = {
+  user_id?: string;
+  guild_id?: string;
+};
+
+const genRefreshToken = (payload: RefreshTokenPayload) =>
+  jwt.sign(payload, JWT_REFRESH_TOKEN_SECRET, { expiresIn: '14d' });
+
+const verifyRefreshToken = (token: string) =>
+  jwt.verify(token, JWT_REFRESH_TOKEN_SECRET) as RefreshTokenPayload & { iat: number };
+
+//JWT Access Token
 type AccessTokenPayload =
   | {
       type: 'Oauth';
@@ -28,22 +40,15 @@ type AccessTokenPayload =
       webhook_ids: string[];
     };
 
-type RefreshTokenPayload = {
-  user_id?: string;
-  guild_id?: string;
-};
-
-const genRefreshToken = (payload: RefreshTokenPayload) =>
-  jwt.sign(payload, JWT_REFRESH_TOKEN_SECRET, { expiresIn: '14d' });
-
-export const genAccessToken = (payload: AccessTokenPayload) =>
+const genAccessToken = (payload: AccessTokenPayload) =>
   jwt.sign(payload, JWT_ACCESS_TOKEN_SECRET, { expiresIn: '30m' });
-
-export const verifyRefreshToken = (token: string) =>
-  jwt.verify(token, JWT_REFRESH_TOKEN_SECRET) as RefreshTokenPayload & { iat: number };
 
 export const verifyAccessToken = (token: string) =>
   jwt.verify(token, JWT_ACCESS_TOKEN_SECRET) as AccessTokenPayload & { iat: number };
+
+//Authentication
+
+type CookieOption = NonNullable<Parameters<typeof setCookies>[2]>;
 
 export type AuthParams = {
   guild_id?: string;
@@ -52,6 +57,7 @@ export type AuthParams = {
   username?: string;
   discriminator?: string;
   avatar?: string;
+  discord_access_token?: string;
 
   webhook_id?: string;
   channel_id?: string;
@@ -61,35 +67,15 @@ export type AuthParams = {
   req: NextApiRequest;
 };
 
-export function generateAuthUrl(withBot: boolean) {
-  const scopeArray = ['identify', 'guilds', 'guilds.members.read'];
-  if (withBot) scopeArray.push('bot');
-
-  const scope = scopeArray.join(' ');
-
-  const param = {
-    client_id: DISCORD_CLIENT_ID,
-    redirect_uri: BASE_URL + '/api/auth/callback',
-    permissions: '536871936',
-    response_type: 'code',
-    scope,
-  };
-
-  return `https://discordapp.com/api/oauth2/authorize?${new URLSearchParams(param)}`;
-}
-
-export default async function authenticate(params: AuthParams) {
-  const { guild_id, user_id, webhook_id, res, req } = params;
+export async function authenticate(params: AuthParams) {
+  const { guild_id, user_id, webhook_id, discord_access_token, res, req } = params;
 
   let user = user_id && user_id !== '' && (await db.getUser(user_id));
   let guild = guild_id && guild_id !== '' && (await db.getGuild(guild_id));
   let webhook = webhook_id && webhook_id !== '' && (await db.getWebhook(webhook_id));
 
   if (user_id && !user) {
-    console.log('user not found');
     const guild_ids = guild_id ? [guild_id] : [];
-    //Add User with Guild ID
-    //Check params for user
     const { username, discriminator, avatar } = params;
     if (!username || !discriminator) {
       throw new AppError(ErrorType.AUTH_MISSING_PARAMS, 'Missing params for creating user');
@@ -104,7 +90,6 @@ export default async function authenticate(params: AuthParams) {
   }
 
   if (webhook_id && !webhook) {
-    console.log('webhook not found');
     if (!guild_id) {
       throw new AppError(ErrorType.AUTH_MISSING_GUILD, 'guild_id is required');
     }
@@ -122,7 +107,6 @@ export default async function authenticate(params: AuthParams) {
   }
 
   if (guild_id && !guild) {
-    console.log('guild not found');
     const user_ids = user_id ? [user_id] : undefined;
     const webhook_ids = webhook_id ? [webhook_id] : undefined;
 
@@ -133,20 +117,26 @@ export default async function authenticate(params: AuthParams) {
     });
   }
 
-  const refresh_token = genRefreshToken({ guild_id, user_id });
-  setCookies(REFRESH_TOKEN_COOKIE_NAME, refresh_token, {
+  const cookieOption: CookieOption = {
     res,
     req,
     httpOnly: true,
     sameSite: 'strict',
     maxAge: 1000 * 60 * 60 * 24 * 14,
     secure: NODE_ENV === 'production',
-  });
+  };
+
+  const refresh_token = genRefreshToken({ guild_id, user_id });
+  setCookies(REFRESH_TOKEN_COOKIE_NAME, refresh_token, cookieOption);
+
+  if (discord_access_token) {
+    setCookies(DISCORD_ACCESS_TOKEN_COOKIE_NAME, discord_access_token, cookieOption);
+  }
 
   return;
 }
 
-export async function getDiscordGuildChannels(guild_id: string) {
+async function getDiscordGuildChannels(guild_id: string) {
   try {
     const channels = (await DiscordRest.get(Routes.guildChannels(guild_id))) as APIGuildChannel<GuildChannelType>[];
     return channels.map(({ id }) => id);
@@ -155,7 +145,14 @@ export async function getDiscordGuildChannels(guild_id: string) {
   }
 }
 
-export async function refresh(refresh_token: string) {
+export async function refresh(cookies: Record<string, string>) {
+  const refresh_token = cookies[REFRESH_TOKEN_COOKIE_NAME];
+  const discord_access_token = cookies[DISCORD_ACCESS_TOKEN_COOKIE_NAME];
+
+  if (!refresh_token) {
+    throw new AppError(ErrorType.AUTH_MISSING_REFRESH_TOKEN, 'Missing refresh token');
+  }
+
   const payload = verifyRefreshToken(refresh_token);
   const { guild_id, user_id } = payload;
 
@@ -172,10 +169,11 @@ export async function refresh(refresh_token: string) {
     console.log({ channel_ids, webhook_ids });
 
     return {
-      guild_ids,
+      avatar,
       username,
       discriminator,
-      avatar,
+      discord_access_token,
+      guild_ids,
       access_token: genAccessToken({
         type: 'Oauth',
         user_id,

@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import discordAxios from '~/libs/axios/discordAxios';
 import { RESTGetAPIWebhookWithTokenResult } from 'discord-api-types/v9';
-import authenticate from '~/libs/authentication';
+import { authenticate } from '~/libs/appAuth';
 
 export default async function webhookAuth(req: NextApiRequest, res: NextApiResponse) {
   const { id: webhook_id, token: webhook_token } = req.query;
