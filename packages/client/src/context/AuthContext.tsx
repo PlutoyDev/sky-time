@@ -41,7 +41,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   }, []);
 
   useEffect(() => {
-    appAxios.defaults.headers.common.Authorization = `Bearer ${userAuthData?.access_token}`;
+    appAxios.defaults.headers.common.Authorization = `Bearer ${userAuthData?.access_token} ${userAuthData?.discord_access_token}`;
   }, []);
 
   useEffect(() => {
