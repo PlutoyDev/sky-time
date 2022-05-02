@@ -894,6 +894,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mantine/modals@npm:^4.2.2":
+  version: 4.2.2
+  resolution: "@mantine/modals@npm:4.2.2"
+  peerDependencies:
+    "@mantine/core": 4.2.2
+    "@mantine/hooks": 4.2.2
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  checksum: 1cdaff470e3166969441724790532898e675d6c0b51ed64612664d47adf56d30789c7199366dc60d2f799329a4a9852746778aa5914ce4f8355aea665dc99841
+  languageName: node
+  linkType: hard
+
 "@mantine/next@npm:^4.1.4":
   version: 4.1.4
   resolution: "@mantine/next@npm:4.1.4"
@@ -1288,6 +1300,7 @@ __metadata:
     "@mantine/dates": ^4.1.4
     "@mantine/form": ^4.1.4
     "@mantine/hooks": ^4.1.4
+    "@mantine/modals": ^4.2.2
     "@mantine/next": ^4.1.4
     "@mantine/notifications": ^4.1.4
     "@sky-time/shared": "workspace:^"

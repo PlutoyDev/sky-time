@@ -1486,6 +1486,40 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@mantine/modals", [\
+        ["npm:4.2.2", {\
+          "packageLocation": "./.yarn/cache/@mantine-modals-npm-4.2.2-db44b72a63-1cdaff470e.zip/node_modules/@mantine/modals/",\
+          "packageDependencies": [\
+            ["@mantine/modals", "npm:4.2.2"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:4.2.2", {\
+          "packageLocation": "./.yarn/__virtual__/@mantine-modals-virtual-5c8f2c672e/0/cache/@mantine-modals-npm-4.2.2-db44b72a63-1cdaff470e.zip/node_modules/@mantine/modals/",\
+          "packageDependencies": [\
+            ["@mantine/modals", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:4.2.2"],\
+            ["@mantine/core", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:4.1.4"],\
+            ["@mantine/hooks", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:4.1.4"],\
+            ["@types/mantine__core", null],\
+            ["@types/mantine__hooks", null],\
+            ["@types/react", "npm:17.0.44"],\
+            ["@types/react-dom", null],\
+            ["react", "npm:17.0.2"],\
+            ["react-dom", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:17.0.2"]\
+          ],\
+          "packagePeers": [\
+            "@mantine/core",\
+            "@mantine/hooks",\
+            "@types/mantine__core",\
+            "@types/mantine__hooks",\
+            "@types/react-dom",\
+            "@types/react",\
+            "react-dom",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@mantine/next", [\
         ["npm:4.1.4", {\
           "packageLocation": "./.yarn/cache/@mantine-next-npm-4.1.4-e70f3aa830-c31afeb8c2.zip/node_modules/@mantine/next/",\
@@ -2102,6 +2136,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@mantine/dates", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:4.1.4"],\
             ["@mantine/form", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:4.1.4"],\
             ["@mantine/hooks", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:4.1.4"],\
+            ["@mantine/modals", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:4.2.2"],\
             ["@mantine/next", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:4.1.4"],\
             ["@mantine/notifications", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:4.1.4"],\
             ["@sky-time/shared", "workspace:packages/shared"],\
