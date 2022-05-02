@@ -2106,6 +2106,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@mantine/notifications", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:4.1.4"],\
             ["@sky-time/shared", "workspace:packages/shared"],\
             ["@types/jsonwebtoken", "npm:8.5.8"],\
+            ["@types/lodash", "npm:4.14.182"],\
             ["@types/node", "npm:17.0.29"],\
             ["@types/react", "npm:17.0.44"],\
             ["@types/uuid", "npm:8.3.4"],\
@@ -2120,6 +2121,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["dotenv", "npm:16.0.0"],\
             ["jest", "virtual:b5def7bccb107b1d7a0bdb42e64006911494524f09bffdfe7ec5eee019215b5a7b9101da645e91a33438c0185b52f2b9c8f0b762047390328035b99d26eb2d56#npm:27.5.1"],\
             ["jsonwebtoken", "npm:8.5.1"],\
+            ["lodash", "npm:4.17.21"],\
             ["mongoose", "npm:6.3.1"],\
             ["next", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:12.1.5"],\
             ["npm-run-all", "npm:4.1.5"],\
@@ -2507,6 +2509,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@types/keyv", "npm:3.1.4"],\
             ["@types/node", "npm:17.0.25"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@types/lodash", [\
+        ["npm:4.14.182", {\
+          "packageLocation": "./.yarn/cache/@types-lodash-npm-4.14.182-1073aac722-7dd137aa9d.zip/node_modules/@types/lodash/",\
+          "packageDependencies": [\
+            ["@types/lodash", "npm:4.14.182"]\
           ],\
           "linkType": "HARD"\
         }]\
