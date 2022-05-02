@@ -6,7 +6,7 @@ import {
   Routes,
 } from 'discord-api-types/v9';
 import { BASE_URL, DISCORD_CLIENT_ID, DISCORD_CLIENT_SECRET } from './constants';
-import { DiscordRest } from './discordRest';
+import { DiscordRest, setTokenAsBot } from './discordRest';
 import { AppError, ErrorType } from './error';
 
 export function genDiscordAuthUrl(withBot: boolean) {
@@ -55,6 +55,8 @@ export async function discordAuthorize(code: any) {
   } = (await DiscordRest.get(Routes.user(), {
     authPrefix: 'Bearer',
   })) as APIUser;
+
+  setTokenAsBot();
 
   return {
     user_id,
