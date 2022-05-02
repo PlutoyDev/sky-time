@@ -67,7 +67,7 @@ export class AppError extends Error {
         return 500;
     }
   }
-  //! Message not shown in response
+
   constructor(public type: ErrorType, message?: string) {
     super(message ?? type.split('_').join(' '));
   }
