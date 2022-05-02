@@ -15,6 +15,8 @@ export const enum ErrorType {
 
   DISCORD_API_MISSING_PARAMS = 'discord_api_missing_params',
 
+  ASSERTION_FAILED = 'assertion_failed',
+
   //HTTP Client side errors
   BAD_REQUEST = 'bad_request',
   FORBIDDEN = 'forbidden',
@@ -68,6 +70,12 @@ export class AppError extends Error {
 
   constructor(public type: ErrorType, message?: string) {
     super(message ?? type.split('_').join(' '));
+  }
+}
+
+export function assert(condition: any, type: ErrorType, message?: string): asserts condition {
+  if (!condition) {
+    throw new AppError(type, message);
   }
 }
 
