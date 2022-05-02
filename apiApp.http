@@ -1,5 +1,7 @@
 @BaseURL=http://localhost:3000
 @AppRefreshToken={{$dotenv APP_REFRESH_TOKEN}}
+@DiscordClientId={{$dotenv DISCORD_CLIENT_ID}}
+@AppDiscordAccessToken={{$dotenv APP_DISCORD_ACCESS_TOKEN}}
 @AppAccessToken={{RefreshToken.response.body.access_token}}
 @GuildId1=966624265317285928
 @ChannelId1=969086384172331010
@@ -7,13 +9,41 @@
 ###
 # @name RefreshToken
 POST {{BaseURL}}/api/auth/refresh
-Cookie: refresh_token={{AppRefreshToken}}
+Cookie: refresh_token={{AppRefreshToken}}; discord_access_token={{AppDiscordAccessToken}}
 
 ###
 POST {{BaseURL}}/api/auth/oauth
 
 ###
 GET http://localhost:3000/api/database/guilds/{{GuildId1}}/users
-Authorization: Bearer {{AppAccessToken}}
+Authorization: Bearer {{AppAccessToken}} {{AppDiscordAccessToken}}
 
 
+###
+GET {{BaseURL}}/api/discord/guilds/{{GuildId1}}/roles
+Authorization: Bearer {{AppAccessToken}} {{AppDiscordAccessToken}}
+
+###
+GET {{BaseURL}}/api/discord/guilds/{{GuildId1}}/members/{{DiscordClientId}}
+Authorization: Bearer {{AppAccessToken}} {{AppDiscordAccessToken}}
+
+###
+GET {{BaseURL}}/api/discord/guilds/{{GuildId1}}/channels
+Authorization: Bearer {{AppAccessToken}} {{AppDiscordAccessToken}}
+
+###
+POST {{BaseURL}}/api/discord/guilds/{{GuildId1}}/channels
+Authorization: Bearer {{AppAccessToken}} {{AppDiscordAccessToken}}
+Content-Type: application/json
+X-Audit-Log-Reason: Testing log
+
+{
+  "name": "bot-create-test",
+  "type": 0,
+  "topic": ""
+}
+
+###
+POST {{BaseURL}}/api/discord/guilds
+Authorization: Bearer {{AppAccessToken}} {{AppDiscordAccessToken}}
+Content-Type: application/json
