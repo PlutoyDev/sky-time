@@ -43,6 +43,9 @@ export async function discordAuthorize(code: any) {
     auth: false,
     passThroughBody: true,
     body: new URLSearchParams(param).toString(),
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
   })) as AccessTokenResult & Partial<BotResult>;
 
   DiscordRest.setToken(tokenData.access_token);
