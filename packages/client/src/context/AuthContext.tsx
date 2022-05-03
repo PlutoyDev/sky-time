@@ -6,6 +6,7 @@ import type { refresh } from '../libs/appAuth';
 type UserData = Awaited<ReturnType<typeof refresh>>;
 
 type AuthContextValue = UserData & {
+  isAuthenticated: boolean;
   refresh: () => Promise<void>;
   logout: () => void;
 };
@@ -14,7 +15,40 @@ type AuthProviderProps = {
   children: React.ReactNode;
 };
 
-export const AuthContext = createContext<AuthContextValue | undefined>(undefined);
+/*
+avatar: string | undefined;
+username: string;
+discriminator: string;
+discord_access_token: string | undefined;
+guild_ids: string[];
+access_token: string;
+
+guild_ids: string[];
+access_token: string;
+avatar?: undefined;
+username?: undefined;
+discriminator?: undefined;
+discord_access_token?: undefined;
+
+*/
+
+const defaultValue: AuthContextValue = {
+  username: '',
+  discriminator: '',
+  avatar: undefined,
+
+  guild_ids: [],
+
+  access_token: '',
+  discord_access_token: undefined,
+
+  isAuthenticated: false,
+
+  refresh: () => Promise.resolve(),
+  logout: () => {},
+};
+
+export const AuthContext = createContext<AuthContextValue>(defaultValue);
 
 const getUserData = async () => {
   return (await appAxios.post<UserData>('/api/auth/refresh')).data;
@@ -23,12 +57,15 @@ const getUserData = async () => {
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const {
     data: userAuthData,
-    isSuccess,
+    isSuccess: isAuthenticated,
     refetch,
   } = useQuery({
     queryKey: 'userAuthData',
     queryFn: getUserData,
     retry: false,
+    refetchOnReconnect: false,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
   });
   const queryClient = useQueryClient();
 
@@ -42,7 +79,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   useEffect(() => {
     appAxios.defaults.headers.common.Authorization = `Bearer ${userAuthData?.access_token} ${userAuthData?.discord_access_token}`;
-  }, []);
+  }, [userAuthData?.access_token, userAuthData?.discord_access_token]);
 
   useEffect(() => {
     queryClient.setDefaultOptions({
@@ -63,12 +100,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     });
   }, []);
 
-  const value: AuthContextValue | undefined = !userAuthData
-    ? undefined
+  const value: AuthContextValue = !userAuthData
+    ? defaultValue
     : {
         refresh,
         logout,
         ...userAuthData,
+        isAuthenticated,
       };
 
   return <AuthContext.Provider value={value} children={children} />;
