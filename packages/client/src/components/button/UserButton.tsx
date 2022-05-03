@@ -20,9 +20,14 @@ const useStyles = createStyles(theme => ({
 }));
 
 export function UserButton() {
-  const { isAuthenticated, user_id, username, discriminator, avatar, guild_ids, nickname, guildName, logout } =
-    useAuth();
+  const { isAuthenticated, user_id, username, discriminator, avatar, nickname, guildName, logout } = useAuth();
   const { classes } = useStyles();
+  const logoutButton = (
+    <Button color="red" onClick={() => logout()}>
+      Logout
+    </Button>
+  );
+
   let href = '/login';
   let userDisplayName = 'Login';
   let guildDisplayName = guildName ?? '';
@@ -54,7 +59,7 @@ export function UserButton() {
           <Text color="dimmed" size="xs" children={tag} />
           <Text color="dimmed" size="xs" children={guildDisplayName} />
         </div>
-        {!isAuthenticated ? <ChevronRight size={28} /> : <Button color="red" children="Logout" />}
+        {!isAuthenticated ? <ChevronRight size={28} /> : logoutButton}
       </Group>
     </UnstyledButton>
   );
