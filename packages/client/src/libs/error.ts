@@ -32,7 +32,7 @@ export const enum ErrorType {
 
 export class AppError extends Error {
   get errorUrl(): string {
-    return `/error?=${this.type}`;
+    return `/error?=${this.type}&message=${encodeURIComponent(this.message)}`;
   }
 
   get status(): number {
@@ -89,40 +89,34 @@ export function assertMethod(value: boolean): asserts value {
   }
 }
 
-export const apiErrorHandler = (req: NextApiRequest, res: NextApiResponse, error: any) => {
+export const apiErrorHandler = (req: NextApiRequest, res: NextApiResponse, error: any, useRedirect = false) => {
   const { method, headers, body, query } = req;
   //TODO: Add MongoDB error handling
   //TODO: Add Mongoose Error Handling
 
-  if (error instanceof TokenExpiredError) {
-    res.status(401).json({
-      error,
-    });
-    return;
-  } else if (error instanceof JsonWebTokenError) {
-    res.status(403).json({
-      error,
-    });
-    return;
-  } else if (error instanceof AppError) {
-    res.status(error.status).json(
-      NODE_ENV === 'production'
-        ? { error }
-        : {
-            error,
-            request: {
-              method,
-              headers,
-              body,
-              query,
-            },
-          },
-    );
-    return;
-  } else {
-    res.status(500).json({
-      error,
-    });
-    return;
+  const debug = NODE_ENV !== 'production' && {
+    method,
+    headers,
+    body,
+    query,
+  };
+
+  if (useRedirect) {
+    res.redirect(error.errorUrl);
   }
+
+  if (error instanceof TokenExpiredError) {
+    res.status(401);
+  } else if (error instanceof JsonWebTokenError) {
+    res.status(403);
+  } else if (error instanceof AppError) {
+    res.status(error.status);
+  } else {
+    res.status(500);
+  }
+
+  res.json({
+    error,
+    debug,
+  });
 };
