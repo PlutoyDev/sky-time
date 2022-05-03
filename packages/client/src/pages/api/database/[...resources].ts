@@ -1,15 +1,9 @@
 import { JsonWebTokenError, TokenExpiredError } from 'jsonwebtoken';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { verifyAccessToken } from '~/libs/appAuth';
-import { apiErrorHandler, AppError, ErrorType } from '~/libs/error';
+import { apiErrorHandler, AppError, ErrorType, assertMethod } from '~/libs/error';
 import db from '~/libs/database';
 import { NODE_ENV } from '~/libs/constants';
-
-function assertMethod(value: boolean): asserts value {
-  if (!value) {
-    throw new AppError(ErrorType.METHOD_NOT_ALLOWED);
-  }
-}
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const { method, headers, body, query } = req;

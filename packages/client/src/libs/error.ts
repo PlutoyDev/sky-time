@@ -83,6 +83,12 @@ export function assert(condition: any, type: ErrorType, message?: string): asser
   }
 }
 
+export function assertMethod(value: boolean): asserts value {
+  if (!value) {
+    throw new AppError(ErrorType.METHOD_NOT_ALLOWED);
+  }
+}
+
 export const apiErrorHandler = (req: NextApiRequest, res: NextApiResponse, error: any) => {
   const { method, headers, body, query } = req;
   //TODO: Add MongoDB error handling
