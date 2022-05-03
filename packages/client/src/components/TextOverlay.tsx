@@ -3,15 +3,16 @@ import { Box, Center, Overlay, Text } from '@mantine/core';
 type Props = {
   children: React.ReactNode;
   height: number;
+  text: string;
 };
 
-function ComingSoonOverlay({ children, height }: Props) {
+function TextOverlay({ children, text, height }: Props) {
   return (
     <Box sx={{ height, position: 'relative' }}>
-      <Overlay opacity={0.6} color="#000" zIndex={5} p={height / 2.5}>
+      <Overlay opacity={0.7} color="#000" zIndex={5} p={(height - 30) / 2}>
         <Center>
           <Text size="xl" color="white">
-            Coming soon
+            {text}
           </Text>
         </Center>
       </Overlay>
@@ -20,4 +21,4 @@ function ComingSoonOverlay({ children, height }: Props) {
   );
 }
 
-export default ComingSoonOverlay;
+export default TextOverlay;

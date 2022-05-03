@@ -88,7 +88,7 @@ interface AppHeaderProps {}
 
 export function NavButton({ label, link }: NavLinks) {
   const router = useRouter();
-  const isActive = router.pathname === link;
+  const isActive = router.pathname.startsWith(link);
   const { classes } = useStyles();
   const linkClassName = classes.link + (isActive ? ` ${classes.activeLink}` : '');
   return (

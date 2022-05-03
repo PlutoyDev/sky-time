@@ -1,70 +1,87 @@
-import { Group, Paper, Box, Text, Title, Center, Divider, Overlay } from '@mantine/core';
+import { Group, Paper, Box, Text, Title, Center, Divider, Button, Overlay } from '@mantine/core';
 import { useBooleanToggle } from '@mantine/hooks';
+import { Link } from 'tabler-icons-react';
 import DiscordButton from '~/components/button/DiscordButton';
-import ComingSoonOverlay from '~/components/ComingSoonOverlay';
+import IconButton from '~/components/button/IconButton';
+import TextOverlay from '~/components/TextOverlay';
 import DiscordRedirectModal from '~/components/modal/DiscordRedirect';
-import axios from 'axios';
 import { useState } from 'react';
+import { useQuery } from 'react-query';
+import { AppRoutes } from '~/libs/appRoutes';
+import { sleep } from '~/utils/sleep';
+import WebhookUrlForm from '~/components/form/webhookUrl';
 
 function AddPage() {
   const [AuthUrlErr, setAuthUrlErr] = useState(false);
   const [isDRModelOpen, toggleDRModel] = useBooleanToggle(false);
-  const onDiscordLoginClick = () => {
-    const authUrlPromise = axios
-      .get('/api/auth/oauth')
-      .then(res => res.data)
-      .catch(() => undefined);
-    setTimeout(async () => {
-      const authUrl = await authUrlPromise;
-      if (authUrl) {
-        window.location.href = authUrl;
-      } else {
-        setAuthUrlErr(true);
-        setTimeout(() => void toggleDRModel() || void setAuthUrlErr(false), 5000);
-      }
-    }, 5000);
+  const { refetch: getOauthUrl } = useQuery<string>(AppRoutes.api('/auth/oauth?mode=add'), {
+    enabled: false,
+  });
+
+  const onDiscordLoginClick = async () => {
     toggleDRModel();
+    const [{ data: authUrl }] = await Promise.all([getOauthUrl(), sleep(5000)]).catch(
+      () => void setAuthUrlErr(true) || [],
+    );
+    if (authUrl) {
+      window.location.href = authUrl;
+    } else {
+      setAuthUrlErr(true);
+      await sleep(5000);
+      toggleDRModel();
+      setAuthUrlErr(false);
+    }
   };
 
   return (
-    <>
+    <Paper>
       <DiscordRedirectModal opened={isDRModelOpen} error={AuthUrlErr} />
-      <Paper p="md" pl="lg">
-        <Center>
-          <Group direction="column" align="center" spacing={0}>
-            <Title>Add to your Discord Server</Title>
-            <Text>You can have the timings in your server too !!</Text>
-            <Text>Use one of the method bellow to add to your server</Text>
+      <Center>
+        <Group direction="column" align="center" spacing={0}>
+          <Title>Add to your Discord Server</Title>
+          <Text>Use one of the method bellow to add to your server</Text>
+        </Group>
+      </Center>
+      <Divider my="xl" />
+      <section>
+        <Group position="apart">
+          <Title order={2}>Already in server??</Title>
+          <IconButton label="Configure Bot" weight="bold" href="/configure" icon={Link} />
+        </Group>
+      </section>
+      <Divider my="xl" />
+      <section>
+        <Group position="apart">
+          <Group direction="column" spacing="xs">
+            <Title order={2}>With Discord Bot</Title>
+            <Text> Easiest way to configure </Text>
+            <Text> Bots can grab the info it needs to configure </Text>
           </Group>
-        </Center>
-        <Divider my="xl" />
-        <section>
-          <Group style={{ justifyContent: 'space-between' }}>
+          <IconButton
+            label="Add to Server"
+            weight="bold"
+            onClick={onDiscordLoginClick}
+            iconPath="/assets/logo/discordWhite.png"
+          />
+        </Group>
+      </section>
+      <Divider my="xl" />
+      <section>
+        <TextOverlay height={150} text="Not supported yet ><">
+          <Group position="apart">
             <Group direction="column" spacing="xs">
-              <Title order={2}>With Discord Bot</Title>
-              <Text> Easiest way to configure </Text>
-              <Text> Bots can grab the info it needs to configure </Text>
+              <Title order={2}>With Webhook Url</Title>
+              <Text> Don't trust me with your data and your server's data, Sure!! </Text>
+              <Text> Let's do the slightly inconvenient way </Text>
             </Group>
-            <DiscordButton label="Add to Server" weight="bold" onClick={onDiscordLoginClick} />
+
+            <Center>
+              <WebhookUrlForm />
+            </Center>
           </Group>
-        </section>
-        <Divider my="xl" />
-        <section>
-          <ComingSoonOverlay height={150}>
-            <Group style={{ justifyContent: 'space-between' }}>
-              <Group direction="column" spacing="xs">
-                <Title order={2}>With Webhook Url</Title>
-                <Text> Don't trust me with your server's data, Sure!! </Text>
-                <Text> Let's do the slightly inconvenient way </Text>
-              </Group>
-              {/* 
-               //TODO: Add Webhook URL Field
-              */}
-            </Group>
-          </ComingSoonOverlay>
-        </section>
-      </Paper>
-    </>
+        </TextOverlay>
+      </section>
+    </Paper>
   );
 }
 
