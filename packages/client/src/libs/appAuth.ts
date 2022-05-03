@@ -169,6 +169,7 @@ export async function refresh(cookies: Record<string, string>) {
     console.log({ channel_ids, webhook_ids });
 
     return {
+      user_id,
       avatar,
       username,
       discriminator,

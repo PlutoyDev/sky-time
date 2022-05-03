@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect } from 'react';
+import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
 import appAxios from '~/libs/axios/appAxios';
 import type { refresh } from '../libs/appAuth';
@@ -6,9 +6,15 @@ import type { refresh } from '../libs/appAuth';
 type UserData = Awaited<ReturnType<typeof refresh>>;
 
 type AuthContextValue = UserData & {
-  isAuthenticated: boolean;
+  isAuthenticated: boolean | undefined;
   refresh: () => Promise<void>;
   logout: () => void;
+
+  setNickname: (nickname: string | undefined) => void;
+  nickname?: string;
+
+  setGuildName: (guildName: string | undefined) => void;
+  guildName?: string;
 };
 
 type AuthProviderProps = {
@@ -33,8 +39,9 @@ discord_access_token?: undefined;
 */
 
 const defaultValue: AuthContextValue = {
-  username: '',
-  discriminator: '',
+  user_id: undefined,
+  username: undefined,
+  discriminator: undefined,
   avatar: undefined,
 
   guild_ids: [],
@@ -42,10 +49,16 @@ const defaultValue: AuthContextValue = {
   access_token: '',
   discord_access_token: undefined,
 
-  isAuthenticated: false,
+  isAuthenticated: undefined,
 
   refresh: () => Promise.resolve(),
   logout: () => {},
+
+  setNickname: () => {},
+  nickname: undefined,
+
+  setGuildName: () => {},
+  guildName: undefined,
 };
 
 export const AuthContext = createContext<AuthContextValue>(defaultValue);
@@ -100,6 +113,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     });
   }, []);
 
+  const [nickname, setNickname] = useState<string | undefined>();
+  const [guildName, setGuildName] = useState<string | undefined>();
+
   const value: AuthContextValue = !userAuthData
     ? defaultValue
     : {
@@ -107,6 +123,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         logout,
         ...userAuthData,
         isAuthenticated,
+
+        nickname,
+        setNickname,
+        guildName,
+        setGuildName,
       };
 
   return <AuthContext.Provider value={value} children={children} />;

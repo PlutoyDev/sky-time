@@ -3,6 +3,7 @@ import { createStyles, Center, Header, Container, Group, UnstyledButton } from '
 import { useBooleanToggle } from '@mantine/hooks';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import UserButton from '~/components/button/UserButton';
 
 const HEADER_HEIGHT = 60;
 
@@ -12,7 +13,7 @@ const useStyles = createStyles(theme => ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: theme.colors.dark[6],
+    backgroundColor: theme.colors.dark[9],
     boxShadow: `5px 5px 10px ${theme.colors.dark[9]}`,
   },
 
@@ -104,21 +105,12 @@ export function NavButton({ label, link }: NavLinks) {
 
 export function AppHeader({}: AppHeaderProps) {
   const { classes } = useStyles();
-  const [opened, toggleOpened] = useBooleanToggle(false);
-
-  const items = links.map(link => <NavButton key={link.label} {...link} />);
 
   return (
     <Header height={HEADER_HEIGHT} sx={{ borderBottom: 0 }}>
       <Container className={classes.inner} fluid>
-        <Group>
-          {/* <Burger opened={opened} onClick={() => toggleOpened()} className={classes.burger} size="sm" /> */}
-          {/* <AppLogo /> */}
-        </Group>
-        <Group spacing={10} className={classes.links}>
-          {items}
-        </Group>
-        <Group>{/* <UserButton /> */}</Group>
+        <Group />
+        <UserButton />
       </Container>
     </Header>
   );
