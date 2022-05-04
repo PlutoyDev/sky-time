@@ -18,7 +18,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     const access = verifyAccessToken(access_token);
-    console.log(method, headers, body, query);
     if (tlr === 'guilds') {
       if (tlr_id && !access.guild_ids.includes(tlr_id)) {
         throw new AppError(ErrorType.FORBIDDEN, `You are not allowed to access this guild (${tlr_id})`);
@@ -27,7 +26,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         if (slr === 'users') {
           assertMethod(method === 'GET');
           const users = await db.getGuildUsers(tlr_id);
-          console.log('Hello');
           res.status(200).json(users);
           return;
         } else if (slr === 'webhooks') {
