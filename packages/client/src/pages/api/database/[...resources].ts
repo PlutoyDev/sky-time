@@ -49,7 +49,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           const guild = await db.getGuild(tlr_id);
           res.status(200).json(guild);
           return;
-        } else if (method === 'PATCH') {
+        } else if (method === 'PUT') {
           if (body.id !== tlr_id) {
             throw new AppError(ErrorType.MISSING_PARAMS, 'id does not match');
           }
@@ -99,7 +99,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           const webhook = await db.getWebhook(tlr_id);
           res.status(200).json(webhook);
           return;
-        } else if (method === 'PATCH') {
+        } else if (method === 'PUT') {
           if (body.id !== tlr_id) {
             throw new AppError(ErrorType.MISSING_PARAMS, 'id does not match');
           }
@@ -127,7 +127,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           const timeConfig = await db.getTimeConfig(tlr_id);
           res.status(200).json(timeConfig);
           return;
-        } else if (method === 'PATCH') {
+        } else if (method === 'PUT') {
           if (body.id !== tlr_id) {
             throw new AppError(ErrorType.MISSING_PARAMS, 'id does not match');
           }
