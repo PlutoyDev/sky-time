@@ -15,7 +15,7 @@ export default function DiscordLoginForm({ addBot }: Props) {
     retryDelay: 1500,
   });
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(true);
+  const [error, setError] = useState(false);
   const onButtonClick = async () => {
     if (error || loading) return;
     setLoading(true);
