@@ -1,4 +1,4 @@
-import { createStyles, UnstyledButton, Group, Box, Text, Title, Center, MantineSize } from '@mantine/core';
+import { createStyles, UnstyledButton, Group, Box, Text, Title, Center, MantineSize, Loader } from '@mantine/core';
 import { Icon } from 'tabler-icons-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -15,6 +15,8 @@ type DiscordButtonProps = {
   onClick?: () => void;
   color?: string;
   hoverColor?: string;
+  disabled?: boolean;
+  loading?: boolean;
 };
 
 type IconStyleParams = {
@@ -31,6 +33,10 @@ const useStyles = createStyles((theme, param: IconStyleParams) => ({
     '&:hover': {
       backgroundColor: param.hoverColor ?? param.color ?? '#1c7ed6',
     },
+
+    '&:disabled': {
+      backgroundColor: theme.colors.gray[8],
+    },
   },
 }));
 
@@ -45,13 +51,22 @@ function ArrowButton({
   icon: Icon,
   iconPath,
   iconSize,
+  disabled,
+  loading,
 }: DiscordButtonProps) {
+  disabled = disabled || loading;
   iconSize = iconSize ?? size === 'sm' ? 24 : 32;
   const { classes } = useStyles({ color, hoverColor });
   const dButton = (
-    <UnstyledButton className={classes.iconButton} onClick={onClick}>
-      <Group direction="row" spacing="md" align="center">
-        {Icon ? <Icon size={iconSize} /> : iconPath && <Image src={iconPath} width={iconSize} height={iconSize} />}
+    <UnstyledButton className={classes.iconButton} onClick={onClick} disabled={disabled}>
+      <Group direction="row" spacing="md" position="center" align="center">
+        {loading ? (
+          <Loader size={iconSize} />
+        ) : Icon ? (
+          <Icon size={iconSize} />
+        ) : (
+          iconPath && <Image src={iconPath} width={iconSize} height={iconSize} />
+        )}
         {label && <Text size={size ?? 'xl'} weight={weight} children={label} />}
       </Group>
     </UnstyledButton>

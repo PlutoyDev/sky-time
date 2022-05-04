@@ -1,6 +1,6 @@
+import { ActionIcon, Group, TextInput, useMantineTheme } from '@mantine/core';
 import React, { useState } from 'react';
-import { TextInput, TextInputProps, ActionIcon, useMantineTheme, Group } from '@mantine/core';
-import { Clipboard, ArrowRight } from 'tabler-icons-react';
+import { ArrowRight, Clipboard } from 'tabler-icons-react';
 
 export function WebhookUrlForm() {
   const [webhookUrl, setWebhookUrl] = useState('');
@@ -31,13 +31,20 @@ export function WebhookUrlForm() {
           <ActionIcon size={36} radius="xl" color={theme.primaryColor} variant="filled" onClick={onPasteClick}>
             <Clipboard />
           </ActionIcon>
-          <ActionIcon size={36} radius="xl" color={theme.primaryColor} variant="filled" onClick={onSubmit}>
+          <ActionIcon
+            size={36}
+            radius="xl"
+            color={theme.primaryColor}
+            variant="filled"
+            onClick={onSubmit}
+            disabled={!webhookUrl}
+          >
             <ArrowRight />
           </ActionIcon>
         </Group>
       }
       placeholder="Webhook URL"
-      rightSectionWidth={90}
+      rightSectionWidth={100}
       onChange={onTextChange}
     />
   );
