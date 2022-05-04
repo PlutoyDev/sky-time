@@ -875,6 +875,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@discordjs/collection", [\
+        ["npm:0.6.0", {\
+          "packageLocation": "./.yarn/cache/@discordjs-collection-npm-0.6.0-982cfa6513-a08826f04e.zip/node_modules/@discordjs/collection/",\
+          "packageDependencies": [\
+            ["@discordjs/collection", "npm:0.6.0"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
         ["npm:0.7.0-dev.1650931751-df64d3e", {\
           "packageLocation": "./.yarn/cache/@discordjs-collection-npm-0.7.0-dev.1650931751-df64d3e-6c94969f69-4e230fb45b.zip/node_modules/@discordjs/collection/",\
           "packageDependencies": [\
@@ -2180,6 +2187,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/client/",\
           "packageDependencies": [\
             ["@sky-time/client", "workspace:packages/client"],\
+            ["@discordjs/collection", "npm:0.6.0"],\
             ["@discordjs/rest", "npm:0.4.1"],\
             ["@luvies/lazy", "npm:1.7.2"],\
             ["@mantine/core", "virtual:e107ba1e0d79c65aa1b39a1d84ec6f09f6e4b07d52bd47ee44a13db004f09758d4a94a20a55dee4947aba3a59bb97b1702c3a4e1e2f710916637f7e1ea3cf17e#npm:4.2.2"],\

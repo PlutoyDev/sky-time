@@ -435,6 +435,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@discordjs/collection@npm:^0.6.0":
+  version: 0.6.0
+  resolution: "@discordjs/collection@npm:0.6.0"
+  checksum: a08826f04e3ddaf079913e2e2069727d518b5a0ea79cbeb66d8b559297df6586a25490b4b2aeab631483f68c2160df769115b9b3e114d8437b707dec80b02bab
+  languageName: node
+  linkType: hard
+
 "@discordjs/collection@npm:^0.7.0-dev":
   version: 0.7.0-dev.1650931751-df64d3e
   resolution: "@discordjs/collection@npm:0.7.0-dev.1650931751-df64d3e"
@@ -1337,6 +1344,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@sky-time/client@workspace:packages/client"
   dependencies:
+    "@discordjs/collection": ^0.6.0
     "@discordjs/rest": ^0.4.1
     "@luvies/lazy": ^1.7.2
     "@mantine/core": ^4.1.4
