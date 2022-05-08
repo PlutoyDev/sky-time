@@ -19,7 +19,7 @@ const mainEnables = [
   ['show_promotion', true],
 ] as const;
 
-const mainFormats = [
+export const mainFormats = [
   ['last_update', '%t (%R)'],
   ['daily_reset', '% (%R)'],
   ['eden_reset', '% (%R)'],

@@ -2,37 +2,37 @@ import { Lazy } from '@luvies/lazy';
 import { add, addMinutes, fromUnixTime, getUnixTime, isAfter, isBefore, startOfDay } from 'date-fns';
 import { LaToUtc, timeFormatter, utcToLa } from './lib';
 
-const reptStrings = [
+const recurStrings = [
   ['title_repeating'],
   ['separator', '➡️'],
   ['label_ongoing', 'Ongoing until: '],
   ['label_upcoming', 'Upcoming: '],
 ] as const;
 
-const reptEnables = [
+const recurEnables = [
   ['show_ongoing', true],
   ['show_upcoming', true],
 ] as const;
 
-const reptFormats = [
+export const recurFormats = [
   ['occurrence', '%t'],
   ['ongoing', '%t (%R)'],
   ['upcoming', '%t (%R)'],
 ] as const;
 
-export type ReptConfig = {
-  strings: Partial<Record<typeof reptStrings[number][0], string>>;
-  enables: Partial<Record<typeof reptEnables[number][0], boolean>>;
-  formats: Partial<Record<typeof reptFormats[number][0], string>>;
+export type RecurConfig = {
+  strings: Partial<Record<typeof recurStrings[number][0], string>>;
+  enables: Partial<Record<typeof recurEnables[number][0], boolean>>;
+  formats: Partial<Record<typeof recurFormats[number][0], string>>;
 };
 
-export type ReptTimeSettings = {
+export type RecurTimeSettings = {
   offset: number;
   interval: number;
   duration: number;
 };
 
-export type ReptStringsSettings = {
+export type RecurStringsSettings = {
   defaultTitle: string;
   credits: string;
 };
@@ -47,12 +47,12 @@ type calculateResult = {
   unixes: IUnixes;
 };
 
-export function calculate(currentTime: number, reptSettings: ReptTimeSettings): calculateResult {
+export function calculate(currentTime: number, recurSettings: RecurTimeSettings): calculateResult {
   const now = fromUnixTime(currentTime);
   const today = LaToUtc(startOfDay(utcToLa(now)));
   const daily_reset = add(today, { days: 1 });
   //Generate future occurrence
-  const { offset, interval, duration } = reptSettings;
+  const { offset, interval, duration } = recurSettings;
   const count = Math.floor(1440 / interval) + 1;
   const start = addMinutes(today, offset);
   const DateIter = Lazy.range(0, count).select(i => addMinutes(start, i * interval));
@@ -71,21 +71,21 @@ export function calculate(currentTime: number, reptSettings: ReptTimeSettings): 
   };
 }
 
-export function repeating(config: ReptConfig, unixes: IUnixes, settings: ReptStringsSettings): string {
+export function repeating(config: RecurConfig, unixes: IUnixes, settings: RecurStringsSettings): string {
   const strings = Object.fromEntries(
-    reptStrings.map(([key, defaults]) => [
+    recurStrings.map(([key, defaults]) => [
       key,
       config.strings[key] ?? key === 'title_repeating' ? settings.defaultTitle : defaults,
     ]),
-  ) as Record<typeof reptStrings[number][0], string>;
+  ) as Record<typeof recurStrings[number][0], string>;
 
   const enables = Object.fromEntries(
-    reptEnables.map(([key, defaults]) => [key, config.enables[key] ?? defaults]),
-  ) as Record<typeof reptEnables[number][0], boolean>;
+    recurEnables.map(([key, defaults]) => [key, config.enables[key] ?? defaults]),
+  ) as Record<typeof recurEnables[number][0], boolean>;
 
   const formats = Object.fromEntries(
-    reptFormats.map(([key, defaults]) => [key, config.formats[key] ?? defaults]),
-  ) as Record<typeof reptFormats[number][0], string>;
+    recurFormats.map(([key, defaults]) => [key, config.formats[key] ?? defaults]),
+  ) as Record<typeof recurFormats[number][0], string>;
 
   const { ongoing, upcoming, occurrences } = unixes;
 
