@@ -5,6 +5,18 @@
   "main": "./dist/index.js",
   "typings": "./src/index.ts",
   "packageManager": "yarn@3.2.0",
+  "exports": {
+    "./database": {
+      "require": "./dist/database",
+      "import": "./dist/database",
+      "types": "./src/database.ts"
+    },
+    "./constants": {
+      "require": "./dist/constants",
+      "import": "./dist/constants",
+      "types": "./dist/constants.d.ts"
+    }
+  },
   "scripts": {
     "build": "tsc",
     "test": "pnpify jest",
