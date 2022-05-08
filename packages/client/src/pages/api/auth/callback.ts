@@ -11,7 +11,13 @@ export default async function OauthCallback(req: NextApiRequest, res: NextApiRes
       res,
       ...result,
     });
-    return res.redirect('/configure');
+
+    const guild_id = result.guild_id;
+    if (guild_id) {
+      return res.redirect(`/manage/${guild_id}`);
+    } else {
+      return res.redirect('/select');
+    }
   } catch (e) {
     apiErrorHandler(req, res, e, true);
   }

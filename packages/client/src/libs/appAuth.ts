@@ -52,6 +52,8 @@ type CookieOption = NonNullable<Parameters<typeof setCookies>[2]>;
 
 export type AuthParams = {
   guild_id?: string;
+  guild_name?: string;
+  guild_icon?: string;
 
   user_id?: string;
   username?: string;
@@ -70,9 +72,9 @@ export type AuthParams = {
 export async function authenticate(params: AuthParams) {
   const { guild_id, user_id, webhook_id, discord_access_token, res, req } = params;
 
-  let user = user_id && user_id !== '' && (await db.getUser(user_id));
-  let guild = guild_id && guild_id !== '' && (await db.getGuild(guild_id));
-  let webhook = webhook_id && webhook_id !== '' && (await db.getWebhook(webhook_id));
+  let user = user_id && user_id !== '' && (await db.getUser(user_id, false));
+  let guild = guild_id && guild_id !== '' && (await db.getGuild(guild_id, false));
+  let webhook = webhook_id && webhook_id !== '' && (await db.getWebhook(webhook_id, false));
 
   if (user_id && !user) {
     const guild_ids = guild_id ? [guild_id] : [];
@@ -107,14 +109,27 @@ export async function authenticate(params: AuthParams) {
   }
 
   if (guild_id && !guild) {
+    const { guild_name, guild_icon } = params;
     const user_ids = user_id ? [user_id] : undefined;
     const webhook_ids = webhook_id ? [webhook_id] : undefined;
 
     guild = await db.createGuild({
       _id: guild_id,
+      name: guild_name,
+      icon: guild_icon,
       user_ids,
       webhook_ids,
     });
+  }
+
+  if (guild_id && user && !user.guild_ids.includes(guild_id)) {
+    user.guild_ids.push(guild_id);
+    user.save();
+  }
+
+  if (user_id && guild && !guild.user_ids.includes(user_id)) {
+    guild.user_ids.push(user_id);
+    guild.save();
   }
 
   const cookieOption: CookieOption = {
@@ -165,10 +180,10 @@ export async function refresh(cookies: Record<string, string>) {
 
     const channel_ids = (await Promise.all(guild_ids.map(getDiscordGuildChannels))).flat();
     const webhook_ids = (await db.getGuilds(guild_ids)).flatMap(({ webhook_ids }) => webhook_ids);
-
-    console.log({ channel_ids, webhook_ids });
+    const type = 'Oauth';
 
     return {
+      type,
       user_id,
       avatar,
       username,
@@ -176,7 +191,7 @@ export async function refresh(cookies: Record<string, string>) {
       discord_access_token,
       guild_ids,
       access_token: genAccessToken({
-        type: 'Oauth',
+        type,
         user_id,
         guild_ids,
         channel_ids,
@@ -190,10 +205,12 @@ export async function refresh(cookies: Record<string, string>) {
     }
     const { webhook_ids } = guild;
     const guild_ids = [guild_id];
+    const type = 'Webhook';
     return {
+      type,
       guild_ids: [guild_id],
       access_token: genAccessToken({
-        type: 'Webhook',
+        type,
         guild_ids,
         webhook_ids,
       }),

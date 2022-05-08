@@ -35,7 +35,7 @@ export function UserButton() {
   let avatarUrl: string | undefined;
 
   if (isAuthenticated) {
-    href = `/dashboard`;
+    href = `/select`;
     if (user_id) {
       const parsedDiscriminator = parseInt(discriminator, 10);
       userDisplayName = nickname ?? username; //or nickname
@@ -49,19 +49,22 @@ export function UserButton() {
   }
 
   const _Button = (
-    <UnstyledButton className={classes.user}>
-      <Group>
-        <Avatar src={avatarUrl} radius="xl" />
+    <Group>
+      <UnstyledButton className={classes.user}>
+        <Group>
+          <Avatar src={avatarUrl} radius="xl" />
 
-        <div style={{ flex: 1 }}>
-          <Text size="md" weight={500} children={userDisplayName} />
+          <div style={{ flex: 1 }}>
+            <Text size="md" weight={500} children={userDisplayName} />
 
-          <Text color="dimmed" size="xs" children={tag} />
-          <Text color="dimmed" size="xs" children={guildDisplayName} />
-        </div>
-        {!isAuthenticated ? <ChevronRight size={28} /> : logoutButton}
-      </Group>
-    </UnstyledButton>
+            <Text color="dimmed" size="xs" children={tag} />
+            <Text color="dimmed" size="xs" children={guildDisplayName} />
+          </div>
+          {!isAuthenticated && <ChevronRight size={28} />}
+        </Group>
+      </UnstyledButton>
+      {isAuthenticated && logoutButton}
+    </Group>
   );
 
   return href ? <Link href={href} passHref children={_Button} /> : _Button;

@@ -9,9 +9,8 @@ import { BASE_URL, DISCORD_CLIENT_ID, DISCORD_CLIENT_SECRET } from './constants'
 import { DiscordRest, setTokenAsBot } from './discordRest';
 import { AppError, ErrorType } from './error';
 
-export function genDiscordAuthUrl(withBot: boolean) {
-  const scopeArray = ['identify', 'guilds', 'guilds.members.read'];
-  if (withBot) scopeArray.push('bot');
+export function genDiscordAuthUrl(botOnly: boolean, guild_id?: string) {
+  const scopeArray = botOnly ? ['bot', 'applications.commands'] : ['identify', 'guilds', 'guilds.members.read'];
 
   const scope = scopeArray.join(' ');
 
@@ -21,6 +20,7 @@ export function genDiscordAuthUrl(withBot: boolean) {
     permissions: '536871936',
     response_type: 'code',
     scope,
+    guild_id: guild_id as string,
   };
 
   return `${OAuth2Routes.authorizationURL}?${new URLSearchParams(param)}`;
@@ -67,6 +67,8 @@ export async function discordAuthorize(code: any) {
     discriminator,
     avatar: avatar ?? undefined,
     guild_id: tokenData.guild?.id,
+    guild_name: tokenData.guild?.name,
+    guild_icon: tokenData.guild?.icon ?? undefined,
     discord_access_token: tokenData.access_token,
   };
 }

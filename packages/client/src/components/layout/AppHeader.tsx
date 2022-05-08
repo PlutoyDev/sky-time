@@ -14,7 +14,7 @@ const useStyles = createStyles(theme => ({
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: theme.colors.dark[9],
-    boxShadow: `5px 5px 10px ${theme.colors.dark[9]}`,
+    // boxShadow: `5px 5px 10px ${theme.colors.dark[9]}`,
   },
 
   links: {

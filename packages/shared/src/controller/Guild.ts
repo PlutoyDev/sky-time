@@ -28,6 +28,14 @@ export const deleteGuild = (guild_id: string) => {
   return Guild.findByIdAndDelete(guild_id).lean().exec();
 };
 
+//Patchable (Any user can edit)
+
+type PatchableGuild = Pick<IGuild, '_id' | 'name' | 'icon'>;
+
+export const patchGuild = (guild: PatchableGuild) => {
+  return Guild.findByIdAndUpdate(guild._id, guild, { new: true }).lean().exec();
+};
+
 //Relations
 export const getUserGuilds = (user_id: string, lean = true) => {
   return Guild.find({ user_ids: { $elemMatch: { $eq: user_id } } }, null, { lean }).exec();

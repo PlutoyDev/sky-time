@@ -2,6 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useState } from 'rea
 import { useQuery, useQueryClient } from 'react-query';
 import appAxios from '~/libs/axios/appAxios';
 import type { refresh } from '../libs/appAuth';
+import { useRouter } from 'next/router';
 
 type UserData = Awaited<ReturnType<typeof refresh>>;
 
@@ -39,6 +40,7 @@ discord_access_token?: undefined;
 */
 
 const defaultValue: AuthContextValue = {
+  type: '',
   user_id: undefined,
   username: undefined,
   discriminator: undefined,
@@ -68,11 +70,7 @@ const getUserData = async () => {
 };
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const {
-    data: userAuthData,
-    isSuccess: isAuthenticated,
-    refetch,
-  } = useQuery({
+  const { data: userAuthData, refetch } = useQuery({
     queryKey: 'userAuthData',
     queryFn: getUserData,
     retry: false,
@@ -80,6 +78,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
   });
+
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
   const queryClient = useQueryClient();
 
   const refresh = useCallback(async () => {
@@ -92,6 +93,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   useEffect(() => {
     appAxios.defaults.headers.common.Authorization = `Bearer ${userAuthData?.access_token} ${userAuthData?.discord_access_token}`;
+    console.log(`Authenticated with access token: ${userAuthData?.access_token}`);
+    setIsAuthenticated(!!userAuthData);
   }, [userAuthData?.access_token, userAuthData?.discord_access_token]);
 
   useEffect(() => {
@@ -133,8 +136,22 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   return <AuthContext.Provider value={value} children={children} />;
 };
 
-export function useAuth() {
-  return useContext(AuthContext);
+type Options = {
+  protected?: boolean;
+};
+
+export function useAuth(options?: Options) {
+  const router = useRouter();
+  const authDetails = useContext(AuthContext);
+  const protectedRoute = options?.protected ?? false;
+
+  useEffect(() => {
+    if (protectedRoute && authDetails.isAuthenticated === false) {
+      router.push('/login');
+    }
+  }, [protectedRoute]);
+
+  return authDetails;
 }
 
 export default AuthContext;

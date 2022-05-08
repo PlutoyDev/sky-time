@@ -3,6 +3,7 @@ import { schemaOptions, createModel, Base } from './libs';
 export interface IGuild extends Base {
   _id: string;
   name?: string | undefined;
+  icon?: string | undefined;
   user_ids: string[];
   webhook_ids: string[];
   time_config_ids: string[];
@@ -14,6 +15,7 @@ export const GuildSchema = new Schema<IGuild>(
   {
     _id: String,
     name: String,
+    icon: String,
     user_ids: [
       {
         type: String,
