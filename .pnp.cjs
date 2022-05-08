@@ -2245,6 +2245,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/cors", "npm:2.8.12"],\
             ["@types/cron", "npm:1.7.3"],\
             ["@types/express", "npm:4.17.13"],\
+            ["@types/jsonwebtoken", "npm:8.5.8"],\
             ["@yarnpkg/pnpify", "npm:4.0.0-rc.3"],\
             ["axios", "npm:0.27.2"],\
             ["cookie-parser", "npm:1.4.6"],\
@@ -2256,6 +2257,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["dotenv", "npm:16.0.0"],\
             ["express", "npm:4.18.0"],\
             ["jest", "virtual:b5def7bccb107b1d7a0bdb42e64006911494524f09bffdfe7ec5eee019215b5a7b9101da645e91a33438c0185b52f2b9c8f0b762047390328035b99d26eb2d56#npm:27.5.1"],\
+            ["jsonwebtoken", "npm:8.5.1"],\
             ["nodemon", "npm:2.0.15"],\
             ["ntl", "npm:5.1.0"],\
             ["tslib", "npm:2.4.0"],\
