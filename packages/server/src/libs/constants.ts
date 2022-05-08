@@ -1,13 +1,15 @@
-//Single File for all **server** constants
+import { config } from 'dotenv';
+
+const { error } = config({
+  path: `../../.env`,
+});
+
+if (error) {
+  throw error;
+}
 
 export const NODE_ENV = process.env.NODE_ENV;
-export const SERVER_URL = process.env.SERVER_URL ?? 'http://localhost:8000';
-export const BASE_URL =
-  typeof window !== 'undefined'
-    ? ''
-    : process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : `http://localhost:${process.env.PORT ?? 3000}`;
+export const CLIENT_URL = process.env.CLIENT_URL ?? 'http://localhost:3000';
 
 export const HARDCODED_ADMIN_IDS = ['702740689846272002', '693802004018888714'].concat(
   process.env.HARDCODED_ADMIN_IDS?.split(',') ?? [],
