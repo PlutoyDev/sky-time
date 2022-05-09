@@ -1,4 +1,5 @@
 @BaseURL=http://localhost:3000
+@ServerURL=http://localhost:8000
 @AppRefreshToken={{$dotenv APP_REFRESH_TOKEN}}
 @DiscordClientId={{$dotenv DISCORD_CLIENT_ID}}
 @AppDiscordAccessToken={{$dotenv APP_DISCORD_ACCESS_TOKEN}}
@@ -47,3 +48,7 @@ X-Audit-Log-Reason: Testing log
 POST {{BaseURL}}/api/discord/guilds
 Authorization: Bearer {{AppAccessToken}} {{AppDiscordAccessToken}}
 Content-Type: application/json
+
+
+###
+GET {{ServerURL}}/settings
