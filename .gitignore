@@ -24,3 +24,5 @@ prisma/**/migrations
 
 # ts
 tsconfig.tsbuildinfo
+
+data/
